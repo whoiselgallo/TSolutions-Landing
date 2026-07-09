@@ -1,0 +1,88 @@
+@theme {
+  /* ============================
+     🎨 COLORES CORPORATIVOS
+     ============================ */
+  --color-naranjaEnergy: #F97316;
+  --color-aquaTurquesa: #00E5FF;
+  --color-negroProfundo: #000000;
+  --color-blancoPuro: #FFFFFF;
+
+  /* ============================
+     🔤 TIPOGRAFÍAS
+     ============================ */
+  --font-bruno: "Bruno Ace", sans-serif;
+  --font-montserratSlim: "Montserrat Super Slim", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  /* ============================
+     🅱️ PESOS TIPOGRÁFICOS
+     ============================ */
+  --font-weight-brunoHeavy: 900;
+  --font-weight-brunoUltra: 1100;
+  --font-weight-brunoBold: 800;
+  --font-weight-interRegular: 400;
+  --font-weight-interMedium: 500;
+
+  /* ============================
+     🔠 LETTER SPACING
+     ============================ */
+  --tracking-tightSlim: -2px;
+  --tracking-tightMega: -1px;
+  --tracking-brunoWide: 1px;
+  --tracking-brunoMedium: 0.5px;
+
+  /* ============================
+     📏 LINE HEIGHT
+     ============================ */
+  --leading-brunoCompact: 1.1;
+  --leading-brunoNormal: 1.2;
+
+  /* ============================
+     🟣 RADIOS
+     ============================ */
+  --radius-soft: 10px;
+  --radius-medium: 12px;
+  --radius-large: 14px;
+  --radius-full: 999px;
+
+  /* ============================
+     🌟 SOMBRAS / GLOWS
+     ============================ */
+  --shadow-turquesaSoft: 0 0 10px rgba(0,229,255,0.20);
+  --shadow-turquesaHover: 0 0 14px rgba(0,229,255,0.45);
+  --shadow-blancoPulse: 0 0 10px rgba(255,255,255,0.8);
+  --shadow-card: 0 8px 24px rgba(0,0,0,0.08);
+
+  /* ============================
+     🎞️ ANIMACIONES
+     ============================ */
+  --animate-glowPulse: glowPulse 1.8s ease-in-out infinite;
+  --animate-fadeTurquesa: fadeTurquesa 0.4s ease-out;
+  --animate-slideSoft: slideSoft 0.3s ease;
+  --animate-hoverPulse: hoverPulse 0.6s ease-in-out;
+}
+
+/* ============================
+   🎞️ KEYFRAMES
+   ============================ */
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 4px rgba(255,255,255,0.4); }
+  50% { box-shadow: 0 0 10px rgba(255,255,255,0.9); }
+  100% { box-shadow: 0 0 4px rgba(255,255,255,0.4); }
+}
+
+@keyframes fadeTurquesa {
+  0% { opacity: 0; box-shadow: 0 0 0 rgba(0,229,255,0); }
+  100% { opacity: 1; box-shadow: 0 0 10px rgba(0,229,255,0.20); }
+}
+
+@keyframes slideSoft {
+  0% { transform: translateY(6px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes hoverPulse {
+  0% { box-shadow: 0 0 6px rgba(0,229,255,0.20); }
+  50% { box-shadow: 0 0 12px rgba(0,229,255,0.45); }
+  100% { box-shadow: 0 0 6px rgba(0,229,255,0.20); }
+}
