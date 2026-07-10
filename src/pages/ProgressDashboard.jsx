@@ -1,6 +1,6 @@
-import { Card } from "./components/ui/Card";
-import { Badge } from "./components/ui/Badge";
-import { Table } from "./components/ui/Table";
+import { Card } from "../components/ui/Card";
+import { Badge } from "../components/ui/Badge";
+import { Table } from "../components/ui/Table";
 
 export function ProgressDashboard() {
   const components = [

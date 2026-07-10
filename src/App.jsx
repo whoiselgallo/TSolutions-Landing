@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import { ProgressDashboard } from "./ProgressDashboard";
+import { ProgressDashboard } from "./pages/ProgressDashboard";
 
 export default function App() {
   return (
