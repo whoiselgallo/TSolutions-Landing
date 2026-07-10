@@ -1,0 +1,188 @@
+/* ============================================================
+   TSolutions IPIDD — INDEX.CSS
+   Archivo maestro que integra todos los tokens y estilos globales
+   ============================================================ */
+
+/* ============================
+   1. Importación de tokens
+   ============================ */
+@import "./tokens-colors.css";
+@import "./tokens-typography.css";
+@import "./tokens-layout.css";
+
+/* ============================
+   2. Tailwind base
+   ============================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================
+   3. Reset global
+   ============================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================
+   4. Body global
+   ============================ */
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-deepBlack);
+  color: var(--color-blancoPerla);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ============================
+   5. Contenedores globales
+   ============================ */
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding-left: var(--container-padding-mobile);
+  padding-right: var(--container-padding-mobile);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+}
+
+/* ============================
+   6. Dividers corporativos
+   ============================ */
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--divider-color);
+  opacity: var(--divider-opacity);
+}
+
+/* ============================
+   7. Glow corporativo
+   ============================ */
+.glow {
+  box-shadow: 0 0 12px var(--color-aquaTurquesa);
+}
+
+/* ============================
+   8. Cards corporativas
+   ============================ */
+.card {
+  min-width: var(--min-card-width);
+  min-height: var(--min-card-height);
+  padding: var(--card-padding);
+  background-color: var(--color-humo);
+  border-radius: 8px;
+  box-shadow: var(--elevation-3);
+}
+
+.card.glow {
+  box-shadow: 0 0 12px var(--color-aquaTurquesa);
+}
+
+/* ============================
+   9. Botones corporativos
+   ============================ */
+.btn {
+  min-height: var(--min-button-height);
+  min-width: var(--min-button-width);
+  padding: var(--padding-base) calc(var(--padding-base) * 2);
+  border-radius: 6px;
+  font-family: var(--font-secondary);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-naranjaEnergy);
+  color: var(--color-deepBlack);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-dorado);
+}
+
+/* ============================
+   10. Inputs corporativos
+   ============================ */
+.input {
+  min-height: var(--min-input-height);
+  min-width: var(--min-input-width);
+  padding: var(--padding-base);
+  border: 1px solid var(--color-humo);
+  border-radius: 6px;
+  background-color: var(--color-blancoPerla);
+  color: var(--color-deepBlack);
+  font-family: var(--font-body);
+}
+
+/* ============================
+   11. Modales corporativos
+   ============================ */
+.modal {
+  min-width: var(--min-modal-width);
+  min-height: var(--min-modal-height);
+  padding: var(--component-padding);
+  background-color: var(--color-blancoPerla);
+  color: var(--color-deepBlack);
+  border-radius: 12px;
+  box-shadow: var(--elevation-4);
+}
+
+/* Full-screen en móvil */
+@media (max-width: 480px) {
+  .modal {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
+
+/* ============================
+   12. Tablas corporativas
+   ============================ */
+.table-row:hover {
+  background-color: rgba(0, 255, 255, 0.1); /* aquaTurquesa con opacidad */
+}
+
+/* ============================
+   13. Formularios corporativos
+   ============================ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-spacing);
+}
+
+.label-floating {
+  position: relative;
+}
+
+.label-floating input {
+  padding-top: 20px;
+}
+
+.label-floating label {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* ============================
+   14. Iconografía responsiva
+   ============================ */
+.icon {
+  width: auto;
+  height: auto;
+  max-width: 48px;
+  max-height: 48px;
+}
