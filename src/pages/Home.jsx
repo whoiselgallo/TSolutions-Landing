@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Header from "../layout/Header";
-import Hero from "../layout/Hero";
-import Features from "../layout/Features";
-import Showcase from "../layout/Showcase";
-import Contact from "../layout/Contact";
-import Footer from "../layout/Footer";
+import Header from "../components/layout/Header";
+import Hero from "../components/layout/Hero";
+import Features from "../components/layout/Features";
+import Showcase from "../components/layout/Showcase";
+import Contact from "../components/layout/Contact";
+import Footer from "../components/layout/Footer";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-deepBlack text-blancoPerla">
+<div className="w-full min-h-screen bg-[var(--color-deepBlack)] text-[var(--color-blancoPerla)]">
       <Header />
 
       <main className="w-full">
@@ -66,11 +66,11 @@ export default function Home() {
               </button>
 
               <button
-                className="btn bg-humo text-deepBlack"
-                onClick={() => setAuthOpen(false)}
-              >
+              className="btn bg-[var(--color-humo)] text-[var(--color-deepBlack)]"
+               onClick={() => setAuthOpen(false)}
+               >
                 Cancelar
-              </button>
+               </button>
             </div>
           </div>
         </div>

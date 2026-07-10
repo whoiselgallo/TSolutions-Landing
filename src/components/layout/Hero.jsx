@@ -1,18 +1,19 @@
-export default function Features() {
+export default function Hero() {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-8 bg-blancoPerla text-deepBlack">
-      <div className="min-h-card shadow-elevation3 p-card-padding rounded-md bg-humo">
-        <h3 className="font-montserrat text-xl text-naranjaEnergy mb-2">Automatización</h3>
-        <p className="font-inter text-sm">Procesos inteligentes para optimizar tu flujo de trabajo.</p>
-      </div>
-      <div className="min-h-card shadow-elevation3 p-card-padding rounded-md bg-humo">
-        <h3 className="font-montserrat text-xl text-aquaTurquesa mb-2">Integración</h3>
-        <p className="font-inter text-sm">Conecta tus sistemas y APIs en una sola plataforma.</p>
-      </div>
-      <div className="min-h-card shadow-elevation3 p-card-padding rounded-md bg-humo">
-        <h3 className="font-montserrat text-xl text-dorado mb-2">Escalabilidad</h3>
-        <p className="font-inter text-sm">Infraestructura lista para crecer contigo.</p>
-      </div>
+    <section className="w-full min-h-[60vh] bg-[var(--color-deepBlack)] text-[var(--color-blancoPerla)] flex flex-col items-center justify-center px-6 py-16 text-center">
+
+      <h1 className="font-bruno text-5xl text-[var(--color-aquaTurquesa)] tracking-[var(--tracking-brunoMedium)] mb-4">
+        Innovación que impulsa tu crecimiento
+      </h1>
+
+      <p className="font-inter text-lg max-w-2xl opacity-80 leading-relaxed mb-8">
+        Soluciones tecnológicas diseñadas para automatizar, integrar y escalar tu negocio con precisión y estilo corporativo.
+      </p>
+
+      <button className="btn btn-primary text-[var(--color-deepBlack)] font-bruno">
+        Explorar soluciones
+      </button>
+
     </section>
   );
 }
