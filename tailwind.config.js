@@ -12,21 +12,43 @@ export default {
   theme: {
   extend: {
     colors: {
-      aquaTurquesa: "#00f5d4",
-      negroProfundo: "#0d0d0d",
-      blancoPuro: "#ffffff",
-      naranjaEnergy: "#ff6b00",
+      naranjaEnergy: "var(--color-naranjaEnergy)",
+      aquaTurquesa: "var(--color-aquaTurquesa)",
+      negroProfundo: "var(--color-negroProfundo)",
+      blancoPuro: "var(--color-blancoPuro)",
+      midnightPanel: "var(--color-midnightPanel)",
+      deepGrid: "var(--color-deepGrid)",
     },
     boxShadow: {
-      turquesaSoft: "0 0 12px rgba(0, 245, 212, 0.4)",
+      turquesaSoft: "var(--shadow-turquesaSoft)",
+      turquesaHover: "var(--shadow-turquesaHover)",
+      blancoPulse: "var(--shadow-blancoPulse)",
+      card: "var(--shadow-card)",
+     glowTurquesaSoft: "var(--glowTurquesaSoft)",
+      glowTurquesaHover: "var(--glowTurquesaHover)",
+      glowBlancoPulse: "var(--glowBlancoPulse)",
+      shadowCard: "var(--shadowCard)",
     },
     borderRadius: {
-      large: "1rem",
-      soft: "0.5rem",
+      soft: "var(--radiusSoft)",
+      medium: "var(--radiusMedium)",
+      large: "var(--radiusLarge)",
+      full: "var(--radiusFull)",
     },
     fontFamily: {
+     bruno: ["Bruno Ace", "sans-serif"],
+      montserratSlim: ["Montserrat Super Slim", "sans-serif"],
       inter: ["Inter", "sans-serif"],
-      bruno: ["Bruno Ace SC", "cursive"],
+    },
+    animation: {
+       glowPulse: "glowPulse 1.8s ease-in-out infinite",
+      fadeTurquesa: "fadeTurquesa 0.4s ease-out",
+      slideSoft: "slideSoft 0.3s ease",
+      pulse: "pulse 2s ease-in-out infinite",
+      ping: "ping 0.4s ease-out",
+      spin: "spin 1s linear infinite",
+      gridMove: "gridMove 10s linear infinite",
+      float: "float 6s ease-in-out infinite",
     },
     theme: {
   extend: {

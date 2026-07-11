@@ -153,7 +153,133 @@
 /* ============================================================
    🎨 COLORES + TIPOGRAFÍAS + SOMBRAS + ANIMACIONES
    ============================================================ */
-@theme {
+
+   /* ============================================================
+   🔸 EXTENSIÓN — DESIGN SYSTEM V1 (TSolutions IPIDD)
+   ============================================================ */
+
+/* ============================
+   🎨 COLORES CORPORATIVOS
+   ============================ */
+:root {
+  --color-naranjaEnergy: #F97316; /* Primary / CTA / Curve */
+  --color-aquaTurquesa: #00E5FF; /* Accent / Glow / Links */
+  --color-negroProfundo: #04040a; /* Background / Ground */
+  --color-blancoPuro: #F0F0F8; /* Text / Icons / Labels */
+  --color-midnightPanel: #0a0a14; /* Card / Surface */
+  --color-deepGrid: #0f0f1e; /* Secondary Surface */
+}
+
+/* ============================
+   🔤 TIPOGRAFÍAS
+   ============================ */
+:root {
+  --font-display: "Bruno Ace", sans-serif; /* Display / Headings */
+  --font-hero-thin: "Montserrat", 100; /* Mega / Hero Title */
+  --font-bold-accent: "Montserrat", 900; /* Bold Accent */
+  --font-body: "Inter", sans-serif; /* Body / UI Text */
+}
+
+/* ============================
+   💡 SOMBRAS / GLOWS
+   ============================ */
+:root {
+  --glowTurquesaSoft: 0 0 12px rgba(0, 229, 255, 0.4);
+  --glowTurquesaHover: 0 0 16px rgba(0, 229, 255, 0.6);
+  --glowBlancoPulse: 0 0 20px rgba(240, 240, 248, 0.8);
+  --shadowCard: 0 0 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================
+   🟠 RADIOS
+   ============================ */
+:root {
+  --radiusSoft: 10px;
+  --radiusMedium: 12px;
+  --radiusLarge: 14px;
+  --radiusFull: 999px;
+}
+
+/* ============================
+   ⚙️ ANIMACIONES
+   ============================ */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: var(--glowBlancoPulse); }
+  50% { box-shadow: var(--glowTurquesaSoft); }
+}
+
+@keyframes fadeTurquesa {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideSoft {
+  from { transform: translateX(-10px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+:root {
+  --animation-glowPulse: 1.8s ease-in-out infinite;
+  --animation-fadeTurquesa: 0.4s ease-out;
+  --animation-slideSoft: 0.3s ease;
+}
+
+/* ============================
+   🧩 COMPONENTES UI
+   ============================ */
+
+/* Botones */
+.btn-primary {
+  background-color: var(--color-naranjaEnergy);
+  color: var(--color-blancoPuro);
+  border-radius: var(--radiusMedium);
+  box-shadow: var(--glowTurquesaSoft);
+  transition: 0.3s ease;
+}
+.btn-primary:hover {
+  box-shadow: var(--glowTurquesaHover);
+}
+
+.btn-secondary {
+  border: 1px solid var(--color-aquaTurquesa);
+  color: var(--color-aquaTurquesa);
+  background-color: transparent;
+  border-radius: var(--radiusMedium);
+  transition: 0.3s ease;
+}
+.btn-secondary:hover {
+  box-shadow: var(--glowTurquesaHover);
+}
+
+.btn-ghost {
+  border: 1px solid var(--color-midnightPanel);
+  color: var(--color-blancoPuro);
+  background-color: transparent;
+  border-radius: var(--radiusMedium);
+}
+
+/* Inputs */
+.input {
+  background-color: var(--color-midnightPanel);
+  border: 1px solid var(--color-deepGrid);
+  color: var(--color-blancoPuro);
+  border-radius: var(--radiusMedium);
+  padding: var(--padding-base);
+}
+
+/* Cards */
+.card {
+  background-color: var(--color-midnightPanel);
+  border-radius: var(--radiusLarge);
+  box-shadow: var(--shadowCard);
+  color: var(--color-blancoPuro);
+}
+
+/* Glow aplicado */
+.glow {
+  animation: glowPulse var(--animation-glowPulse);
+}
+
   /* ============================
      COLORES CORPORATIVOS
   ============================ */
@@ -215,7 +341,6 @@
   --animate-fadeTurquesa: fadeTurquesa 0.4s ease-out;
   --animate-slideSoft: slideSoft 0.3s ease;
   --animate-hoverPulse: hoverPulse 0.6s ease-in-out;
-}
 
 /* ============================================================
    🎞️ KEYFRAMES
