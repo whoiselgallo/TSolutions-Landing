@@ -1,33 +1,30 @@
 /* ============================================================
-   TSolutions IPIDD — TOKENS UNIFICADOS (FINAL)
-   Archivo maestro del Design System:
-   - Layout tokens
-   - Colores
-   - Tipografías
-   - Spacing
-   - Breakpoints
-   - Radios
-   - Sombras
-   - Animaciones
-   - Alias corregidos
+   TSolutions IPIDD — TOKENS UNIFICADOS (LIMPIO)
+   Design System V1
    ============================================================ */
 
-/* ============================================================
-   🌐 TOKENS DE LAYOUT (PRIORIDAD MÁXIMA)
-   ============================================================ */
 :root {
-  /* ============================
-     GRID SYSTEM
-  ============================ */
+
+  /* ============================================================
+     🌐 1. LAYOUT SYSTEM
+  ============================================================ */
   --grid-columns: 16;
   --grid-gutter-mobile: 16px;
   --grid-gutter-tablet: 20px;
   --grid-gutter-desktop: 24px;
   --grid-distribution: asymmetrical;
 
-  /* ============================
-     BREAKPOINTS
-  ============================ */
+  --container-max-width: 1920px;
+  --container-padding-mobile: 16px;
+  --container-padding-desktop: 24px;
+  --container-type: hybrid;
+
+  --sidebar-type: collapsible;
+  --navbar-type: top;
+
+  /* ============================================================
+     📱 2. BREAKPOINTS
+  ============================================================ */
   --bp-mobile-sm: 480px;
   --bp-mobile-lg: 640px;
   --bp-tablet: 768px;
@@ -35,17 +32,9 @@
   --bp-desktop: 1536px;
   --bp-ultrawide: 1920px;
 
-  /* ============================
-     CONTAINERS
-  ============================ */
-  --container-max-width: 1920px;
-  --container-padding-mobile: 16px;
-  --container-padding-desktop: 24px;
-  --container-type: hybrid;
-
-  /* ============================
-     SPACING SYSTEM (4-based)
-  ============================ */
+  /* ============================================================
+     📐 3. SPACING SYSTEM (4-based)
+  ============================================================ */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -55,15 +44,69 @@
   --space-7: 28px;
   --space-8: 32px;
 
-  /* ============================
-     PADDING & MARGINS
-  ============================ */
   --padding-base: 8px;
   --section-margin: 24px;
+  --component-padding: 12px;
 
-  /* ============================
-     MINIMUM SIZES
-  ============================ */
+  /* ============================================================
+     🎨 4. COLORS
+  ============================================================ */
+  --color-naranjaEnergy: #F97316;
+  --color-aquaTurquesa: #00E5FF;
+  --color-negroProfundo: #04040a;
+  --color-blancoPuro: #F0F0F8;
+  --color-midnightPanel: #0a0a14;
+  --color-deepGrid: #0f0f1e;
+
+  /* ============================================================
+     🔤 5. TYPOGRAPHY
+  ============================================================ */
+  --font-bruno: "Bruno Ace", sans-serif;
+  --font-montserratSlim: "Montserrat Super Slim", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  --font-weight-brunoHeavy: 900;
+  --font-weight-brunoUltra: 1100;
+  --font-weight-brunoBold: 800;
+  --font-weight-interRegular: 400;
+  --font-weight-interMedium: 500;
+
+  --tracking-tightSlim: -2px;
+  --tracking-tightMega: -1px;
+  --tracking-brunoWide: 1px;
+  --tracking-brunoMedium: 0.5px;
+
+  --leading-brunoCompact: 1.1;
+  --leading-brunoNormal: 1.2;
+
+  /* ============================================================
+     🟠 6. RADII
+  ============================================================ */
+  --radiusSoft: 10px;
+  --radiusMedium: 12px;
+  --radiusLarge: 14px;
+  --radiusFull: 999px;
+
+  /* ============================================================
+     💡 7. SHADOWS & GLOWS
+  ============================================================ */
+  --shadow-turquesaSoft: 0 0 10px rgba(0,229,255,0.20);
+  --shadow-turquesaHover: 0 0 14px rgba(0,229,255,0.45);
+  --shadow-blancoPulse: 0 0 10px rgba(255,255,255,0.8);
+  --shadow-card: 0 8px 24px rgba(0,0,0,0.08);
+
+  /* ============================================================
+     ⚙️ 8. ANIMATION VARIABLES
+  ============================================================ */
+  --animate-glowPulse: glowPulse 1.8s ease-in-out infinite;
+  --animate-fadeTurquesa: fadeTurquesa 0.4s ease-out;
+  --animate-slideSoft: slideSoft 0.3s ease;
+  --animate-hoverPulse: hoverPulse 0.6s ease-in-out;
+  --animate-scaleIn: scaleIn 0.4s ease-out;
+
+  /* ============================================================
+     🧩 9. COMPONENT TOKENS
+  ============================================================ */
   --min-button-height: 48px;
   --min-button-width: 96px;
 
@@ -77,274 +120,25 @@
   --min-modal-height: 320px;
 
   --min-dashboard-section-height: 120px;
-  --min-dashboard-section-width: 100%;
 
-  /* ============================
-     DASHBOARD LAYOUT
-  ============================ */
-  --sidebar-type: collapsible;
-  --navbar-type: top;
-
-  /* ============================
-     SEPARATORS
-  ============================ */
-  --divider-color: var(--color-aquaTurquesa);
-  --divider-opacity: 0.4;
-
-  /* ============================
-     ELEVATION
-  ============================ */
-  --elevation-1: 0 1px 3px rgba(0,0,0,0.12);
-  --elevation-2: 0 3px 6px rgba(0,0,0,0.16);
-  --elevation-3: 0 6px 12px rgba(0,0,0,0.20);
-  --elevation-4: 0 10px 20px rgba(0,0,0,0.24);
-  --elevation-5: 0 14px 28px rgba(0,0,0,0.28);
-
-  /* ============================
-     COMPONENT INTERNAL PADDING
-  ============================ */
-  --component-padding: 12px;
-
-  /* ============================
-     CARDS
-  ============================ */
-  --card-style: glow;
-  --card-padding: 8px;
-
-  /* ============================
-     MODALS
-  ============================ */
-  --modal-mobile-mode: fullscreen;
-  --modal-width-mode: dynamic;
-
-  /* ============================
-     TABLES
-  ============================ */
-  --table-hover: 1;
-  --table-row-style: compact;
-  --table-border-style: none;
-
-  /* ============================
-     FORMS
-  ============================ */
   --form-spacing: 16px;
-  --form-label-style: floating;
-
-  /* ============================
-     ICONOGRAPHY
-  ============================ */
-  --icon-size-mode: responsive;
 
   /* ============================================================
-     ALIAS CORRECTIVOS (DETECTADOS EN INDEX.CSS)
-     ============================================================ */
-
-  /* Alias de colores */
+     🔁 10. ALIAS (CORRECTIVOS)
+  ============================================================ */
   --color-deepBlack: var(--color-negroProfundo);
   --color-blancoPerla: var(--color-blancoPuro);
   --color-humo: #E0E0E0;
   --color-dorado: #FFD700;
 
-  /* Alias de tipografías */
   --font-body: var(--font-inter);
   --font-secondary: var(--font-bruno);
 }
 
 /* ============================================================
-   🎨 COLORES + TIPOGRAFÍAS + SOMBRAS + ANIMACIONES
-   ============================================================ */
+   🎞️ 11. KEYFRAMES (solo una versión por animación)
+============================================================ */
 
-   /* ============================================================
-   🔸 EXTENSIÓN — DESIGN SYSTEM V1 (TSolutions IPIDD)
-   ============================================================ */
-
-/* ============================
-   🎨 COLORES CORPORATIVOS
-   ============================ */
-:root {
-  --color-naranjaEnergy: #F97316; /* Primary / CTA / Curve */
-  --color-aquaTurquesa: #00E5FF; /* Accent / Glow / Links */
-  --color-negroProfundo: #04040a; /* Background / Ground */
-  --color-blancoPuro: #F0F0F8; /* Text / Icons / Labels */
-  --color-midnightPanel: #0a0a14; /* Card / Surface */
-  --color-deepGrid: #0f0f1e; /* Secondary Surface */
-}
-
-/* ============================
-   🔤 TIPOGRAFÍAS
-   ============================ */
-:root {
-  --font-display: "Bruno Ace", sans-serif; /* Display / Headings */
-  --font-hero-thin: "Montserrat", 100; /* Mega / Hero Title */
-  --font-bold-accent: "Montserrat", 900; /* Bold Accent */
-  --font-body: "Inter", sans-serif; /* Body / UI Text */
-}
-
-/* ============================
-   💡 SOMBRAS / GLOWS
-   ============================ */
-:root {
-  --glowTurquesaSoft: 0 0 12px rgba(0, 229, 255, 0.4);
-  --glowTurquesaHover: 0 0 16px rgba(0, 229, 255, 0.6);
-  --glowBlancoPulse: 0 0 20px rgba(240, 240, 248, 0.8);
-  --shadowCard: 0 0 24px rgba(0, 0, 0, 0.4);
-}
-
-/* ============================
-   🟠 RADIOS
-   ============================ */
-:root {
-  --radiusSoft: 10px;
-  --radiusMedium: 12px;
-  --radiusLarge: 14px;
-  --radiusFull: 999px;
-}
-
-/* ============================
-   ⚙️ ANIMACIONES
-   ============================ */
-@keyframes glowPulse {
-  0%, 100% { box-shadow: var(--glowBlancoPulse); }
-  50% { box-shadow: var(--glowTurquesaSoft); }
-}
-
-@keyframes fadeTurquesa {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideSoft {
-  from { transform: translateX(-10px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-:root {
-  --animation-glowPulse: 1.8s ease-in-out infinite;
-  --animation-fadeTurquesa: 0.4s ease-out;
-  --animation-slideSoft: 0.3s ease;
-}
-
-/* ============================
-   🧩 COMPONENTES UI
-   ============================ */
-
-/* Botones */
-.btn-primary {
-  background-color: var(--color-naranjaEnergy);
-  color: var(--color-blancoPuro);
-  border-radius: var(--radiusMedium);
-  box-shadow: var(--glowTurquesaSoft);
-  transition: 0.3s ease;
-}
-.btn-primary:hover {
-  box-shadow: var(--glowTurquesaHover);
-}
-
-.btn-secondary {
-  border: 1px solid var(--color-aquaTurquesa);
-  color: var(--color-aquaTurquesa);
-  background-color: transparent;
-  border-radius: var(--radiusMedium);
-  transition: 0.3s ease;
-}
-.btn-secondary:hover {
-  box-shadow: var(--glowTurquesaHover);
-}
-
-.btn-ghost {
-  border: 1px solid var(--color-midnightPanel);
-  color: var(--color-blancoPuro);
-  background-color: transparent;
-  border-radius: var(--radiusMedium);
-}
-
-/* Inputs */
-.input {
-  background-color: var(--color-midnightPanel);
-  border: 1px solid var(--color-deepGrid);
-  color: var(--color-blancoPuro);
-  border-radius: var(--radiusMedium);
-  padding: var(--padding-base);
-}
-
-/* Cards */
-.card {
-  background-color: var(--color-midnightPanel);
-  border-radius: var(--radiusLarge);
-  box-shadow: var(--shadowCard);
-  color: var(--color-blancoPuro);
-}
-
-/* Glow aplicado */
-.glow {
-  animation: glowPulse var(--animation-glowPulse);
-}
-
-  /* ============================
-     COLORES CORPORATIVOS
-  ============================ */
-  --color-naranjaEnergy: #F97316;
-  --color-aquaTurquesa: #00E5FF;
-  --color-negroProfundo: #000000;
-  --color-blancoPuro: #FFFFFF;
-
-  /* ============================
-     TIPOGRAFÍAS
-  ============================ */
-  --font-bruno: "Bruno Ace", sans-serif;
-  --font-montserratSlim: "Montserrat Super Slim", sans-serif;
-  --font-inter: "Inter", sans-serif;
-
-  /* ============================
-     PESOS TIPOGRÁFICOS
-  ============================ */
-  --font-weight-brunoHeavy: 900;
-  --font-weight-brunoUltra: 1100;
-  --font-weight-brunoBold: 800;
-  --font-weight-interRegular: 400;
-  --font-weight-interMedium: 500;
-
-  /* ============================
-     LETTER SPACING
-  ============================ */
-  --tracking-tightSlim: -2px;
-  --tracking-tightMega: -1px;
-  --tracking-brunoWide: 1px;
-  --tracking-brunoMedium: 0.5px;
-
-  /* ============================
-     LINE HEIGHT
-  ============================ */
-  --leading-brunoCompact: 1.1;
-  --leading-brunoNormal: 1.2;
-
-  /* ============================
-     RADIOS
-  ============================ */
-  --radius-soft: 10px;
-  --radius-medium: 12px;
-  --radius-large: 14px;
-  --radius-full: 999px;
-
-  /* ============================
-     SOMBRAS
-  ============================ */
-  --shadow-turquesaSoft: 0 0 10px rgba(0,229,255,0.20);
-  --shadow-turquesaHover: 0 0 14px rgba(0,229,255,0.45);
-  --shadow-blancoPulse: 0 0 10px rgba(255,255,255,0.8);
-  --shadow-card: 0 8px 24px rgba(0,0,0,0.08);
-
-  /* ============================
-     ANIMACIONES
-  ============================ */
-  --animate-glowPulse: glowPulse 1.8s ease-in-out infinite;
-  --animate-fadeTurquesa: fadeTurquesa 0.4s ease-out;
-  --animate-slideSoft: slideSoft 0.3s ease;
-  --animate-hoverPulse: hoverPulse 0.6s ease-in-out;
-
-/* ============================================================
-   🎞️ KEYFRAMES
-   ============================================================ */
 @keyframes glowPulse {
   0% { box-shadow: 0 0 4px rgba(255,255,255,0.4); }
   50% { box-shadow: 0 0 10px rgba(255,255,255,0.9); }
@@ -352,17 +146,26 @@
 }
 
 @keyframes fadeTurquesa {
-  0% { opacity: 0; box-shadow: 0 0 0 rgba(0,229,255,0); }
-  100% { opacity: 1; box-shadow: 0 0 10px rgba(0,229,255,0.20); }
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideSoft {
-  0% { transform: translateY(6px); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
+  0% { transform: translateX(-10px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes hoverPulse {
   0% { box-shadow: 0 0 6px rgba(0,229,255,0.20); }
   50% { box-shadow: 0 0 12px rgba(0,229,255,0.45); }
   100% { box-shadow: 0 0 6px rgba(0,229,255,0.20); }
+}
+
+@keyframes scaleIn {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.4s ease-out;
 }

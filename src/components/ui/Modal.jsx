@@ -1,58 +1,42 @@
-export function Modal({ open = false, onClose, title, children }) {
+import React from "react";
+
+export default function Modal({
+  open,
+  onClose,
+  title,
+  children,
+  glow = true,
+  className = "",
+}) {
   if (!open) return null;
 
   return (
-    <div
-      className="
-        fixed inset-0
-        bg-negroProfundo/60
-        backdrop-blur-sm
-        flex items-center justify-center
-        z-50
-        animate-fadeTurquesa
-      "
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeTurquesa">
+
+      <div className="absolute inset-0" onClick={onClose} />
+
       <div
-        className="
-          bg-blancoPuro
-          rounded-large
-          shadow-turquesaSoft
-          p-6
-          w-full max-w-lg
-          animate-slideSoft
-        "
-        onClick={(e) => e.stopPropagation()}
+        className={`
+          relative bg-midnightPanel text-blancoPuro p-8 rounded-large w-[90%] max-w-lg shadow-card
+          transition-all duration-300
+          ${glow ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover" : ""}
+          ${className}
+        `}
       >
-        {/* HEADER */}
-        <div className="flex justify-between items-center mb-4">
-          {title && (
-            <h2 className="font-bruno font-brunoHeavy tracking-brunoMedium text-negroProfundo">
-              {title}
-            </h2>
-          )}
+        {title && (
+          <h2 className="text-2xl font-bruno text-aquaTurquesa mb-4">
+            {title}
+          </h2>
+        )}
 
-          <button
-            onClick={onClose}
-            className="
-              w-8 h-8
-              rounded-full
-              bg-negroProfundo
-              text-blancoPuro
-              flex items-center justify-center
-              shadow-turquesaSoft
-              hover:bg-aquaTurquesa hover:text-negroProfundo
-              transition
-            "
-          >
-            ✕
-          </button>
-        </div>
+        {children}
 
-        {/* CONTENT */}
-        <div className="font-inter text-negroProfundo">
-          {children}
-        </div>
+        <button
+          onClick={onClose}
+          className="mt-6 px-6 py-3 bg-aquaTurquesa text-negroProfundo rounded-medium hover:shadow-turquesaHover"
+        >
+          Cerrar
+        </button>
       </div>
     </div>
   );

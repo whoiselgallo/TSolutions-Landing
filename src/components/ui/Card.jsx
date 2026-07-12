@@ -1,15 +1,27 @@
-export function Card({ title, children }) {
-  return (
-    <div className="bg-blancoPuro rounded-large shadow-card shadow-turquesaSoft p-6">
-      {title && (
-        <h3 className="font-bruno font-brunoHeavy tracking-brunoMedium text-negroProfundo mb-3">
-          {title}
-        </h3>
-      )}
+import React from "react";
+import { MagneticCard } from "../../effects/mouse/MagneticCard";
 
-      <div className="font-inter text-negroProfundo">
+export default function Card({
+  children,
+  glow = false,
+  className = "",
+  ...props
+}) {
+  const base =
+    "p-6 bg-midnightPanel text-blancoPuro rounded-large shadow-card transition-all duration-300";
+
+  return (
+    <MagneticCard>
+      <div
+        {...props}
+        className={`
+          ${base}
+          ${glow ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover" : ""}
+          ${className}
+        `}
+      >
         {children}
       </div>
-    </div>
+    </MagneticCard>
   );
 }

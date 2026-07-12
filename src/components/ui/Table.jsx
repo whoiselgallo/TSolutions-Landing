@@ -1,38 +1,29 @@
-export function Table({ columns = [], data = [] }) {
+import React from "react";
+
+export default function Table({ columns = [], data = [], className = "" }) {
   return (
-    <div className="overflow-hidden rounded-large shadow-turquesaSoft">
-      <table className="w-full border-collapse font-inter text-negroProfundo">
-        
-        {/* HEADER */}
-        <thead>
-          <tr className="bg-aquaTurquesa text-negroProfundo">
-            {columns.map((col, index) => (
-              <th
-                key={index}
-                className="px-4 py-3 text-left font-interMedium tracking-brunoMedium"
-              >
+    <div className={`overflow-x-auto ${className}`}>
+      <table className="min-w-full bg-midnightPanel rounded-medium shadow-card text-blancoPuro">
+
+        <thead className="text-aquaTurquesa font-bruno">
+          <tr>
+            {columns.map((col, i) => (
+              <th key={i} className="p-4 border-b border-deepGrid text-left">
                 {col}
               </th>
             ))}
           </tr>
         </thead>
 
-        {/* BODY */}
-        <tbody>
-          {data.map((row, rowIndex) => (
+        <tbody className="font-inter">
+          {data.map((row, i) => (
             <tr
-              key={rowIndex}
-              className="
-                hover:bg-aquaTurquesa/20
-                transition
-              "
+              key={i}
+              className="hover:bg-aquaTurquesa/10 transition-colors duration-200"
             >
-              {columns.map((col, colIndex) => (
-                <td
-                  key={colIndex}
-                  className="px-4 py-3 border-b border-negroProfundo/10"
-                >
-                  {row[col]}
+              {row.map((cell, j) => (
+                <td key={j} className="p-4 border-b border-deepGrid">
+                  {cell}
                 </td>
               ))}
             </tr>

@@ -1,31 +1,33 @@
-export function Chip({
-  children,
-  variant = "turquesa",
-  icon = null,
+import React from "react";
+
+export default function Chip({
+  label,
+  variant = "default",
+  glow = true,
+  className = "",
   ...props
 }) {
   const base =
-    "inline-flex items-center gap-2 px-3 py-1 rounded-full font-inter text-sm transition shadow-turquesaSoft";
+    "inline-flex items-center px-3 py-1 rounded-soft font-inter text-sm transition-all duration-300";
 
   const variants = {
-    turquesa:
-      "bg-aquaTurquesa text-negroProfundo",
-    negro:
-      "bg-negroProfundo text-blancoPuro",
-    blanco:
-      "bg-blancoPuro text-negroProfundo",
-    naranja:
-      "bg-naranjaEnergy text-blancoPuro",
-    outline:
-      "border border-aquaTurquesa text-aquaTurquesa bg-transparent",
+    default: "bg-midnightPanel text-blancoPuro border border-deepGrid",
+    aqua: "bg-aquaTurquesa text-negroProfundo",
+    naranja: "bg-naranjaEnergy text-blancoPuro",
+    ghost: "bg-transparent text-blancoPuro border border-blancoPuro",
   };
 
   return (
-    <span className={`${base} ${variants[variant]}`} {...props}>
-      {icon && (
-        <span className="w-4 h-4 bg-blancoPuro rounded-full shadow-turquesaSoft"></span>
-      )}
-      {children}
+    <span
+      {...props}
+      className={`
+        ${base}
+        ${variants[variant]}
+        ${glow ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover" : ""}
+        ${className}
+      `}
+    >
+      {label}
     </span>
   );
 }

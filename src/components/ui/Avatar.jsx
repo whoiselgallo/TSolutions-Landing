@@ -1,47 +1,33 @@
-export function Avatar({
-  src = null,
-  name = "",
+import React from "react";
+
+export default function Avatar({
+  src,
+  alt = "avatar",
   size = "md",
-  bordered = false,
+  glow = true,
+  className = "",
   ...props
 }) {
   const sizes = {
-    sm: "w-10 h-10 text-sm",
-    md: "w-14 h-14 text-base",
-    lg: "w-20 h-20 text-xl",
+    sm: "w-10 h-10",
+    md: "w-16 h-16",
+    lg: "w-24 h-24",
   };
-
-  const initials = name
-    ? name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-    : "?";
 
   return (
     <div
-      className={`
-        ${sizes[size]}
-        rounded-full
-        overflow-hidden
-        bg-blancoPuro
-        text-negroProfundo
-        flex items-center justify-center
-        font-bruno
-        shadow-turquesaSoft
-        ${bordered ? "border-2 border-aquaTurquesa" : ""}
-      `}
       {...props}
+      className={`
+        overflow-hidden rounded-full bg-midnightPanel flex items-center justify-center
+        ${sizes[size]}
+        ${glow ? "shadow-glowTurquesaSoft" : ""}
+        ${className}
+      `}
     >
       {src ? (
-        <img
-          src={src}
-          alt={name}
-          className="w-full h-full object-cover"
-        />
+        <img src={src} alt={alt} className="w-full h-full object-cover" />
       ) : (
-        <span>{initials}</span>
+        <span className="text-blancoPuro font-bruno text-sm">?</span>
       )}
     </div>
   );

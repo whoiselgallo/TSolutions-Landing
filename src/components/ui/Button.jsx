@@ -1,30 +1,34 @@
-export function Button({
+import React from "react";
+import { RippleButton } from "../../effects/click/RippleButton";
+
+export default function Button({
   children,
   variant = "primary",
   size = "md",
   icon = null,
+  className = "",
   ...props
 }) {
   /* ============================
      🎨 BASE DEL BOTÓN
      ============================ */
   const base =
-    "inline-flex items-center justify-center gap-3 font-bruno tracking-brunoMedium transition shadow-turquesaSoft rounded-medium";
+    "inline-flex items-center justify-center gap-3 font-bruno tracking-brunoMedium transition-all duration-300 rounded-medium shadow-turquesaSoft";
 
   /* ============================
-     🎨 VARIANTES DEL DESIGN SYSTEM
+     🎨 VARIANTES CORPORATIVAS
      ============================ */
   const variants = {
     primary:
-      "bg-naranjaEnergy text-blancoPuro shadow-blancoPulse hover:shadow-turquesaHover hover:bg-[#fb8a2f]",
+      "bg-naranjaEnergy text-blancoPuro hover:bg-[#fb8a2f] hover:shadow-turquesaHover",
     secondary:
-      "bg-aquaTurquesa text-negroProfundo shadow-blancoPulse hover:shadow-turquesaHover hover:bg-[#4ef2ff]",
+      "bg-aquaTurquesa text-negroProfundo hover:bg-[#4ef2ff] hover:shadow-turquesaHover",
     ghost:
-      "bg-transparent text-negroProfundo border-2 border-negroProfundo hover:bg-negroProfundo hover:text-blancoPuro hover:shadow-turquesaHover",
+      "bg-transparent text-blancoPuro border border-midnightPanel hover:bg-midnightPanel hover:text-blancoPuro hover:shadow-turquesaHover",
     outlineTurquesa:
-      "border-2 border-aquaTurquesa text-aquaTurquesa hover:bg-aquaTurquesa hover:text-negroProfundo hover:shadow-turquesaHover",
+      "border border-aquaTurquesa text-aquaTurquesa hover:bg-aquaTurquesa hover:text-negroProfundo hover:shadow-turquesaHover",
     outlineBlanco:
-      "border-2 border-blancoPuro text-blancoPuro hover:bg-blancoPuro hover:text-negroProfundo hover:shadow-turquesaHover",
+      "border border-blancoPuro text-blancoPuro hover:bg-blancoPuro hover:text-negroProfundo hover:shadow-turquesaHover",
   };
 
   /* ============================
@@ -37,11 +41,14 @@ export function Button({
   };
 
   return (
-    <button className={`${base} ${variants[variant]} ${sizes[size]}`} {...props}>
+    <RippleButton
+      {...props}
+      className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
+    >
       {icon && (
         <span className="w-5 h-5 bg-blancoPuro rounded-full shadow-turquesaSoft"></span>
       )}
       {children}
-    </button>
+    </RippleButton>
   );
 }

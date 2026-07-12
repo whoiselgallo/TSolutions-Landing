@@ -1,27 +1,33 @@
-export function Badge({
-  children,
-  variant = "turquesa",
+import React from "react";
+
+export default function Badge({
+  label,
+  variant = "aqua",
+  glow = true,
+  className = "",
   ...props
 }) {
   const base =
-    "inline-flex items-center px-3 py-1 rounded-soft font-inter text-sm font-interMedium transition";
+    "inline-flex items-center px-2 py-1 rounded-soft font-inter text-xs tracking-wide transition-all duration-300";
 
   const variants = {
-    turquesa:
-      "bg-aquaTurquesa text-negroProfundo shadow-turquesaSoft",
-    negro:
-      "bg-negroProfundo text-blancoPuro shadow-turquesaSoft",
-    blanco:
-      "bg-blancoPuro text-negroProfundo shadow-turquesaSoft",
-    naranja:
-      "bg-naranjaEnergy text-blancoPuro shadow-turquesaSoft",
-    outline:
-      "border border-aquaTurquesa text-aquaTurquesa bg-transparent shadow-turquesaSoft",
+    aqua: "bg-aquaTurquesa text-negroProfundo",
+    naranja: "bg-naranjaEnergy text-blancoPuro",
+    blanco: "bg-blancoPuro text-negroProfundo",
+    ghost: "bg-transparent text-blancoPuro border border-blancoPuro",
   };
 
   return (
-    <span className={`${base} ${variants[variant]}`} {...props}>
-      {children}
+    <span
+      {...props}
+      className={`
+        ${base}
+        ${variants[variant]}
+        ${glow ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover" : ""}
+        ${className}
+      `}
+    >
+      {label}
     </span>
   );
 }

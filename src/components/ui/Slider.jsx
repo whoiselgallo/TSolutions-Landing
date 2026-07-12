@@ -1,39 +1,50 @@
-export function Slider({ min = 0, max = 100, step = 1, defaultValue = 50, onChange, ...props }) {
-  const handleChange = (e) => {
-    const value = Number(e.target.value);
-    onChange && onChange(value);
-  };
+import React from "react";
 
+export default function Slider({
+  label,
+  glow = true,
+  value,
+  onChange,
+  className = "",
+  ...props
+}) {
   return (
-    <input
-      type="range"
-      min={min}
-      max={max}
-      step={step}
-      defaultValue={defaultValue}
-      onChange={handleChange}
-      {...props}
-      className="
-        w-full
-        accent-aquaTurquesa
-        cursor-pointer
+    <div className="w-full">
+      {label && (
+        <label className="block mb-2 text-aquaTurquesa font-inter">
+          {label}
+        </label>
+      )}
 
-        [&::-webkit-slider-runnable-track]:h-2
-        [&::-webkit-slider-runnable-track]:rounded-full
-        [&::-webkit-slider-runnable-track]:bg-negroProfundo/20
+      <input
+        type="range"
+        {...props}
+        value={value}
+        onChange={onChange}
+        className={`
+          w-full h-2 bg-deepGrid rounded-full appearance-none cursor-pointer
+          accent-aquaTurquesa
+          ${glow ? "shadow-glowTurquesaSoft" : ""}
+          ${className}
+        `}
+      />
 
-        [&::-webkit-slider-thumb]:appearance-none
-        [&::-webkit-slider-thumb]:w-5
-        [&::-webkit-slider-thumb]:h-5
-        [&::-webkit-slider-thumb]:rounded-full
-        [&::-webkit-slider-thumb]:bg-blancoPuro
-        [&::-webkit-slider-thumb]:shadow-turquesaSoft
-        [&::-webkit-slider-thumb]:transition-all
-        [&::-webkit-slider-thumb]:mt-[-6px]
-
-        focus:outline-none
-        focus:shadow-turquesaSoft
-      "
-    />
+      <style>
+        {`
+          input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--color-aquaTurquesa);
+            border-radius: var(--radiusFull);
+            box-shadow: var(--glowTurquesaSoft);
+            transition: 0.3s ease;
+          }
+          input[type="range"]::-webkit-slider-thumb:hover {
+            box-shadow: var(--glowTurquesaHover);
+          }
+        `}
+      </style>
+    </div>
   );
 }

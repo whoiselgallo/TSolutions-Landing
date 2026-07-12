@@ -1,35 +1,38 @@
-import { useState } from "react";
+import React from "react";
 
-export function Toggle({ defaultChecked = false, onChange }) {
-  const [checked, setChecked] = useState(defaultChecked);
-
-  const handleToggle = () => {
-    const newValue = !checked;
-    setChecked(newValue);
-    onChange && onChange(newValue);
-  };
-
+export default function Toggle({
+  checked,
+  onChange,
+  label,
+  className = "",
+  ...props
+}) {
   return (
-    <button
-      onClick={handleToggle}
-      className={`
-        w-14 h-8
-        rounded-full
-        flex items-center
-        transition
-        ${checked ? "bg-aquaTurquesa shadow-turquesaSoft" : "bg-negroProfundo/40"}
-      `}
-    >
-      <span
+    <div className={`flex items-center gap-3 ${className}`}>
+      <button
+        type="button"
+        onClick={() => onChange(!checked)}
         className={`
-          w-6 h-6
-          bg-blancoPuro
-          rounded-full
-          shadow-turquesaSoft
-          transition
-          ${checked ? "translate-x-7" : "translate-x-1"}
+          w-12 h-6 rounded-full flex items-center px-1
+          transition-all duration-300
+          ${checked ? "bg-aquaTurquesa" : "bg-deepGrid"}
         `}
-      ></span>
-    </button>
+        {...props}
+      >
+        <span
+          className={`
+            w-4 h-4 rounded-full bg-blancoPuro shadow-glowTurquesaSoft
+            transform transition-all duration-300
+            ${checked ? "translate-x-6" : "translate-x-0"}
+          `}
+        />
+      </button>
+
+      {label && (
+        <span className="text-blancoPuro font-inter">
+          {label}
+        </span>
+      )}
+    </div>
   );
 }
