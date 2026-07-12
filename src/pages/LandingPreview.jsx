@@ -1,55 +1,80 @@
 import React from "react";
-import { ParticleField } from "../effects/background/ParticleField";
-import { Grid3D } from "../effects/background/Grid3D";
-import { NeonText } from "../effects/text/NeonText";
-import { Typewriter } from "../effects/text/Typewriter";
-import { RippleButton } from "../effects/click/RippleButton";
-import { MouseGlow } from "../effects/mouse/MouseGlow";
-import { MouseTrail } from "../effects/mouse/MouseTrail";
+
+// Layout components
+import {
+  Header,
+  Hero,
+  Features,
+  Showcase,
+  Contact,
+  Footer,
+} from "../components/layout";
+
+// Page transition effect
+import PageTransition from "../effects/transitions/PageTransition";
 
 export default function LandingPreview() {
   return (
-    <div className="relative min-h-screen bg-negroProfundo text-blancoPuro overflow-hidden">
+    <PageTransition type="fade" glow>
+      <div className="bg-negroProfundo text-blancoPuro min-h-screen">
 
-      <ParticleField />
-      <Grid3D />
-      <MouseGlow />
-      <MouseTrail />
+        {/* ================= HEADER ================= */}
+        <Header />
 
-      {/* HERO */}
-      <section className="flex flex-col items-center justify-center text-center p-20 space-y-10">
-
-        <NeonText>
-          <h1 className="text-6xl font-bruno">TSolutions IPIDD</h1>
-        </NeonText>
-
-        <Typewriter
-          text="Design System V1 — Futurista, elegante y corporativo"
-          speed={40}
+        {/* ================= HERO ================= */}
+        <Hero
+          title="TSolutions IPIDD"
+          subtitle="Tecnología, diseño y automatización para el futuro."
+          ctaLabel="Comenzar"
         />
 
-        <RippleButton className="btn-primary px-10 py-4 text-xl">
-          Comenzar →
-        </RippleButton>
-      </section>
+        {/* ================= FEATURES ================= */}
+        <Features
+          items={[
+            {
+              title: "Diseño Futurista",
+              description: "Interfaz con tokens corporativos y efectos avanzados.",
+            },
+            {
+              title: "Automatización IA",
+              description: "Agentes inteligentes integrados en todo el sistema.",
+            },
+            {
+              title: "Escalabilidad",
+              description: "Arquitectura modular lista para crecer.",
+            },
+          ]}
+        />
 
-      {/* FEATURES */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-10 p-20">
+        {/* ================= SHOWCASE ================= */}
+        <Showcase
+          title="Nuestros Productos"
+          items={[
+            {
+              name: "Zoco MéXL",
+              description: "Marketplace escalable con IA integrada.",
+            },
+            {
+              name: "La Cueva del Güero",
+              description: "Plataforma multimedia con identidad única.",
+            },
+            {
+              name: "Brand Builder API",
+              description: "Generador de marcas corporativas con IA.",
+            },
+          ]}
+        />
 
-        <div className="card h-40 flex items-center justify-center">
-          Tokens unificados
-        </div>
+        {/* ================= CONTACT ================= */}
+        <Contact
+          title="Contáctanos"
+          description="¿Listo para llevar tu empresa al futuro?"
+        />
 
-        <div className="card h-40 flex items-center justify-center">
-          Effects Library V1
-        </div>
+        {/* ================= FOOTER ================= */}
+        <Footer />
 
-        <div className="card h-40 flex items-center justify-center">
-          UI Components
-        </div>
-
-      </section>
-
-    </div>
+      </div>
+    </PageTransition>
   );
 }

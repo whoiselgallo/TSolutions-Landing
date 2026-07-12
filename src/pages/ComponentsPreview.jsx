@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import Button from "../components/Button";
-import Card from "../components/Card";
-import Input from "../components/Input";
-import Select from "../components/Select";
-import Slider from "../components/Slider";
-import Modal from "../components/Modal";
-import Table from "../components/Table";
-import Tooltip from "../components/Tooltip";
+
+// Importación correcta desde /ui
+import {
+  Button,
+  Card,
+  Input,
+  Select,
+  Slider,
+  Modal,
+  Table,
+  Tooltip,
+} from "../components/ui";
 
 export default function ComponentsPreview() {
-
-  // Estado del modal
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -72,12 +74,9 @@ export default function ComponentsPreview() {
       <section>
         <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">🪟 Modal</h2>
 
-        <button
-          className="btn-primary px-6 py-3"
-          onClick={() => setOpenModal(true)}
-        >
+        <Button variant="primary" onClick={() => setOpenModal(true)}>
           Abrir Modal
-        </button>
+        </Button>
 
         <Modal
           open={openModal}
@@ -104,7 +103,7 @@ export default function ComponentsPreview() {
       <section>
         <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">💬 Tooltip</h2>
         <Tooltip text="Tooltip corporativo futurista">
-          <button className="btn-secondary px-6 py-3">Hover aquí</button>
+          <Button variant="secondary">Hover aquí</Button>
         </Tooltip>
       </section>
 

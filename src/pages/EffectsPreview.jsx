@@ -1,91 +1,130 @@
 import React from "react";
-import { useScrollReveal } from "../effects/Scrol/useScrollReveal";
-import { useParallax } from "../effects/Scrol/useParallax";
-import { useScrollVelocityGlow } from "../effects/Scrol/useScrollVelocityGlow";
 
-import { MouseGlow } from "../effects/mouse/MouseGlow";
-import { MagneticCard } from "../effects/mouse/MagneticCard";
-import { MouseTrail } from "../effects/mouse/MouseTrail";
+// Page transition
+import PageTransition from "../effects/transitions/PageTransition";
 
-import { RippleButton } from "../effects/click/RippleButton";
-import { Shockwave } from "../effects/click/Shockwave";
+// Scroll effects
+import {
+  useScrollFade,
+  useScrollSlideUp,
+  useScrollScale,
+} from "../effects/scroll";
 
-import { NeonText } from "../effects/text/NeonText";
-import { Typewriter } from "../effects/text/Typewriter";
+// Mouse effects
+import {
+  useMouseGlow,
+  useMouseParallax,
+} from "../effects/mouse";
 
-import { ParticleField } from "../effects/background/ParticleField";
-import { Grid3D } from "../effects/background/Grid3D";
+// Click effects
+import {
+  useClickPulse,
+  useClickPop,
+} from "../effects/click";
 
-import { PageTransition } from "../effects/transitions/PageTransition";
-import { LoaderIntegral } from "../effects/loaders/LoaderIntegral";
-import { LogoPulse } from "../effects/branding/LogoPulse";
+// Text effects
+import {
+  TextReveal,
+  TextScramble,
+} from "../effects/text";
+
+// Background effects
+import {
+  BgGrid,
+  BgAurora,
+} from "../effects/background";
 
 export default function EffectsPreview() {
-  const { ref, visible } = useScrollReveal();
-  const offset = useParallax(0.15);
-  const glow = useScrollVelocityGlow();
+  // Hooks de efectos
+  const fadeRef = useScrollFade();
+  const slideRef = useScrollSlideUp();
+  const scaleRef = useScrollScale();
+
+  const glowRef = useMouseGlow();
+  const parallaxRef = useMouseParallax();
+
+  const pulseRef = useClickPulse();
+  const popRef = useClickPop();
 
   return (
-    <div className="relative min-h-screen bg-negroProfundo text-blancoPuro p-10 space-y-20">
+    <PageTransition type="fade" glow>
+      <div className="min-h-screen bg-negroProfundo text-blancoPuro p-10 space-y-20">
 
-      {/* BACKGROUND EFFECTS */}
-      <ParticleField />
-      <Grid3D />
+        {/* ================= SCROLL EFFECTS ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">📜 Scroll Effects</h2>
 
-      {/* MOUSE EFFECTS */}
-      <MouseGlow />
-      <MouseTrail />
+          <div ref={fadeRef} className="p-6 bg-midnightPanel rounded-soft shadow-card">
+            Fade al hacer scroll
+          </div>
 
-      {/* SCROLL REVEAL */}
-      <section ref={ref} className={`transition duration-700 ${visible ? "opacity-100 translate-y-0 shadow-turquesaSoft" : "opacity-0 translate-y-6"
-        }`}>
-        <h2 className="text-4xl font-bruno text-aquaTurquesa">Scroll Reveal</h2>
-      </section>
+          <div ref={slideRef} className="p-6 bg-midnightPanel rounded-soft shadow-card mt-6">
+            Slide-Up al hacer scroll
+          </div>
 
-      {/* PARALLAX */}
-      <section style={{ transform: `translateY(${offset}px)` }}>
-        <h2 className="text-3xl font-bruno text-naranjaEnergy">Parallax Multicapa</h2>
-      </section>
+          <div ref={scaleRef} className="p-6 bg-midnightPanel rounded-soft shadow-card mt-6">
+            Scale-In al hacer scroll
+          </div>
+        </section>
 
-      {/* SCROLL VELOCITY GLOW */}
-      <section style={{ boxShadow: `0 0 ${glow * 20}px rgba(0,229,255,0.4)` }}>
-        <h2 className="text-3xl font-bruno text-aquaTurquesa">Scroll Velocity Glow</h2>
-      </section>
+        {/* ================= MOUSE EFFECTS ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">🖱 Mouse Effects</h2>
 
-      {/* MAGNETIC CARD */}
-      <MagneticCard>
-        <div className="card w-64 h-32 flex items-center justify-center">
-          Magnetic Card
-        </div>
-      </MagneticCard>
+          <div ref={glowRef} className="p-6 bg-midnightPanel rounded-soft shadow-card">
+            Glow dinámico siguiendo el mouse
+          </div>
 
-      {/* RIPPLE BUTTON */}
-      <RippleButton className="btn-primary px-6 py-3">
-        Ripple Button
-      </RippleButton>
+          <div ref={parallaxRef} className="p-6 bg-midnightPanel rounded-soft shadow-card mt-6">
+            Parallax suave con el mouse
+          </div>
+        </section>
 
-      {/* SHOCKWAVE */}
-      <Shockwave active={true} />
+        {/* ================= CLICK EFFECTS ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">🖱💥 Click Effects</h2>
 
-      {/* NEON TEXT */}
-      <NeonText>Neon Text Pulse</NeonText>
+          <button
+            ref={pulseRef}
+            className="px-6 py-3 bg-aquaTurquesa text-negroProfundo rounded-soft font-bruno"
+          >
+            Pulse Effect
+          </button>
 
-      {/* TYPEWRITER */}
-      <Typewriter text="TSolutions IPIDD — Typewriter Futurista" speed={50} />
+          <button
+            ref={popRef}
+            className="px-6 py-3 bg-naranjaEnergy text-blancoPuro rounded-soft font-bruno ml-6"
+          >
+            Pop Effect
+          </button>
+        </section>
 
-      {/* PAGE TRANSITION */}
-      <PageTransition>
-        <div className="mt-10 text-xl font-inter">
-          Page Transition (Fade + Glow)
-        </div>
-      </PageTransition>
+        {/* ================= TEXT EFFECTS ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">🔤 Text Effects</h2>
 
-      {/* LOADER */}
-      <LoaderIntegral />
+          <TextReveal text="Efecto Reveal Corporativo" className="text-2xl font-bruno" />
 
-      {/* LOGO PULSE */}
-      <LogoPulse src="/logo.png" />
+          <TextScramble
+            text="Efecto Scramble Futurista"
+            className="text-2xl font-bruno mt-6"
+          />
+        </section>
 
-    </div>
+        {/* ================= BACKGROUND EFFECTS ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">🌌 Background Effects</h2>
+
+          <BgGrid className="p-10 rounded-soft shadow-card">
+            Fondo Grid Corporativo
+          </BgGrid>
+
+          <BgAurora className="p-10 rounded-soft shadow-card mt-6">
+            Fondo Aurora Futurista
+          </BgAurora>
+        </section>
+
+      </div>
+    </PageTransition>
   );
 }

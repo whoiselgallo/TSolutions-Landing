@@ -1,132 +1,115 @@
 import React from "react";
+import PageTransition from "../effects/transitions/PageTransition";
 
 export default function TokensPreview() {
   const colors = [
-    "naranjaEnergy",
-    "aquaTurquesa",
-    "negroProfundo",
-    "blancoPuro",
-    "midnightPanel",
-    "deepGrid",
+    { name: "aquaTurquesa", class: "bg-aquaTurquesa" },
+    { name: "negroProfundo", class: "bg-negroProfundo" },
+    { name: "blancoPuro", class: "bg-blancoPuro" },
+    { name: "midnightPanel", class: "bg-midnightPanel" },
+    { name: "naranjaEnergy", class: "bg-naranjaEnergy" },
   ];
 
   const shadows = [
-    "turquesaSoft",
-    "turquesaHover",
-    "blancoPulse",
-    "card",
-    "glowTurquesaSoft",
-    "glowTurquesaHover",
-    "glowBlancoPulse",
+    { name: "shadow-card", class: "shadow-card" },
+    { name: "shadow-glowTurquesaSoft", class: "shadow-glowTurquesaSoft" },
+    { name: "shadow-glowEnergy", class: "shadow-glowEnergy" },
   ];
 
-  const radii = ["soft", "medium", "large", "full"];
+  const radii = [
+    { name: "rounded-soft", class: "rounded-soft" },
+    { name: "rounded-hard", class: "rounded-hard" },
+    { name: "rounded-full", class: "rounded-full" },
+  ];
 
-  const spacing = [1, 2, 3, 4, 5, 6, 7, 8];
+  const fonts = [
+    { name: "font-bruno", class: "font-bruno" },
+    { name: "font-inter", class: "font-inter" },
+  ];
 
   const animations = [
-    "glowPulse",
-    "fadeTurquesa",
-    "slideSoft",
-    "hoverPulse",
-    "pulse",
-    "ping",
-    "spin",
-    "gridMove",
-    "float",
+    { name: "animate-fadeTurquesa", class: "animate-fadeTurquesa" },
+    { name: "animate-slideSoft", class: "animate-slideSoft" },
+    { name: "animate-scaleIn", class: "animate-scaleIn" },
   ];
 
   return (
-    <div className="min-h-screen bg-negroProfundo text-blancoPuro p-10 space-y-16">
+    <PageTransition type="fade" glow>
+      <div className="min-h-screen bg-negroProfundo text-blancoPuro p-10 space-y-20">
 
-      {/* COLORS */}
-      <section>
-        <h2 className="text-3xl font-bruno mb-6 text-aquaTurquesa">🎨 Colores</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-          {colors.map((c) => (
-            <div key={c} className="space-y-2">
-              <div className={`w-full h-20 rounded-medium bg-${c}`}></div>
-              <p className="text-sm font-inter">{c}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* SHADOWS */}
-      <section>
-        <h2 className="text-3xl font-bruno mb-6 text-aquaTurquesa">💡 Sombras & Glows</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {shadows.map((s) => (
-            <div key={s} className="space-y-3">
-              <div className={`w-full h-24 bg-midnightPanel rounded-medium shadow-${s}`}></div>
-              <p className="text-sm font-inter">{s}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* RADII */}
-      <section>
-        <h2 className="text-3xl font-bruno mb-6 text-aquaTurquesa">🟠 Radios</h2>
-        <div className="flex flex-wrap gap-10">
-          {radii.map((r) => (
-            <div key={r} className="space-y-3">
-              <div className={`w-32 h-32 bg-midnightPanel shadow-card rounded-${r}`}></div>
-              <p className="text-sm font-inter">{r}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* SPACING */}
-      <section>
-        <h2 className="text-3xl font-bruno mb-6 text-aquaTurquesa">📐 Spacing</h2>
-        <div className="space-y-4">
-          {spacing.map((s) => (
-            <div key={s} className="flex items-center gap-4">
-              <div className={`bg-aquaTurquesa h-4 w-${s}`}></div>
-              <p className="text-sm font-inter">space-{s}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ANIMATIONS */}
-      <section>
-        <h2 className="text-3xl font-bruno mb-6 text-aquaTurquesa">⚙️ Animaciones</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {animations.map((a) => (
-            <div key={a} className="space-y-3">
-              <div className={`w-full h-24 bg-midnightPanel rounded-medium shadow-card animate-${a}`}></div>
-              <p className="text-sm font-inter">{a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* COMPONENTS */}
-      <section>
-        <h2 className="text-3xl font-bruno mb-6 text-aquaTurquesa">🧩 Componentes Base</h2>
-
-        <div className="space-y-6">
-
-          <button className="btn-primary px-6 py-3">Botón Primario</button>
-          <button className="btn-secondary px-6 py-3">Botón Secundario</button>
-          <button className="btn-ghost px-6 py-3">Botón Ghost</button>
-
-          <input className="input w-64" placeholder="Input corporativo" />
-
-          <div className="card w-64 h-32 flex items-center justify-center">
-            Card corporativa
+        {/* ================= COLORS ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">🎨 Colores</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {colors.map((c) => (
+              <div
+                key={c.name}
+                className={`${c.class} p-6 rounded-soft shadow-card flex items-center justify-center`}
+              >
+                {c.name}
+              </div>
+            ))}
           </div>
+        </section>
 
-          <div className="modal w-64 h-64 flex items-center justify-center">
-            Modal corporativo
+        {/* ================= SHADOWS ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">🌑 Sombras</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {shadows.map((s) => (
+              <div
+                key={s.name}
+                className={`bg-midnightPanel p-10 rounded-soft ${s.class}`}
+              >
+                {s.name}
+              </div>
+            ))}
           </div>
+        </section>
 
-        </div>
-      </section>
+        {/* ================= RADII ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">🔲 Bordes / Radius</h2>
+          <div className="flex flex-wrap gap-10">
+            {radii.map((r) => (
+              <div
+                key={r.name}
+                className={`bg-midnightPanel p-10 w-40 h-40 ${r.class} shadow-card flex items-center justify-center`}
+              >
+                {r.name}
+              </div>
+            ))}
+          </div>
+        </section>
 
-    </div>
+        {/* ================= FONTS ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">🔤 Tipografías</h2>
+          <div className="space-y-6">
+            {fonts.map((f) => (
+              <p key={f.name} className={`${f.class} text-2xl`}>
+                {f.name}
+              </p>
+            ))}
+          </div>
+        </section>
+
+        {/* ================= ANIMATIONS ================= */}
+        <section>
+          <h2 className="text-3xl font-bruno text-aquaTurquesa mb-6">⚡ Animaciones</h2>
+          <div className="space-y-10">
+            {animations.map((a) => (
+              <div
+                key={a.name}
+                className={`bg-midnightPanel p-6 rounded-soft shadow-card w-64 ${a.class}`}
+              >
+                {a.name}
+              </div>
+            ))}
+          </div>
+        </section>
+
+      </div>
+    </PageTransition>
   );
 }

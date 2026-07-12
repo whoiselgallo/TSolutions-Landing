@@ -1,21 +1,42 @@
 import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from "chart.js";
 
-export function AnalyticsChart({ data }) {
-  const chartData = {
-    labels: data.map((d) => d.name),
-    datasets: [
-      {
-        label: "Diseño",
-        data: data.map((d) => d.design),
-        backgroundColor: "#00f5d4",
-      },
-      {
-        label: "Funcionalidad",
-        data: data.map((d) => d.functional),
-        backgroundColor: "#ff6b00",
-      },
-    ],
-  };
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-  return <Bar data={chartData} />;
+const data = {
+  labels: ["Enero", "Febrero", "Marzo"],
+  datasets: [
+    {
+      label: "Ventas",
+      data: [12, 19, 3],
+      backgroundColor: "rgba(75, 192, 192, 0.5)"
+    }
+  ]
+};
+
+const options = {
+  responsive: true,
+  plugins: {
+    legend: { position: "top" },
+    title: { display: true, text: "Ventas trimestrales" }
+  }
+};
+
+export default function AnalyticsChart() {
+  return <Bar data={data} options={options} />;
 }
