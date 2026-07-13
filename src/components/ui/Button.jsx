@@ -5,7 +5,9 @@ export default function Button({
   children,
   variant = "primary",
   size = "md",
-  icon = null,
+  icon: Icon = null,
+  loading = false,
+  fullWidth = false,
   className = "",
   ...props
 }) {
@@ -13,7 +15,7 @@ export default function Button({
      🎨 BASE DEL BOTÓN
      ============================ */
   const base =
-    "inline-flex items-center justify-center gap-3 font-bruno tracking-brunoMedium transition-all duration-300 rounded-medium shadow-turquesaSoft";
+    "inline-flex items-center justify-center gap-3 font-bruno tracking-brunoMedium transition-all duration-300 rounded-medium";
 
   /* ============================
      🎨 VARIANTES CORPORATIVAS
@@ -32,23 +34,42 @@ export default function Button({
   };
 
   /* ============================
-     📏 TAMAÑOS
+     📏 TAMAÑOS CORPORATIVOS
      ============================ */
   const sizes = {
     md: "px-6 py-3 text-base",
     mini: "px-3 py-1 text-sm rounded-soft",
-    xl: "px-10 py-6 text-[90px] font-montserratSlim tracking-tightSlim rounded-large",
+    lg: "px-8 py-4 text-lg rounded-large",
   };
+
+  /* ============================
+     🔄 LOADING STATE
+     ============================ */
+  const Loader = () => (
+    <span className="w-4 h-4 border-2 border-blancoPuro border-t-transparent rounded-full animate-spin"></span>
+  );
 
   return (
     <RippleButton
       {...props}
-      className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
+      disabled={loading || props.disabled}
+      className={`
+        ${base}
+        ${variants[variant]}
+        ${sizes[size]}
+        ${fullWidth ? "w-full" : ""}
+        ${loading ? "opacity-70 cursor-not-allowed" : ""}
+        ${className}
+      `}
     >
-      {icon && (
-        <span className="w-5 h-5 bg-blancoPuro rounded-full shadow-turquesaSoft"></span>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {Icon && <Icon className="w-5 h-5" />}
+          {children}
+        </>
       )}
-      {children}
     </RippleButton>
   );
 }
