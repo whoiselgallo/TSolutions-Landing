@@ -1,29 +1,39 @@
 // ============================================================
-// ⌨️ Typewriter — TSolutions IPIDD
-// Escritura dinámica con cursor turquesa animado
+// ✨ TypewriterLoop — TSolutions IPIDD
+// Escritura dinámica con múltiples frases en loop infinito
 // ============================================================
 
 import React, { useState, useEffect } from "react";
 
-const Typewriter = ({
-  text = "",
+const TypewriterLoop = ({
+  phrases = [],
   speed = 60,
+  pause = 1200,
   variant = "turquesa",
   glow = true,
   className = "",
 }) => {
+  const [index, setIndex] = useState(0);
   const [display, setDisplay] = useState("");
 
   useEffect(() => {
     let i = 0;
+    const current = phrases[index];
+
     const interval = setInterval(() => {
-      setDisplay(text.slice(0, i));
+      setDisplay(current.slice(0, i));
       i++;
-      if (i > text.length) clearInterval(interval);
+
+      if (i > current.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          setIndex((prev) => (prev + 1) % phrases.length);
+        }, pause);
+      }
     }, speed);
 
     return () => clearInterval(interval);
-  }, [text, speed]);
+  }, [index, phrases, speed, pause]);
 
   const variants = {
     turquesa: "text-aquaTurquesa",
@@ -46,4 +56,4 @@ const Typewriter = ({
   );
 };
 
-export default Typewriter;
+export default TypewriterLoop;

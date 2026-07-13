@@ -1,0 +1,58 @@
+[36mvite v8.1.3 [32mbuilding client environment for production...[36m[39m
+[2K
+transforming...Ô£ô 58 modules transformed.
+rendering chunks...
+Ô£ù Build failed in 1.94s
+error during build:
+Build failed with 12 errors:
+
+[MISSING_EXPORT] "DashboardLayout" is not exported by "src/components/dashboard/index.js".
+   Ôò¡ÔöÇ[ src/pages/DashboardFullDemo.jsx:2:10 ]
+   Ôöé
+ 2 Ôöé import { DashboardLayout, ProgressBar, AnalyticsChart, StatusPanel } from "../components/dashboard";
+   Ôöé          ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ  
+   Ôöé                 Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ Missing export
+ÔöÇÔöÇÔöÇÔò»
+
+[MISSING_EXPORT] "ProgressBar" is not exported by "src/components/dashboard/index.js".
+   Ôò¡ÔöÇ[ src/pages/DashboardFullDemo.jsx:2:27 ]
+   Ôöé
+ 2 Ôöé import { DashboardLayout, ProgressBar, AnalyticsChart, StatusPanel } from "../components/dashboard";
+   Ôöé                           ÔöÇÔöÇÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇÔöÇÔöÇ  
+   Ôöé                                Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ Missing export
+ÔöÇÔöÇÔöÇÔò»
+
+[MISSING_EXPORT] "StatusPanel" is not exported by "src/components/dashboard/index.js".
+   Ôò¡ÔöÇ[ src/pages/DashboardFullDemo.jsx:2:56 ]
+   Ôöé
+ 2 Ôöé import { DashboardLayout, ProgressBar, AnalyticsChart, StatusPanel } from "../components/dashboard";
+   Ôöé                                                        ÔöÇÔöÇÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇÔöÇÔöÇ  
+   Ôöé                                                             Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ Missing export
+ÔöÇÔöÇÔöÇÔò»
+
+[MISSING_EXPORT] "default" is not exported by "src/components/dashboard/DashboardLayout.jsx".
+   Ôò¡ÔöÇ[ src/components/dashboard/index.js:1:10 ]
+   Ôöé
+ 1 Ôöé export { default as DashboardLayout } from "./DashboardLayout";
+   Ôöé          ÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇ  
+   Ôöé             Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇ Missing export
+ÔöÇÔöÇÔöÇÔò»
+
+[MISSING_EXPORT] "default" is not exported by "src/components/dashboard/ProgressBar.jsx".
+   Ôò¡ÔöÇ[ src/components/dashboard/index.js:3:10 ]
+   Ôöé
+ 3 Ôöé export { default as ProgressBar } from "./ProgressBar";
+   Ôöé          ÔöÇÔöÇÔöÇÔö¼ÔöÇÔöÇÔöÇ  
+   Ôöé             Ôò░ÔöÇÔöÇÔöÇÔöÇÔöÇ Missing export
+ÔöÇÔöÇÔöÇÔò»
+
+...
+    at aggregateBindingErrorsIntoJsError (file:///T:/TSolutions%20Landing/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)
+    at unwrapBindingResult (file:///T:/TSolutions%20Landing/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)
+    at #build (file:///T:/TSolutions%20Landing/node_modules/rolldown/dist/shared/rolldown-build-CtPvmZgJ.mjs:3276:34)
+    at async buildEnvironment (file:///T:/TSolutions%20Landing/node_modules/vite/dist/node/chunks/node.js:32622:66)
+    at async Object.build (file:///T:/TSolutions%20Landing/node_modules/vite/dist/node/chunks/node.js:33044:19)
+    at async Object.buildApp (file:///T:/TSolutions%20Landing/node_modules/vite/dist/node/chunks/node.js:33041:153)
+    at async CAC.<anonymous> (file:///T:/TSolutions%20Landing/node_modules/vite/dist/node/cli.js:777:3) {
+  errors: [Getter/Setter]
+}
