@@ -1,6 +1,6 @@
-import { Badge } from "../ui/Badge";
+import Badge from "../ui/Badge";
 
-export function StatusPanel({ tokens, interactivity }) {
+export default function StatusPanel({ tokens, interactivity }) {
   return (
     <div className="space-y-2">
       <Badge variant="turquesa">Tokens: {tokens}</Badge>

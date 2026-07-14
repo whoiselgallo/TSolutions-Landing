@@ -1,16 +1,13 @@
 // ============================================================
-// 📊 Dashboard Components — TSolutions IPIDD
-// Versión optimizada y estructurada por categorías
+// 📊 Dashboard Components & Data — TSolutions IPIDD
+// Exportación unificada de componentes y datos del dashboard
 // ============================================================
 
-// ---------- Layout ----------
-export { DashboardLayout } from "./DashboardLayout";
-export { default as Dashboard } from "./Dashboard";
+// ---------- Componentes ----------
+export { default as DashboardLayout } from "./DashboardLayout.jsx";
+export { default as ProgressBar } from "./ProgressBar.jsx";
+export { default as AnalyticsChart } from "./AnalyticsChart.jsx";
+export { default as StatusPanel } from "./StatusPanel.jsx";
 
-// ---------- Widgets ----------
-export { default as AnalyticsChart } from "./AnalyticsChart";
-export { default as ProgressBar } from "./ProgressBar";
-export { default as StatusPanel } from "./StatusPanel";
-
-// ---------- Data ----------
-export * from "./data";
+// ---------- Datos del Dashboard ----------
+export * from "./dashboardData.js";
