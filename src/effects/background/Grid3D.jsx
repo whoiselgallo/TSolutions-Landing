@@ -1,10 +1,5 @@
-// ============================================================
-// 🟦 Grid3D — TSolutions IPIDD
-// Fondo 3D animado con glow corporativo y perspectiva dinámica
-// ============================================================
-
 import React, { useEffect, useRef } from "react";
-import { UI } from "../../components/ui/ui.config"; // integración con tokens corporativos
+import { UI } from "../../components/ui/ui.config";
 
 const Grid3D = ({
   density = 22,
@@ -14,8 +9,6 @@ const Grid3D = ({
   className = "",
 }) => {
   const canvasRef = useRef(null);
-
-  // Color corporativo desde UI.config
   const color =
     UI.variants.button[variant]?.split(" ")[0] ||
     UI.variants.chip[variant]?.split(" ")[0] ||
@@ -38,7 +31,6 @@ const Grid3D = ({
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       ctx.strokeStyle = color;
       ctx.lineWidth = 1.2;
       ctx.globalAlpha = glow ? 0.35 : 0.18;
@@ -46,7 +38,6 @@ const Grid3D = ({
       const step = density;
       offset += speed;
 
-      // Líneas diagonales descendentes
       for (let x = -canvas.height; x < canvas.width + canvas.height; x += step) {
         ctx.beginPath();
         ctx.moveTo(x + offset, 0);
@@ -54,7 +45,6 @@ const Grid3D = ({
         ctx.stroke();
       }
 
-      // Líneas diagonales ascendentes
       for (let y = -canvas.width; y < canvas.height + canvas.width; y += step) {
         ctx.beginPath();
         ctx.moveTo(0, y + offset);
@@ -76,12 +66,7 @@ const Grid3D = ({
   return (
     <canvas
       ref={canvasRef}
-      className={`
-        fixed inset-0 -z-10
-        mix-blend-screen
-        ${glow ? "animate-glowPulse" : ""}
-        ${className}
-      `}
+      className={`fixed inset-0 -z-10 mix-blend-screen ${glow ? "animate-glowPulse" : ""} ${className}`}
     />
   );
 };

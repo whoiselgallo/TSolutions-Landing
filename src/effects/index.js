@@ -1,6 +1,6 @@
 // ============================================================
 // ✨ TSolutions IPIDD — Effects Library V1
-// Exportación global de efectos visuales y hooks
+// Exportación global de efectos visuales y hooks corporativos
 // ============================================================
 
 // ---------- Background ----------

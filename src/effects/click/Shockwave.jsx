@@ -1,9 +1,10 @@
 // ============================================================
 // ⚡ Shockwave — TSolutions IPIDD
-// Onda expansiva futurista con tokens corporativos
+// Onda expansiva futurista con tokens corporativos y control dinámico
 // ============================================================
 
 import React, { useEffect, useRef } from "react";
+import { UI } from "../../components/ui/ui.config";
 
 const Shockwave = ({
   trigger = "click", // click | auto | hover
@@ -11,18 +12,15 @@ const Shockwave = ({
   duration = 900,
   variant = "turquesa",
   glow = true,
+  intensity = 4,
   className = "",
 }) => {
   const waveRef = useRef(null);
 
-  const variants = {
-    turquesa: "bg-aquaTurquesa/40 shadow-glowTurquesaSoft",
-    naranja: "bg-naranjaEnergy/40 shadow-turquesaHover",
-    blanco: "bg-blancoPuro/40 shadow-blancoPulse",
-    dashboard: "bg-midnightPanel/40 shadow-turquesaSoft",
-  };
-
-  const v = variants[variant];
+  const color =
+    UI.variants.button[variant]?.split(" ")[0] ||
+    UI.variants.chip[variant]?.split(" ")[0] ||
+    "#00E5FF";
 
   const launchWave = (x, y) => {
     const wave = waveRef.current;
@@ -30,16 +28,14 @@ const Shockwave = ({
 
     wave.style.left = `${x - size / 2}px`;
     wave.style.top = `${y - size / 2}px`;
-
     wave.style.width = `${size}px`;
     wave.style.height = `${size}px`;
-
     wave.style.opacity = glow ? 0.45 : 0.25;
     wave.style.transform = "scale(0)";
     wave.style.transition = `transform ${duration}ms ease-out, opacity ${duration}ms ease-out`;
 
     requestAnimationFrame(() => {
-      wave.style.transform = "scale(4)";
+      wave.style.transform = `scale(${intensity})`;
       wave.style.opacity = 0;
     });
   };
@@ -50,36 +46,27 @@ const Shockwave = ({
       return;
     }
 
-    const handler = (e) => {
-      launchWave(e.clientX, e.clientY);
-    };
+    const handler = (e) => launchWave(e.clientX, e.clientY);
 
-    if (trigger === "click") {
-      window.addEventListener("click", handler);
-    }
-
-    if (trigger === "hover") {
-      window.addEventListener("mousemove", handler);
-    }
+    if (trigger === "click") window.addEventListener("click", handler);
+    if (trigger === "hover") window.addEventListener("mousemove", handler);
 
     return () => {
       window.removeEventListener("click", handler);
       window.removeEventListener("mousemove", handler);
     };
-  }, [trigger, size, duration, glow]);
+  }, [trigger, size, duration, glow, intensity]);
 
   return (
     <div
       ref={waveRef}
       className={`
-        pointer-events-none
-        fixed
-        rounded-full
-        mix-blend-screen
-        ${v}
+        pointer-events-none fixed rounded-full mix-blend-screen
+        ${glow ? "shadow-glowTurquesaSoft" : ""}
         ${className}
       `}
       style={{
+        backgroundColor: `${color}40`,
         position: "fixed",
         width: size,
         height: size,

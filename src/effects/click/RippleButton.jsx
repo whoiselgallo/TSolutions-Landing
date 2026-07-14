@@ -1,4 +1,10 @@
+// ============================================================
+// ⚡ RippleButton — TSolutions IPIDD
+// Botón interactivo con efecto ripple, glow corporativo y motion dinámico
+// ============================================================
+
 import React, { useRef } from "react";
+import { UI } from "../../components/ui/ui.config";
 
 const RippleButton = ({
   children,
@@ -6,22 +12,26 @@ const RippleButton = ({
   size = "md",
   icon = null,
   glow = true,
-  motion = "fade", // fade | slide | none
+  motion = "fade", // fade | slide | pulse | none
+  disabled = false,
+  loading = false,
   className = "",
   ...props
 }) => {
   const btnRef = useRef(null);
 
   const createRipple = (event) => {
+    if (disabled || loading) return;
     const button = btnRef.current;
     const ripple = document.createElement("span");
 
-    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const rect = button.getBoundingClientRect();
+    const diameter = Math.max(rect.width, rect.height);
     const radius = diameter / 2;
 
     ripple.style.width = ripple.style.height = `${diameter}px`;
-    ripple.style.left = `${event.clientX - (button.offsetLeft + radius)}px`;
-    ripple.style.top = `${event.clientY - (button.offsetTop + radius)}px`;
+    ripple.style.left = `${event.clientX - rect.left - radius}px`;
+    ripple.style.top = `${event.clientY - rect.top - radius}px`;
     ripple.classList.add("ts-ripple");
 
     const oldRipple = button.getElementsByClassName("ts-ripple")[0];
@@ -30,35 +40,10 @@ const RippleButton = ({
     button.appendChild(ripple);
   };
 
-  const variants = {
-    /* ============================================================
-       CTA — Botón principal naranja (visto en “Acceder →” y “Explorar Componentes”)
-    ============================================================ */
-    cta: `
-      bg-naranjaEnergy text-negroProfundo
-      shadow-turquesaSoft hover:shadow-turquesaHover
-      font-bruno tracking-brunoMedium
-    `,
-
-    /* ============================================================
-       HERO — Botón turquesa brillante (visto en “Ver Tokens”)
-    ============================================================ */
-    hero: `
-      bg-aquaTurquesa text-negroProfundo
-      shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover
-      font-montserratSlim tracking-tightMega
-    `,
-
-    /* ============================================================
-       DASHBOARD — Botón oscuro con borde turquesa (visto en Overview / Metrics)
-    ============================================================ */
-    dashboard: `
-      bg-midnightPanel text-blancoPuro
-      border border-aquaTurquesa
-      hover:bg-aquaTurquesa hover:text-negroProfundo
-      shadow-turquesaSoft
-    `,
-  };
+  const color =
+    UI.variants.button[variant]?.split(" ")[0] ||
+    UI.variants.chip[variant]?.split(" ")[0] ||
+    "#F97316";
 
   const sizes = {
     sm: "px-3 py-2 text-sm",
@@ -69,6 +54,7 @@ const RippleButton = ({
   const motionMap = {
     fade: "animate-fadeTurquesa",
     slide: "animate-slideSoft",
+    pulse: "animate-glowPulse",
     none: "",
   };
 
@@ -76,21 +62,27 @@ const RippleButton = ({
     <button
       ref={btnRef}
       onClick={createRipple}
+      disabled={disabled}
       className={`
         relative overflow-hidden rounded-soft
         min-h-button min-w-button
         transition-all duration-200
-        ${variants[variant]}
         ${sizes[size]}
-        ${glow ? "animate-glowPulse" : ""}
-        hover:animate-hoverPulse
+        ${glow ? "shadow-glowTurquesaSoft" : ""}
+        ${motionMap[motion]}
+        ${disabled ? "opacity-50 cursor-not-allowed" : ""}
+        ${loading ? "animate-pulse" : ""}
         ${className}
       `}
+      style={{
+        backgroundColor: color,
+        color: variant === "dashboard" ? "#FFF" : "#000",
+      }}
       {...props}
     >
-      <span className={`${motionMap[motion]} flex items-center`}>
-        {icon && <span className="mr-2 animate-slideSoft">{icon}</span>}
-        {children}
+      <span className="flex items-center justify-center gap-2">
+        {icon && <span className="animate-slideSoft">{icon}</span>}
+        {loading ? "Cargando..." : children}
       </span>
     </button>
   );

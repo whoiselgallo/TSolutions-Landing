@@ -1,10 +1,5 @@
-// ============================================================
-// 🟦 ParticleField — TSolutions IPIDD
-// Campo de partículas 3D con glow corporativo y movimiento suave
-// ============================================================
-
 import React, { useEffect, useRef } from "react";
-import { UI } from "../../components/ui/ui.config"; // integración con tokens corporativos
+import { UI } from "../../components/ui/ui.config";
 
 const ParticleField = ({
   count = 120,
@@ -15,8 +10,6 @@ const ParticleField = ({
   className = "",
 }) => {
   const canvasRef = useRef(null);
-
-  // Color corporativo desde UI.config
   const color =
     UI.variants.button[variant]?.split(" ")[0] ||
     UI.variants.chip[variant]?.split(" ")[0] ||
@@ -34,7 +27,6 @@ const ParticleField = ({
     resize();
     window.addEventListener("resize", resize);
 
-    // Crear partículas
     const particles = Array.from({ length: count }).map(() => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -78,12 +70,7 @@ const ParticleField = ({
   return (
     <canvas
       ref={canvasRef}
-      className={`
-        fixed inset-0 -z-10
-        mix-blend-screen
-        ${glow ? "animate-glowPulse" : ""}
-        ${className}
-      `}
+      className={`fixed inset-0 -z-10 mix-blend-screen ${glow ? "animate-glowPulse" : ""} ${className}`}
     />
   );
 };
