@@ -4,7 +4,7 @@
 // ============================================================
 
 // ---------- Layout ----------
-export { default as DashboardLayout } from "./DashboardLayout";
+export { DashboardLayout } from "./DashboardLayout";
 export { default as Dashboard } from "./Dashboard";
 
 // ---------- Widgets ----------
