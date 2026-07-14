@@ -4,6 +4,7 @@
 // ============================================================
 
 import React, { useEffect, useRef } from "react";
+import { UI } from "../../components/ui/ui.config"; // integración con tokens corporativos
 
 const ParticleFieldNetwork = ({
   count = 140,
@@ -15,15 +16,7 @@ const ParticleFieldNetwork = ({
   className = "",
 }) => {
   const canvasRef = useRef(null);
-
-  const variants = {
-    turquesa: "#00E5FF",
-    naranja: "#F97316",
-    dashboard: "#00E5FF",
-    hero: "#F97316",
-  };
-
-  const color = variants[variant];
+  const color = UI.variants.button[variant]?.split(" ")[0] || "#00E5FF"; // usa color base del sistema
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -37,7 +30,6 @@ const ParticleFieldNetwork = ({
     resize();
     window.addEventListener("resize", resize);
 
-    // Crear partículas
     const particles = Array.from({ length: count }).map(() => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -46,10 +38,11 @@ const ParticleFieldNetwork = ({
       vy: (Math.random() - 0.5) * speed,
     }));
 
+    let animationId;
+
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Render de partículas
       particles.forEach((p) => {
         p.x += p.vx * p.z;
         p.y += p.vy * p.z;
@@ -66,7 +59,6 @@ const ParticleFieldNetwork = ({
         ctx.fill();
       });
 
-      // Render de conexiones
       ctx.lineWidth = 1;
       particles.forEach((a) => {
         particles.forEach((b) => {
@@ -76,11 +68,9 @@ const ParticleFieldNetwork = ({
 
           if (dist < linkDistance) {
             const alpha = 1 - dist / linkDistance;
-
             ctx.strokeStyle = glow
               ? `${color}${Math.floor(alpha * 180).toString(16)}`
               : `${color}${Math.floor(alpha * 120).toString(16)}`;
-
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
@@ -89,12 +79,15 @@ const ParticleFieldNetwork = ({
         });
       });
 
-      requestAnimationFrame(draw);
+      animationId = requestAnimationFrame(draw);
     };
 
     draw();
 
-    return () => window.removeEventListener("resize", resize);
+    return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(animationId);
+    };
   }, [count, speed, size, linkDistance, glow, color]);
 
   return (

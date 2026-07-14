@@ -1,143 +1,129 @@
-import { useState } from "react";
-import {
+import React from "react";
+import { 
+  DashboardLayout,
+  AnalyticsChart,
+  ProgressBar,
+  StatusPanel,
   roadmapPhases,
   kanbanColumnsV2,
-  kanbanColumnsV3,
-} from "./data";
+  kanbanColumnsV3
+} from "./index";
 
 export default function Dashboard() {
-  const [selectedVersion, setSelectedVersion] = useState("v2");
-
-  const kanbanColumns =
-    selectedVersion === "v2" ? kanbanColumnsV2 : kanbanColumnsV3;
-
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 px-6 py-8">
-      {/* Header */}
-      <header className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-semibold text-orange-400">
-            TSolutions IPIDD · Design System
-          </h1>
-          <p className="text-sm text-slate-400">
-            Roadmap & Kanban — V2 / V3
-          </p>
+    <DashboardLayout>
+
+      {/* ===================== HERO ===================== */}
+      <section className="mb-10">
+        <h1 className="text-3xl font-inter font-bold text-blancoPuro">
+          Dashboard PRO — TSolutions IPIDD
+        </h1>
+        <p className="text-blancoPuro/70 mt-2">
+          Roadmap, métricas y progreso del sistema corporativo.
+        </p>
+      </section>
+
+      {/* ===================== ANALYTICS ===================== */}
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+        <AnalyticsChart />
+        <StatusPanel />
+        <ProgressBar />
+      </section>
+
+      {/* ===================== ROADMAP ===================== */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-inter font-semibold text-blancoPuro mb-4">
+          Roadmap — Evolución del Sistema
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {roadmapPhases.map((phase) => (
+            <div
+              key={phase.id}
+              className={`rounded-soft p-5 shadow-glowTurquesaSoft ${phase.color} text-negroProfundo`}
+            >
+              <h3 className="text-xl font-bold">{phase.label}</h3>
+              <p className="opacity-80">{phase.period}</p>
+              <p className="mt-1 font-semibold">{phase.status}</p>
+
+              <ul className="mt-4 space-y-1">
+                {phase.items.map((item, index) => (
+                  <li key={index} className="text-sm">
+                    • {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
+      </section>
 
-        <div className="flex gap-2">
-          <button
-            onClick={() => setSelectedVersion("v2")}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition
-              ${
-                selectedVersion === "v2"
-                  ? "bg-cyan-500 text-slate-950"
-                  : "bg-slate-800 text-slate-200 hover:bg-slate-700"
-              }`}
-          >
-            Versión V2
-          </button>
-          <button
-            onClick={() => setSelectedVersion("v3")}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition
-              ${
-                selectedVersion === "v3"
-                  ? "bg-orange-500 text-slate-950"
-                  : "bg-slate-800 text-slate-200 hover:bg-slate-700"
-              }`}
-          >
-            Versión V3
-          </button>
+      {/* ===================== KANBAN V2 ===================== */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-inter font-semibold text-blancoPuro mb-4">
+          Kanban — Versión V2
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          {kanbanColumnsV2.map((col) => (
+            <div
+              key={col.id}
+              className={`rounded-soft p-4 bg-negroProfundo border ${col.color}`}
+            >
+              <h3 className="text-lg font-bold text-blancoPuro mb-3">
+                {col.title}
+              </h3>
+
+              <ul className="space-y-2">
+                {col.tasks.map((task, index) => (
+                  <li
+                    key={index}
+                    className="text-sm text-blancoPuro/80 bg-blancoPuro/10 p-2 rounded-soft"
+                  >
+                    {task}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      </header>
+      </section>
 
-      {/* Grid principal */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-        {/* Roadmap visual */}
-        <section className="xl:col-span-1 bg-slate-900/70 border border-slate-800 rounded-xl p-5">
-          <h2 className="text-sm font-semibold text-slate-300 mb-4">
-            Roadmap visual
-          </h2>
+      {/* ===================== KANBAN V3 ===================== */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-inter font-semibold text-blancoPuro mb-4">
+          Kanban — Versión V3
+        </h2>
 
-          <div className="space-y-4">
-            {roadmapPhases.map((phase) => (
-              <div
-                key={phase.id}
-                className={`relative rounded-lg border border-slate-700 p-4`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`inline-block w-2 h-2 rounded-full ${phase.color}`}
-                    />
-                    <h3 className="text-sm font-medium text-slate-100">
-                      {phase.label}
-                    </h3>
-                  </div>
-                  <span className="text-xs text-slate-400">
-                    {phase.period} · {phase.status}
-                  </span>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          {kanbanColumnsV3.map((col) => (
+            <div
+              key={col.id}
+              className={`rounded-soft p-4 bg-negroProfundo border ${col.color}`}
+            >
+              <h3 className="text-lg font-bold text-blancoPuro mb-3">
+                {col.title}
+              </h3>
 
-                <ul className="mt-2 space-y-1 text-xs text-slate-300">
-                  {phase.items.map((item, idx) => (
-                    <li key={idx} className="flex gap-2">
-                      <span className="text-cyan-400">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Kanban */}
-        <section className="xl:col-span-2 bg-slate-900/70 border border-slate-800 rounded-xl p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-semibold text-slate-300">
-              Tablero Kanban — {selectedVersion.toUpperCase()}
-            </h2>
-            <span className="text-xs text-slate-500">
-              Click en V2 / V3 para cambiar contexto
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4">
-            {kanbanColumns.map((col) => (
-              <div
-                key={col.id}
-                className={`flex flex-col rounded-lg bg-slate-950/60 border ${col.color} p-3`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xs font-semibold text-slate-100 uppercase tracking-wide">
-                    {col.title}
-                  </h3>
-                  <span className="text-[10px] text-slate-500">
-                    {col.tasks.length} tareas
-                  </span>
-                </div>
-
-                <div className="space-y-2">
-                  {col.tasks.length === 0 && (
-                    <div className="text-[11px] text-slate-500 italic">
-                      Aún sin tareas en esta fase.
-                    </div>
-                  )}
-
-                  {col.tasks.map((task, idx) => (
-                    <article
-                      key={idx}
-                      className="rounded-md bg-slate-800/70 border border-slate-700 px-3 py-2 text-[11px] text-slate-200 hover:border-cyan-500 hover:bg-slate-800 transition"
+              <ul className="space-y-2">
+                {col.tasks.length > 0 ? (
+                  col.tasks.map((task, index) => (
+                    <li
+                      key={index}
+                      className="text-sm text-blancoPuro/80 bg-blancoPuro/10 p-2 rounded-soft"
                     >
                       {task}
-                    </article>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-    </div>
+                    </li>
+                  ))
+                ) : (
+                  <p className="text-blancoPuro/50 italic">Sin tareas</p>
+                )}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </DashboardLayout>
   );
 }

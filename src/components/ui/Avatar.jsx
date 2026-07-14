@@ -3,51 +3,29 @@ import React from "react";
 export default function Avatar({
   src,
   alt = "avatar",
-  name = "",
   size = "md",
-  glow = true,
-  shape = "round",
+  glow = false,
+  border = false,
   className = "",
-  ...props
 }) {
   const sizes = {
-    sm: "w-10 h-10",   // 40px
-    md: "w-14 h-14",   // 56px
-    lg: "w-18 h-18",   // 72px
+    sm: "w-8 h-8 text-xs",
+    md: "w-12 h-12 text-sm",
+    lg: "w-16 h-16 text-base",
   };
 
-  const shapes = {
-    round: "rounded-full",
-    soft: "rounded-soft",
-    square: "rounded-none",
-  };
-
-  const initials = name
-    ? name
-        .trim()
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-    : "?";
+  const glowEffect = glow ? "shadow-glowTurquesaSoft" : "";
+  const borderEffect = border ? "border border-blancoPuro" : "";
 
   return (
     <div
-      {...props}
-      className={`
-        bg-midnightPanel overflow-hidden flex items-center justify-center
-        ${sizes[size]}
-        ${shapes[shape]}
-        ${glow ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover" : ""}
-        border border-midnightBorder
-        ${className}
-      `}
+      className={`rounded-full overflow-hidden bg-negroProfundo flex items-center justify-center font-inter ${sizes[size]} ${glowEffect} ${borderEffect} ${className}`}
     >
       {src ? (
         <img src={src} alt={alt} className="w-full h-full object-cover" />
       ) : (
-        <span className="text-blancoPuro font-bruno text-sm">
-          {initials}
+        <span className="text-blancoPuro opacity-80">
+          {alt.charAt(0).toUpperCase()}
         </span>
       )}
     </div>

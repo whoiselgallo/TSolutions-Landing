@@ -1,24 +1,24 @@
 // ============================================================
-// 🔶 Logopulse — TSolutions IPIDD
+// 🔶 LogoPulse — TSolutions IPIDD
 // Renderiza el logo corporativo con glow y pulso animado
 // ============================================================
 
 import React from "react";
-import logo from "../assets/logo-tsolutions.png"; // versión PNG con fondo transparente
+import logo from "../../assets/logo-tsolutions.WEBP";
+import { UI } from "../../components/ui/ui.config"; // integración con tokens corporativos
 
-const Logopulse = ({
+const LogoPulse = ({
   size = 160,
   glow = true,
   pulse = true,
   variant = "naranja",
+  glowStrength = 12,
   className = "",
 }) => {
-  const variants = {
-    naranja: "shadow-naranjaEnergySoft",
-    turquesa: "shadow-glowTurquesaSoft",
-    blanco: "shadow-blancoPulse",
-    dashboard: "shadow-turquesaSoft",
-  };
+  const color =
+    UI.variants.button[variant]?.split(" ")[0] ||
+    UI.variants.chip[variant]?.split(" ")[0] ||
+    "#F97316";
 
   return (
     <div
@@ -26,26 +26,23 @@ const Logopulse = ({
         relative flex items-center justify-center
         ${glow ? "animate-glowPulse" : ""}
         ${pulse ? "animate-ping" : ""}
-        ${variants[variant]}
         ${className}
       `}
       style={{
         width: size,
         height: size,
+        filter: glow
+          ? `drop-shadow(0 0 ${glowStrength}px ${color})`
+          : "none",
       }}
     >
       <img
         src={logo}
         alt="TSolutions Logo"
         className="w-full h-full object-contain"
-        style={{
-          filter: glow
-            ? "drop-shadow(0 0 12px rgba(255, 90, 0, 0.6))"
-            : "none",
-        }}
       />
     </div>
   );
 };
 
-export default Logopulse;
+export default LogoPulse;

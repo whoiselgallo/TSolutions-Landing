@@ -1,43 +1,45 @@
 import React from "react";
-import { MagneticCard } from "../../effects/mouse/MagneticCard";
 
 export default function Card({
   children,
-  variant = "default",
-  glow = false,
-  interactive = true,
+  title,
+  footer,
+  variant = "dark",
+  glow = true,
+  padding = "md",
   className = "",
-  ...props
 }) {
-  const base =
-    "p-6 rounded-large transition-all duration-300 bg-midnightPanel text-blancoPuro shadow-card";
-
   const variants = {
-    default: "",
-    soft: "bg-midnightSoft text-blancoPuro",
-    outline: "border border-midnightBorder",
-    glass: "bg-midnightGlass backdrop-blur-md",
+    dark: "bg-negroProfundo text-blancoPuro",
+    light: "bg-blancoPuro text-negroProfundo",
+    turquesa: "bg-aquaTurquesa text-negroProfundo",
   };
 
-  const glowEffect = glow
-    ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover"
-    : "";
+  const paddings = {
+    sm: "p-3",
+    md: "p-5",
+    lg: "p-7",
+  };
 
-  const Wrapper = interactive ? MagneticCard : React.Fragment;
+  const glowEffect = glow ? "shadow-glowTurquesaSoft" : "";
 
   return (
-    <Wrapper>
-      <div
-        {...props}
-        className={`
-          ${base}
-          ${variants[variant]}
-          ${glowEffect}
-          ${className}
-        `}
-      >
-        {children}
-      </div>
-    </Wrapper>
+    <div
+      className={`rounded-soft ${variants[variant]} ${glowEffect} ${className}`}
+    >
+      {title && (
+        <div className="px-5 pt-4 pb-2 font-inter text-lg font-semibold">
+          {title}
+        </div>
+      )}
+
+      <div className={`${paddings[padding]}`}>{children}</div>
+
+      {footer && (
+        <div className="px-5 pb-4 pt-2 font-inter text-sm opacity-80">
+          {footer}
+        </div>
+      )}
+    </div>
   );
 }

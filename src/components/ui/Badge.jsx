@@ -3,16 +3,23 @@ import React from "react";
 export default function Badge({
   label,
   icon: Icon,
-  variant = "aqua",
+  variant = "turquesa",
+  size = "md",
   glow = true,
   className = "",
   ...props
 }) {
   const base =
-    "inline-flex items-center gap-1 px-2 py-1 rounded-soft font-inter text-xs tracking-wide transition-all duration-300";
+    "inline-flex items-center font-inter tracking-wide rounded-soft transition-all duration-300";
+
+  const sizes = {
+    sm: "text-[10px] px-2 py-[2px] gap-1",
+    md: "text-xs px-2.5 py-1 gap-1.5",
+    lg: "text-sm px-3 py-1.5 gap-2",
+  };
 
   const variants = {
-    aqua: "bg-aquaTurquesa text-negroProfundo",
+    turquesa: "bg-aquaTurquesa text-negroProfundo",
     naranja: "bg-naranjaEnergy text-blancoPuro",
     blanco: "bg-blancoPuro text-negroProfundo",
     ghost: "bg-transparent text-blancoPuro border border-blancoPuro",
@@ -25,9 +32,9 @@ export default function Badge({
   return (
     <span
       {...props}
-      className={`${base} ${variants[variant]} ${glowEffect} ${className}`}
+      className={`${base} ${sizes[size]} ${variants[variant]} ${glowEffect} ${className}`}
     >
-      {Icon && <Icon className="w-3 h-3" />}
+      {Icon && <Icon className="w-3.5 h-3.5 opacity-90" />}
       {label}
     </span>
   );

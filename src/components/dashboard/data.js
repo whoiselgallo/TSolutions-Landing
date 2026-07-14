@@ -1,5 +1,9 @@
-// Roadmap y Kanban para V2 y V3
+// ============================================================
+// 🧩 Dashboard Data — Roadmap & Kanban (V2 / V3)
+// TSolutions IPIDD Design System V1
+// ============================================================
 
+// ---------- Roadmap ----------
 export const roadmapPhases = [
   {
     id: "v2",
@@ -28,6 +32,7 @@ export const roadmapPhases = [
   },
 ];
 
+// ---------- Kanban V2 ----------
 export const kanbanColumnsV2 = [
   {
     id: "backlog",
@@ -84,6 +89,7 @@ export const kanbanColumnsV2 = [
   },
 ];
 
+// ---------- Kanban V3 ----------
 export const kanbanColumnsV3 = [
   {
     id: "backlog",

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo } from "react";
 import { dashboardData } from "../data/dashboardData";
 
 // Crear contexto
@@ -10,16 +10,19 @@ export function DashboardProvider({ children }) {
   const [tokens, setTokens] = useState(dashboardData.tokens);
   const [interactivity, setInteractivity] = useState(dashboardData.interactivity);
 
-  // Calcular progreso total
-  const progress = Math.round(
-    (components.filter(c =>
-      c.design === 100 &&
-      c.visual === 100 &&
-      c.functional === 100
-    ).length / components.length) * 100
-  );
+  // Progreso total (memoizado)
+  const progress = useMemo(() => {
+    const completed = components.filter(
+      c =>
+        c.design === 100 &&
+        c.visual === 100 &&
+        c.functional === 100
+    ).length;
 
-  // Exponer valores globales
+    return Math.round((completed / components.length) * 100);
+  }, [components]);
+
+  // Valores expuestos globalmente
   const value = {
     components,
     tokens,
@@ -41,3 +44,6 @@ export function DashboardProvider({ children }) {
 export function useDashboard() {
   return useContext(DashboardContext);
 }
+
+// Exportación por defecto (para integrarlo con src/components/index.js)
+export default DashboardContext;

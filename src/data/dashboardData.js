@@ -1,17 +1,22 @@
+// ============================================================
+// 📊 Dashboard Data — TSolutions IPIDD
+// Estructura optimizada para DashboardContext y Dashboard PRO
+// ============================================================
+
 export const dashboardData = {
   components: [
-    { name: "Button", design: 100, visual: 100, functional: 100 },
-    { name: "Card", design: 100, visual: 100, functional: 100 },
-    { name: "Input", design: 100, visual: 100, functional: 100 },
-    { name: "Select", design: 100, visual: 100, functional: 100 },
-    { name: "Toggle", design: 100, visual: 100, functional: 100 },
-    { name: "Slider", design: 100, visual: 100, functional: 100 },
-    { name: "Badge", design: 100, visual: 100, functional: 100 },
-    { name: "Chip", design: 100, visual: 100, functional: 100 },
-    { name: "Modal", design: 100, visual: 100, functional: 100 },
-    { name: "Tooltip", design: 100, visual: 100, functional: 100 },
-    { name: "Avatar", design: 100, visual: 100, functional: 100 },
-    { name: "Table", design: 100, visual: 100, functional: 100 },
+    { id: "button", name: "Button", category: "UI Base", design: 100, visual: 100, functional: 100 },
+    { id: "card", name: "Card", category: "UI Base", design: 100, visual: 100, functional: 100 },
+    { id: "input", name: "Input", category: "Form", design: 100, visual: 100, functional: 100 },
+    { id: "select", name: "Select", category: "Form", design: 100, visual: 100, functional: 100 },
+    { id: "toggle", name: "Toggle", category: "UI Base", design: 100, visual: 100, functional: 100 },
+    { id: "slider", name: "Slider", category: "UI Base", design: 100, visual: 100, functional: 100 },
+    { id: "badge", name: "Badge", category: "Display", design: 100, visual: 100, functional: 100 },
+    { id: "chip", name: "Chip", category: "Display", design: 100, visual: 100, functional: 100 },
+    { id: "modal", name: "Modal", category: "Feedback", design: 100, visual: 100, functional: 100 },
+    { id: "tooltip", name: "Tooltip", category: "Feedback", design: 100, visual: 100, functional: 100 },
+    { id: "avatar", name: "Avatar", category: "Display", design: 100, visual: 100, functional: 100 },
+    { id: "table", name: "Table", category: "Display", design: 100, visual: 100, functional: 100 },
   ],
 
   tokens: {
@@ -19,6 +24,8 @@ export const dashboardData = {
     shadows: true,
     radius: true,
     typography: true,
+    spacing: true,       // agregado
+    animations: true,    // agregado
   },
 
   interactivity: {
@@ -26,5 +33,6 @@ export const dashboardData = {
     animations: true,
     hover: true,
     focus: true,
+    transitions: true,   // agregado
   }
 };
