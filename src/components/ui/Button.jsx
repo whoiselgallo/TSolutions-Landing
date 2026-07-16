@@ -24,10 +24,12 @@ export default function Button({
     turquesa: "bg-aquaTurquesa text-negroProfundo hover:bg-aquaTurquesa/90",
     blanco: "bg-blancoPuro text-negroProfundo hover:bg-blancoPuro/90",
     ghost: "bg-transparent border border-blancoPuro text-blancoPuro hover:bg-blancoPuro/10",
+    primary: "bg-naranjaEnergy text-blancoPuro hover:bg-naranjaEnergy/90",
+    secondary: "bg-blancoPuro text-negroProfundo hover:bg-blancoPuro/90",
   };
 
   const glowEffect = glow
-    ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover"
+    ? "shadow-glowEnergy hover:shadow-glowEnergyHover"
     : "";
 
   return (
@@ -36,7 +38,7 @@ export default function Button({
       className={`${base} ${sizes[size]} ${variants[variant]} ${glowEffect} ${className}`}
     >
       {IconLeft && <IconLeft className="w-4 h-4" />}
-      {label}
+      {label || children}
       {IconRight && <IconRight className="w-4 h-4" />}
     </button>
   );

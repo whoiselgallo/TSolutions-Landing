@@ -19,12 +19,12 @@ export default function Modal({
         className={`
           relative bg-midnightPanel text-blancoPuro p-8 rounded-large w-[90%] max-w-lg shadow-card
           transition-all duration-300
-          ${glow ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover" : ""}
+          ${glow ? "shadow-glowEnergy hover:shadow-glowEnergyHover border border-naranjaEnergy/25" : ""}
           ${className}
         `}
       >
         {title && (
-          <h2 className="text-2xl font-bruno text-aquaTurquesa mb-4">
+          <h2 className="text-2xl font-bruno text-naranjaEnergy mb-4">
             {title}
           </h2>
         )}
@@ -33,7 +33,7 @@ export default function Modal({
 
         <button
           onClick={onClose}
-          className="mt-6 px-6 py-3 bg-aquaTurquesa text-negroProfundo rounded-medium hover:shadow-turquesaHover"
+          className="mt-6 px-6 py-3 bg-naranjaEnergy text-negroProfundo rounded-medium font-bruno hover:shadow-[0_0_15px_rgba(249,115,22,0.5)] transition duration-300"
         >
           Cerrar
         </button>

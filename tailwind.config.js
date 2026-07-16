@@ -21,6 +21,8 @@ export default {
         humo: "var(--color-humo)",
         dorado: "var(--color-dorado)",
         divider: "var(--divider-color)",
+        deepBlack: "var(--color-deepBlack)",
+        blancoPerla: "var(--color-blancoPerla)",
       },
 
       /* ============================================================
@@ -33,9 +35,11 @@ export default {
         card: "var(--shadow-card)",
 
         // glows oficiales
-        glowTurquesaSoft: "var(--glowTurquesaSoft)",
-        glowTurquesaHover: "var(--glowTurquesaHover)",
-        glowBlancoPulse: "var(--glowBlancoPulse)",
+        glowTurquesaSoft: "0 0 12px rgba(0,229,255,0.30)",
+        glowTurquesaHover: "0 0 20px rgba(0,229,255,0.55)",
+        glowBlancoPulse: "0 0 10px rgba(255,255,255,0.8)",
+        glowEnergy: "var(--shadow-glowEnergy)",
+        glowEnergyHover: "var(--shadow-glowEnergyHover)",
       },
 
       /* ============================================================

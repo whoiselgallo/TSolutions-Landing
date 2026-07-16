@@ -29,7 +29,7 @@ export default function Chip({
   };
 
   const glowEffect = glow
-    ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover"
+    ? "shadow-glowEnergy hover:shadow-glowEnergyHover"
     : "";
 
   const interactiveEffect = interactive
@@ -49,7 +49,7 @@ export default function Chip({
       `}
     >
       {Icon && <Icon className="w-4 h-4" />}
-      {label}
+      {label || children}
     </span>
   );
 }

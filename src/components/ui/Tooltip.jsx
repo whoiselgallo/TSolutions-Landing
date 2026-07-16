@@ -15,7 +15,7 @@ export default function Tooltip({ text, children, className = "" }) {
         <div
           className="
             absolute left-1/2 -translate-x-1/2 mt-3 px-4 py-2
-            bg-midnightPanel text-blancoPuro rounded-medium shadow-glowTurquesaSoft
+            bg-midnightPanel text-blancoPuro rounded-medium shadow-glowEnergy border border-naranjaEnergy/25
             animate-slideSoft whitespace-nowrap z-50
           "
         >

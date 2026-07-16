@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 /**
- * PageTransition PRO — TSolutions IPIDD
- * Transiciones suaves, profesionales y corporativas.
+ * PageTransition — Versión ESTABLE
+ * Animaciones suaves sin desmontaje ni parpadeo.
  *
  * Props:
  * - children: contenido
  * - type: "fade" | "slide" | "scale"
  * - direction: "up" | "down" | "left" | "right" (solo slide)
  * - speed: "slow" | "normal" | "fast"
- * - glow: activa glow turquesa
+ * - glow: activa glow turquesa corporativo
  * - className: clases adicionales
  */
 
@@ -21,14 +21,6 @@ export default function PageTransition({
   glow = false,
   className = "",
 }) {
-  const [isMounted, setIsMounted] = useState(false);
-
-  // Activa animación de entrada
-  useEffect(() => {
-    const timer = setTimeout(() => setIsMounted(true), 10);
-    return () => clearTimeout(timer);
-  }, []);
-
   // Variantes de velocidad
   const speedMap = {
     slow: "duration-700",
@@ -44,24 +36,17 @@ export default function PageTransition({
     right: "-translate-x-6",
   };
 
-  // Animaciones de entrada
+  // Animaciones de entrada (siempre activas)
   const enterAnimations = {
-    fade: "opacity-0 animate-fadeTurquesa",
-    scale: "opacity-0 scale-95 animate-scaleIn",
-    slide: `opacity-0 ${slideDirection[direction]} animate-slideSoft`,
-  };
-
-  // Animaciones de salida
-  const exitAnimations = {
-    fade: "opacity-0",
-    scale: "opacity-0 scale-95",
-    slide: "opacity-0 translate-y-6",
+    fade: "animate-fadeTurquesa",
+    scale: "animate-scaleIn",
+    slide: `animate-slideSoft ${slideDirection[direction]}`,
   };
 
   return (
     <div
       className={`
-        ${isMounted ? enterAnimations[type] : exitAnimations[type]}
+        ${enterAnimations[type]}
         ${speedMap[speed]}
         ${glow ? "shadow-glowTurquesaSoft" : ""}
         transition-all ease-out

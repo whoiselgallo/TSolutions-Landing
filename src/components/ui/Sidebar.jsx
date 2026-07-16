@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MagneticCard } from "../../effects/mouse/MagneticCard";
+import MagneticCard from "../../effects/mouse/MagneticCard";
 
 export default function Sidebar({
   items = [],

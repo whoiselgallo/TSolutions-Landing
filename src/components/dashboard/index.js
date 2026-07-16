@@ -10,4 +10,4 @@ export { default as AnalyticsChart } from "./AnalyticsChart.jsx";
 export { default as StatusPanel } from "./StatusPanel.jsx";
 
 // ---------- Datos del Dashboard ----------
-export * from "./dashboardData.js";
+export * from "./data.js";

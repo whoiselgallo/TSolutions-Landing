@@ -1,6 +1,6 @@
 import React from "react";
-import { RippleButton } from "../../effects/click/RippleButton";
-import { NeonText } from "../../effects/text/NeonText";
+import RippleButton from "../../effects/click/RippleButton";
+import NeonText from "../../effects/text/NeonText";
 
 export default function Navbar({
   title = "TSolutions IPIDD",

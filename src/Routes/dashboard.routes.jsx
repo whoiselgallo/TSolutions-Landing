@@ -2,7 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 // Vistas del dashboard
-import Dashboard from "../pages/dashboard";
+import Dashboard from "../pages/Dashboard";
 import DashboardShowcase from "../pages/DashboardShowcase";
 import DashboardFullDemo from "../pages/DashboardFullDemo";
 

@@ -11,7 +11,7 @@ export default function Slider({
   return (
     <div className="w-full">
       {label && (
-        <label className="block mb-2 text-aquaTurquesa font-inter">
+        <label className="block mb-2 text-naranjaEnergy font-inter text-sm">
           {label}
         </label>
       )}
@@ -23,8 +23,8 @@ export default function Slider({
         onChange={onChange}
         className={`
           w-full h-2 bg-deepGrid rounded-full appearance-none cursor-pointer
-          accent-aquaTurquesa
-          ${glow ? "shadow-glowTurquesaSoft" : ""}
+          accent-naranjaEnergy
+          ${glow ? "shadow-glowEnergy" : ""}
           ${className}
         `}
       />
@@ -35,13 +35,13 @@ export default function Slider({
             appearance: none;
             width: 18px;
             height: 18px;
-            background: var(--color-aquaTurquesa);
+            background: var(--color-naranjaEnergy);
             border-radius: var(--radiusFull);
-            box-shadow: var(--glowTurquesaSoft);
+            box-shadow: 0 0 8px rgba(249,115,22,0.4);
             transition: 0.3s ease;
           }
           input[type="range"]::-webkit-slider-thumb:hover {
-            box-shadow: var(--glowTurquesaHover);
+            box-shadow: 0 0 14px rgba(249,115,22,0.8);
           }
         `}
       </style>

@@ -3,7 +3,7 @@ import React from "react";
 export default function Badge({
   label,
   icon: Icon,
-  variant = "turquesa",
+  variant = "naranja",
   size = "md",
   glow = true,
   className = "",
@@ -26,7 +26,7 @@ export default function Badge({
   };
 
   const glowEffect = glow
-    ? "shadow-glowTurquesaSoft hover:shadow-glowTurquesaHover"
+    ? "shadow-glowEnergy hover:shadow-glowEnergyHover"
     : "";
 
   return (
@@ -35,7 +35,7 @@ export default function Badge({
       className={`${base} ${sizes[size]} ${variants[variant]} ${glowEffect} ${className}`}
     >
       {Icon && <Icon className="w-3.5 h-3.5 opacity-90" />}
-      {label}
+      {label || children}
     </span>
   );
 }

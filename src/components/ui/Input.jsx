@@ -16,7 +16,7 @@ export default function Input({
         <label
           className={`
             absolute left-3 transition-all duration-300 pointer-events-none
-            ${focus || value ? "top-1 text-xs text-aquaTurquesa" : "top-3 text-blancoPuro/60"}
+            ${focus || value ? "top-1 text-xs text-naranjaEnergy" : "top-3 text-blancoPuro/60"}
           `}
         >
           {label}
@@ -32,7 +32,7 @@ export default function Input({
         className={`
           w-full bg-midnightPanel text-blancoPuro border border-deepGrid
           rounded-medium px-3 py-3 font-inter outline-none transition duration-300
-          ${glow ? "shadow-glowTurquesaSoft focus:shadow-glowTurquesaHover" : ""}
+          ${glow ? "shadow-glowEnergy focus:shadow-glowEnergyHover" : ""}
           ${className}
         `}
       />

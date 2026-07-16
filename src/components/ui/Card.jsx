@@ -5,12 +5,12 @@ export default function Card({
   title,
   footer,
   variant = "dark",
-  glow = true,
+  glow = false,
   padding = "md",
   className = "",
 }) {
   const variants = {
-    dark: "bg-negroProfundo text-blancoPuro",
+    dark: "bg-negroProfundo text-blancoPuro border border-blancoPuro/5",
     light: "bg-blancoPuro text-negroProfundo",
     turquesa: "bg-aquaTurquesa text-negroProfundo",
   };
@@ -21,7 +21,7 @@ export default function Card({
     lg: "p-7",
   };
 
-  const glowEffect = glow ? "shadow-glowTurquesaSoft" : "";
+  const glowEffect = glow ? "shadow-glowEnergy border-naranjaEnergy/20" : "shadow-card";
 
   return (
     <div

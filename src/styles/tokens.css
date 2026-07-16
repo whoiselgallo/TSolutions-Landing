@@ -94,6 +94,8 @@
   --shadow-turquesaHover: 0 0 14px rgba(0,229,255,0.45);
   --shadow-blancoPulse: 0 0 10px rgba(255,255,255,0.8);
   --shadow-card: 0 8px 24px rgba(0,0,0,0.08);
+  --shadow-glowEnergy: 0 0 12px rgba(249,115,22,0.35);
+  --shadow-glowEnergyHover: 0 0 20px rgba(249,115,22,0.55);
 
   /* ============================================================
      ⚙️ 8. ANIMATION VARIABLES

@@ -1,6 +1,6 @@
 // ============================================================
 // 🧩 UI Components — TSolutions IPIDD
-// Versión optimizada y estructurada por categorías
+// Barrel export — index.js (case-sensitive compatible)
 // ============================================================
 
 // ---------- Base UI ----------
@@ -24,27 +24,10 @@ export { default as Avatar } from "./Avatar";
 
 // ---------- Layout ----------
 export { default as Navbar } from "./Navbar";
-export { default as Sidebar } from "./Sidebar"; // si el nombre real es Slidebar.jsx
+export { default as Sidebar } from "./Sidebar";
 
 // ---------- Form Helpers ----------
 export { default as FormGroup } from "./FormGroup";
 
-// ---------- Exportación agrupada ----------
-export default {
-  Button,
-  Card,
-  Input,
-  Select,
-  Slider,
-  Toggle,
-  Modal,
-  Tooltip,
-  Loader,
-  Table,
-  Chip,
-  Badge,
-  Avatar,
-  Navbar,
-  Sidebar,
-  FormGroup,
-};
+// ---------- Config ----------
+export { UI as UIConfig } from "./ui.config";

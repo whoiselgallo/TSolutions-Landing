@@ -15,13 +15,13 @@ export default function Toggle({
         className={`
           w-12 h-6 rounded-full flex items-center px-1
           transition-all duration-300
-          ${checked ? "bg-aquaTurquesa" : "bg-deepGrid"}
+          ${checked ? "bg-naranjaEnergy" : "bg-deepGrid"}
         `}
         {...props}
       >
         <span
           className={`
-            w-4 h-4 rounded-full bg-blancoPuro shadow-glowTurquesaSoft
+            w-4 h-4 rounded-full bg-blancoPuro shadow-glowEnergy
             transform transition-all duration-300
             ${checked ? "translate-x-6" : "translate-x-0"}
           `}

@@ -78,8 +78,8 @@ export const UI = {
   // ------------------------------------------------------------
   effects: {
     glow: {
-      default: "shadow-glowTurquesaSoft",
-      hover: "hover:shadow-glowTurquesaHover",
+      default: "shadow-glowEnergy",
+      hover: "hover:shadow-glowEnergyHover",
     },
     transitions: {
       soft: "transition-all duration-300",

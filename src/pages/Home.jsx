@@ -15,66 +15,17 @@ import PageTransition from "../effects/transitions/PageTransition";
 
 export default function Home() {
   return (
-    <PageTransition type="fade" glow>
-      <div className="bg-negroProfundo text-blancoPuro min-h-screen">
+    <div className="bg-negroProfundo text-blancoPuro min-h-screen">
+      <Header />
 
-        {/* ================= HEADER ================= */}
-        <Header />
+      <PageTransition type="slide" direction="up" speed="slow" glow>
+        <Hero />
+        <Features />
+        <Showcase />
+        <Contact />
+      </PageTransition>
 
-        {/* ================= HERO ================= */}
-        <Hero
-          title="TSolutions IPIDD"
-          subtitle="Tecnología, diseño y automatización para el futuro."
-          ctaLabel="Explorar"
-        />
-
-        {/* ================= FEATURES ================= */}
-        <Features
-          items={[
-            {
-              title: "Diseño Futurista",
-              description: "Interfaz con tokens corporativos y efectos avanzados.",
-            },
-            {
-              title: "Automatización IA",
-              description: "Agentes inteligentes integrados en todo el sistema.",
-            },
-            {
-              title: "Escalabilidad",
-              description: "Arquitectura modular lista para crecer.",
-            },
-          ]}
-        />
-
-        {/* ================= SHOWCASE ================= */}
-        <Showcase
-          title="Nuestros Productos"
-          items={[
-            {
-              name: "Zoco MéXL",
-              description: "Marketplace escalable con IA integrada.",
-            },
-            {
-              name: "La Cueva del Güero",
-              description: "Plataforma multimedia con identidad única.",
-            },
-            {
-              name: "Brand Builder API",
-              description: "Generador de marcas corporativas con IA.",
-            },
-          ]}
-        />
-
-        {/* ================= CONTACT ================= */}
-        <Contact
-          title="Contáctanos"
-          description="¿Listo para llevar tu empresa al futuro?"
-        />
-
-        {/* ================= FOOTER ================= */}
-        <Footer />
-
-      </div>
-    </PageTransition>
+      <Footer />
+    </div>
   );
 }
