@@ -8,6 +8,7 @@ export default function Button({
   size = "md",
   glow = true,
   className = "",
+  children,
   ...props
 }) {
   const base =

@@ -7,6 +7,7 @@ export default function Badge({
   size = "md",
   glow = true,
   className = "",
+  children,
   ...props
 }) {
   const base =

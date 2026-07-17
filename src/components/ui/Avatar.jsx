@@ -14,8 +14,9 @@ export default function Avatar({
     lg: "w-16 h-16 text-base",
   };
 
-  const glowEffect = glow ? "shadow-glowTurquesaSoft" : "";
+  const glowEffect = glow ? "shadow-glowEnergy" : "";
   const borderEffect = border ? "border border-blancoPuro" : "";
+  const fallbackChar = (alt || "A").toString().substring(0, 1).toUpperCase();
 
   return (
     <div
@@ -25,7 +26,7 @@ export default function Avatar({
         <img src={src} alt={alt} className="w-full h-full object-cover" />
       ) : (
         <span className="text-blancoPuro opacity-80">
-          {alt.charAt(0).toUpperCase()}
+          {fallbackChar}
         </span>
       )}
     </div>

@@ -8,6 +8,7 @@ export default function Chip({
   glow = true,
   interactive = true,
   className = "",
+  children,
   ...props
 }) {
   const base =
