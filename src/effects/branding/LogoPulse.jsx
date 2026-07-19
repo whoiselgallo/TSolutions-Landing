@@ -4,7 +4,7 @@
 // ============================================================
 
 import React from "react";
-import logo from "../../assets/logo-tsolutions.WEBP";
+import logo from "../../assets/logo-tsolutions.webp";
 import { UI } from "../../components/ui/ui.config"; // integración con tokens corporativos
 
 const LogoPulse = ({
