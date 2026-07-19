@@ -5,9 +5,9 @@ import {
   Header,
   Hero,
   Features,
-  Showcase,
   Contact,
   Footer,
+  Modules
 } from "../components/layout";
 
 // Page transition effect
@@ -20,6 +20,7 @@ export default function Home() {
 
       <PageTransition type="slide" direction="up" speed="slow" glow>
         <Hero />
+        <Modules />
         <Features />
         <Showcase />
         <Contact />
