@@ -7,7 +7,8 @@ import {
   Features,
   Contact,
   Footer,
-  Modules
+  Modules,
+  Showcase
 } from "../components/layout";
 
 // Page transition effect
