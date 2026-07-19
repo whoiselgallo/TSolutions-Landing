@@ -11,6 +11,7 @@ import DashboardShowcase from "./pages/DashboardShowcase.jsx";
 import DashboardFullDemo from "./pages/DashboardFullDemo.jsx";
 import DashboardPreview from "./pages/DashboardPreview.jsx";
 import ProgressDashboard from "./pages/ProgressDashboard.jsx";
+import FerreteriaSmart from "./pages/FerreteriaSmart.jsx";
 
 // Transition wrapper
 import PageTransition from "./effects/transitions/PageTransition.jsx";
@@ -22,6 +23,7 @@ export default function App() {
         {/* ===== HOME / LANDING ===== */}
         <Route path="/" element={<Home />} />
         <Route path="/landing" element={<PageTransition type="fade"><LandingPreview /></PageTransition>} />
+        <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />
 
         {/* ===== UI PREVIEWS ===== */}
         <Route path="/components" element={<PageTransition type="slide" direction="up"><ComponentsPreview /></PageTransition>} />

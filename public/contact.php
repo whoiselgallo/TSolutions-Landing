@@ -22,9 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Modifica estos valores con las credenciales que crees en hPanel
 // ------------------------------------------------------------
 define('DB_HOST', 'localhost');
-define('DB_USER', 'tu_usuario_db');     // Reemplazar
-define('DB_PASS', 'tu_contraseña_db');  // Reemplazar
-define('DB_NAME', 'tu_nombre_db');      // Reemplazar
+define('DB_USER', 'u115767692_rua');
+define('DB_PASS', 'exhsbcmvsJ87e/$');
+define('DB_NAME', 'u115767692_ipiddsolutions');
 
 // Obtener datos enviados en formato JSON
 $inputJSON = file_get_contents('php://input');

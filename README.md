@@ -64,7 +64,7 @@ TSolutions Landing/
 - **Radios**: soft (10px), medium (12px), large (14px), full (999px)
 - **Animaciones**: fadeTurquesa, slideSoft, scaleIn, glowPulse
 
-Ver `src/styles/README.md` para documentación completa del design system.
+Ver [DESIGN_SYSTEM.md](file:///T:/TSolutions%20Landing/DESIGN_SYSTEM.md) para documentación completa del design system, tokens, componentes reutilizables y variantes.
 
 ## Deploy en Hostinger
 

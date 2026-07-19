@@ -39,3 +39,4 @@ bg-negroProfundo, text-aquaTurquesa, border-naranjaEnergy, shadow-glowTurquesaSo
 - NUNCA hardcodear colores en componentes — siempre usar tokens CSS o clases Tailwind
 - Al agregar nuevos tokens: primero en `tokens.css` (:root), luego registrar en `tailwind.config.js`
 - `index.css` es el único archivo que debe importarse en `main.jsx`
+- Documentación maestra: ver [DESIGN_SYSTEM.md](file:///T:/TSolutions%20Landing/DESIGN_SYSTEM.md)
