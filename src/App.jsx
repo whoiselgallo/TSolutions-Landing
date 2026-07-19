@@ -12,6 +12,9 @@ import DashboardFullDemo from "./pages/DashboardFullDemo.jsx";
 import DashboardPreview from "./pages/DashboardPreview.jsx";
 import ProgressDashboard from "./pages/ProgressDashboard.jsx";
 import FerreteriaSmart from "./pages/FerreteriaSmart.jsx";
+import CuevaDelGuero from "./pages/CuevaDelGuero.jsx";
+import BrandIdentity from "./pages/BrandIdentity.jsx";
+import ConsultoriaNegocios from "./pages/ConsultoriaNegocios.jsx";
 
 // Transition wrapper
 import PageTransition from "./effects/transitions/PageTransition.jsx";
@@ -23,7 +26,12 @@ export default function App() {
         {/* ===== HOME / LANDING ===== */}
         <Route path="/" element={<Home />} />
         <Route path="/landing" element={<PageTransition type="fade"><LandingPreview /></PageTransition>} />
+        
+        {/* ===== PRODUCT MODULES ===== */}
         <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />
+        <Route path="/la-cueva-del-guero" element={<PageTransition type="fade"><CuevaDelGuero /></PageTransition>} />
+        <Route path="/brand-builder" element={<PageTransition type="fade"><BrandIdentity /></PageTransition>} />
+        <Route path="/consultoria" element={<PageTransition type="fade"><ConsultoriaNegocios /></PageTransition>} />
 
         {/* ===== UI PREVIEWS ===== */}
         <Route path="/components" element={<PageTransition type="slide" direction="up"><ComponentsPreview /></PageTransition>} />
