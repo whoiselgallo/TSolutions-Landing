@@ -18,7 +18,7 @@ ChartJS.register(
   Legend
 );
 
-const data = {
+const defaultData = {
   labels: ["Enero", "Febrero", "Marzo"],
   datasets: [
     {
@@ -29,7 +29,7 @@ const data = {
   ]
 };
 
-const options = {
+const defaultOptions = {
   responsive: true,
   plugins: {
     legend: { position: "top" },
@@ -37,6 +37,6 @@ const options = {
   }
 };
 
-export default function AnalyticsChart() {
-  return <Bar data={data} options={options} />;
+export default function AnalyticsChart({ chartData, chartOptions }) {
+  return <Bar data={chartData || defaultData} options={chartOptions || defaultOptions} />;
 }

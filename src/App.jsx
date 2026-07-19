@@ -12,6 +12,7 @@ import DashboardFullDemo from "./pages/DashboardFullDemo.jsx";
 import DashboardPreview from "./pages/DashboardPreview.jsx";
 import ProgressDashboard from "./pages/ProgressDashboard.jsx";
 import FerreteriaSmart from "./pages/FerreteriaSmart.jsx";
+import FerreteriaDashboard from "./pages/FerreteriaDashboard.jsx";
 import CuevaDelGuero from "./pages/CuevaDelGuero.jsx";
 import BrandIdentity from "./pages/BrandIdentity.jsx";
 import ConsultoriaNegocios from "./pages/ConsultoriaNegocios.jsx";
@@ -29,6 +30,7 @@ export default function App() {
         
         {/* ===== PRODUCT MODULES ===== */}
         <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />
+        <Route path="/ferreteria-smart/demo" element={<PageTransition type="fade" glow><FerreteriaDashboard /></PageTransition>} />
         <Route path="/la-cueva-del-guero" element={<PageTransition type="fade"><CuevaDelGuero /></PageTransition>} />
         <Route path="/brand-builder" element={<PageTransition type="fade"><BrandIdentity /></PageTransition>} />
         <Route path="/consultoria" element={<PageTransition type="fade"><ConsultoriaNegocios /></PageTransition>} />

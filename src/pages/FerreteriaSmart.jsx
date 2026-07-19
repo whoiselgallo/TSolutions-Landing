@@ -33,7 +33,7 @@ export default function FerreteriaSmart() {
             <a href="#roadmap" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">El Roadmap</a>
           </nav>
           <div className="hidden md:flex">
-             <Link to="/dashboard">
+             <Link to="/ferreteria-smart/demo">
                 <Button variant="primary" glow size="sm">
                   Ver Demo
                 </Button>
@@ -63,7 +63,7 @@ export default function FerreteriaSmart() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/dashboard/full-demo">
+            <Link to="/ferreteria-smart/demo">
               <Button variant="primary" size="lg" glow>
                 Explorar el Demo Interactivo
               </Button>
@@ -131,7 +131,7 @@ export default function FerreteriaSmart() {
         {/* CTA */}
         <section className="py-24 px-6 text-center">
             <h3 className="font-bruno text-3xl md:text-5xl text-white mb-8">¿Listo para modernizar tu negocio?</h3>
-            <Link to="/dashboard">
+            <Link to="/ferreteria-smart/demo">
               <Button variant="turquesa" size="lg" glow>
                 Probar Demo de la Plataforma
               </Button>
