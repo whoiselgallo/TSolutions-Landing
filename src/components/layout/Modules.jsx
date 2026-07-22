@@ -7,14 +7,14 @@ export default function Modules() {
   const modules = [
     {
       title: "Ferretería Smart",
-      path: "/ferreteria-smart",
+      path: "https://ferreteria.tsolutionsipidd.com",
       icon: "📦",
       desc: "Automatiza tu inventario, dispara tus ventas y mejora el servicio con IA.",
       color: "naranjaEnergy"
     },
     {
       title: "La Cueva del Güero",
-      path: "/la-cueva-del-guero",
+      path: "https://www.lacuevadelguero.com",
       icon: "🎙️",
       desc: "Módulo de podcasts, creación de avatares interactivos y producción audiovisual.",
       color: "aquaTurquesa"
@@ -48,8 +48,9 @@ export default function Modules() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {modules.map((mod, index) => (
-            <Link to={mod.path} key={index} className="block group">
+          {modules.map((mod, index) => {
+            const isExternal = mod.path.startsWith("http");
+            const CardContent = (
               <MagneticCard intensity={25} glow={true} className="h-full p-6 rounded-2xl bg-midnightPanel border border-white/10 hover:border-white/30 flex flex-col items-center text-center transition-all duration-300">
                 <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-6 text-3xl group-hover:scale-110 transition-transform">
                   {mod.icon}
@@ -64,8 +65,18 @@ export default function Modules() {
                   Explorar Módulo &rarr;
                 </div>
               </MagneticCard>
-            </Link>
-          ))}
+            );
+
+            return isExternal ? (
+              <a href={mod.path} target="_blank" rel="noopener noreferrer" key={index} className="block group">
+                {CardContent}
+              </a>
+            ) : (
+              <Link to={mod.path} key={index} className="block group">
+                {CardContent}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
