@@ -21,7 +21,7 @@ export default function Modules() {
     },
     {
       title: "Brand Identity",
-      path: "/brand-builder",
+      path: "https://identidad.tsolutionsipidd.com",
       icon: "🎨",
       desc: "El núcleo de diseño corporativo y branding de manuales de identidad visual.",
       color: "naranjaEnergy"
