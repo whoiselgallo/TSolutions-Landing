@@ -3,12 +3,14 @@ import { NavLink } from "react-router-dom";
 
 const navLinks = [
   { label: "Inicio", to: "/" },
+  { label: "Tienda", to: "/tienda" },
   { label: "Landing", to: "/landing" },
   { label: "Componentes", to: "/components" },
   { label: "Efectos", to: "/effects" },
   { label: "Tokens", to: "/tokens" },
   { label: "Dashboard", to: "/dashboard" },
 ];
+
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);

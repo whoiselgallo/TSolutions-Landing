@@ -16,6 +16,8 @@ import FerreteriaDashboard from "./pages/FerreteriaDashboard.jsx";
 import CuevaDelGuero from "./pages/CuevaDelGuero.jsx";
 import BrandIdentity from "./pages/BrandIdentity.jsx";
 import ConsultoriaNegocios from "./pages/ConsultoriaNegocios.jsx";
+import Store from "./pages/Store.jsx";
+
 
 // Transition wrapper
 import PageTransition from "./effects/transitions/PageTransition.jsx";
@@ -34,6 +36,8 @@ export default function App() {
         <Route path="/la-cueva-del-guero" element={<PageTransition type="fade"><CuevaDelGuero /></PageTransition>} />
         <Route path="/brand-builder" element={<PageTransition type="fade"><BrandIdentity /></PageTransition>} />
         <Route path="/consultoria" element={<PageTransition type="fade"><ConsultoriaNegocios /></PageTransition>} />
+        <Route path="/tienda" element={<PageTransition type="fade"><Store /></PageTransition>} />
+
 
         {/* ===== UI PREVIEWS ===== */}
         <Route path="/components" element={<PageTransition type="slide" direction="up"><ComponentsPreview /></PageTransition>} />
