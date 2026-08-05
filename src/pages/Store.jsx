@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { NeonText, Grid3D, MagneticCard } from "../effects";
-import { Button, Modal, Input } from "../components/ui";
+import { Button, Modal, Input, Badge } from "../components/ui";
 import { Header, Footer } from "../components/layout";
 
 const products = [
@@ -270,22 +270,34 @@ export default function Store() {
   const [emailInput, setEmailInput] = useState(localStorage.getItem("ts_user_email") || "");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  // Estados de Facturación SAT
+  const [wantsInvoice, setWantsInvoice] = useState(false);
+  const [rfc, setRfc] = useState(localStorage.getItem("ts_billing_rfc") || "");
+  const [legalName, setLegalName] = useState(localStorage.getItem("ts_billing_legalName") || "");
+  const [taxSystem, setTaxSystem] = useState(localStorage.getItem("ts_billing_taxSystem") || "625");
+  const [zip, setZip] = useState(localStorage.getItem("ts_billing_zip") || "");
+  const [usoCfdi, setUsoCfdi] = useState(localStorage.getItem("ts_billing_usoCfdi") || "G03");
   
   // Modales de estado de compra
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [purchasedItemName, setPurchasedItemName] = useState("");
+  const [invoiceRequested, setInvoiceRequested] = useState(false);
 
   useEffect(() => {
     const status = searchParams.get("status");
     const itemId = searchParams.get("itemId");
+    const wantsInvoiceParam = searchParams.get("wantsInvoice");
     if (status === "success" && itemId) {
       const prod = products.find(p => p.id === itemId);
       setPurchasedItemName(prod ? prod.title : itemId);
+      setInvoiceRequested(wantsInvoiceParam === "true");
       setSuccessModalOpen(true);
       // Limpiar parámetros de la URL
       searchParams.delete("status");
       searchParams.delete("itemId");
+      searchParams.delete("wantsInvoice");
       setSearchParams(searchParams);
     } else if (status === "cancel" && itemId) {
       const prod = products.find(p => p.id === itemId);
@@ -293,6 +305,7 @@ export default function Store() {
       setCancelModalOpen(true);
       searchParams.delete("status");
       searchParams.delete("itemId");
+      searchParams.delete("wantsInvoice");
       setSearchParams(searchParams);
     }
   }, [searchParams, setSearchParams]);
@@ -300,6 +313,7 @@ export default function Store() {
   const handleOpenCheckout = (product) => {
     setSelectedProduct(product);
     setCheckoutModalOpen(true);
+    setWantsInvoice(false);
     setErrorMsg("");
   };
 
@@ -308,6 +322,26 @@ export default function Store() {
     if (!emailInput) {
       setErrorMsg("Por favor, ingresa tu correo electrónico.");
       return;
+    }
+
+    if (wantsInvoice) {
+      if (!rfc || rfc.trim().length < 12 || rfc.trim().length > 13) {
+        setErrorMsg("Por favor, ingresa un RFC válido (12 o 13 caracteres).");
+        return;
+      }
+      if (!legalName || !legalName.trim()) {
+        setErrorMsg("Por favor, ingresa tu Razón Social o Nombre completo.");
+        return;
+      }
+      if (!zip || zip.trim().length !== 5) {
+        setErrorMsg("Por favor, ingresa un Código Postal válido (5 dígitos).");
+        return;
+      }
+      localStorage.setItem("ts_billing_rfc", rfc.trim());
+      localStorage.setItem("ts_billing_legalName", legalName.trim());
+      localStorage.setItem("ts_billing_taxSystem", taxSystem);
+      localStorage.setItem("ts_billing_zip", zip.trim());
+      localStorage.setItem("ts_billing_usoCfdi", usoCfdi);
     }
 
     localStorage.setItem("ts_user_email", emailInput);
@@ -321,7 +355,13 @@ export default function Store() {
         body: JSON.stringify({
           itemId: selectedProduct.id,
           currency: currency,
-          email: emailInput
+          email: emailInput,
+          wantsInvoice,
+          rfc: rfc.trim(),
+          legalName: legalName.trim(),
+          taxSystem,
+          zip: zip.trim(),
+          usoCfdi
         })
       });
       const data = await response.json();
@@ -363,7 +403,7 @@ export default function Store() {
             Ecosistema TSolutions
           </Badge>
           <h1 className="font-bruno text-4xl md:text-6xl mb-6 text-white leading-tight">
-            Tienda de <NeonText variant="naranja" glow>Soluciones</NeonText> Digitales
+            Tienda de <NeonText variant="cta" glow>Soluciones</NeonText> Digitales
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
             Adquiere acceso inmediato a nuestras herramientas inteligentes de branding, servicios a medida de desarrollo, automatización IA y consultoría especializada.
@@ -532,6 +572,105 @@ export default function Store() {
               </span>
             </div>
 
+            {/* Facturación SAT */}
+            <div className="border-t border-white/5 pt-4">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={wantsInvoice}
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+                    setWantsInvoice(checked);
+                    if (checked) {
+                      if (!rfc) setRfc("GAAJ8703126A0");
+                      if (!legalName) setLegalName("JAVIER EDUARDO GALLARDO ARREDONDO");
+                      if (!zip) setZip("21600");
+                    }
+                  }}
+                  className="rounded border-white/10 text-naranjaEnergy focus:ring-0 focus:ring-offset-0 bg-midnightPanel w-4 h-4"
+                />
+                <span className="text-xs text-gray-300 font-bruno">¿Requieres Factura Fiscal (CFDI 4.0)?</span>
+              </label>
+
+              {wantsInvoice && (
+                <div className="mt-4 space-y-4 animate-scaleIn bg-white/5 p-4 rounded-medium border border-white/5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-gray-400 uppercase font-bruno">RFC</label>
+                      <input
+                        type="text"
+                        placeholder="Ej. GAAJ8703126A0"
+                        value={rfc}
+                        onChange={(e) => setRfc(e.target.value.toUpperCase())}
+                        maxLength={13}
+                        className="w-full bg-midnightPanel text-blancoPuro border border-deepGrid rounded-medium px-3 py-2 text-xs outline-none focus:border-naranjaEnergy transition duration-200"
+                        required={wantsInvoice}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-gray-400 uppercase font-bruno">Código Postal</label>
+                      <input
+                        type="text"
+                        placeholder="Ej. 21600"
+                        value={zip}
+                        onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
+                        maxLength={5}
+                        className="w-full bg-midnightPanel text-blancoPuro border border-deepGrid rounded-medium px-3 py-2 text-xs outline-none focus:border-naranjaEnergy transition duration-200"
+                        required={wantsInvoice}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-gray-400 uppercase font-bruno">Nombre o Razón Social</label>
+                    <input
+                      type="text"
+                      placeholder="Ej. JAVIER EDUARDO GALLARDO ARREDONDO"
+                      value={legalName}
+                      onChange={(e) => setLegalName(e.target.value.toUpperCase())}
+                      className="w-full bg-midnightPanel text-blancoPuro border border-deepGrid rounded-medium px-3 py-2 text-xs outline-none focus:border-naranjaEnergy transition duration-200"
+                      required={wantsInvoice}
+                    />
+                    <span className="text-[9px] text-gray-500 block leading-tight">
+                      Tal como aparece en la Constancia de Situación Fiscal (sin agregar S.A. de C.V., etc.).
+                    </span>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-gray-400 uppercase font-bruno">Régimen Fiscal</label>
+                    <select
+                      value={taxSystem}
+                      onChange={(e) => setTaxSystem(e.target.value)}
+                      className="w-full bg-midnightPanel text-blancoPuro border border-deepGrid rounded-medium px-3 py-2 text-xs outline-none focus:border-naranjaEnergy transition duration-200"
+                      required={wantsInvoice}
+                    >
+                      <option value="625">625 - Actividades Empresariales con Plataformas Tecnológicas</option>
+                      <option value="601">601 - General de Ley Personas Morales</option>
+                      <option value="612">612 - Personas Físicas con Actividades Empresariales y Profesionales</option>
+                      <option value="626">626 - Régimen Simplificado de Confianza (RESICO)</option>
+                      <option value="605">605 - Sueldos y Salarios e Ingresos Asimilados</option>
+                      <option value="616">616 - Sin obligaciones fiscales</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-gray-400 uppercase font-bruno">Uso de CFDI</label>
+                    <select
+                      value={usoCfdi}
+                      onChange={(e) => setUsoCfdi(e.target.value)}
+                      className="w-full bg-midnightPanel text-blancoPuro border border-deepGrid rounded-medium px-3 py-2 text-xs outline-none focus:border-naranjaEnergy transition duration-200"
+                      required={wantsInvoice}
+                    >
+                      <option value="G03">G03 - Gastos en general</option>
+                      <option value="CP01">CP01 - Sin efectos fiscales</option>
+                      <option value="I08">I08 - Otras inversiones</option>
+                      <option value="D01">D01 - Honorarios médicos, dentales y hospitalarios</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {errorMsg && (
               <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-medium text-xs">
                 ⚠️ {errorMsg}
@@ -569,8 +708,13 @@ export default function Store() {
             Tu transacción para adquirir <strong>{purchasedItemName}</strong> se ha completado de forma segura a través de Stripe.
           </p>
           <div className="bg-white/5 p-4 rounded-medium text-xs text-gray-300 border border-white/5 max-w-sm mx-auto text-left leading-relaxed">
-            ✔️ Se ha enviado una confirmación a tu correo.<br />
+            ✔️ Se ha enviado una confirmación de pago a tu correo.<br />
             ✔️ El sistema de base de datos de TSolutions ha registrado tu acceso.<br />
+            {invoiceRequested && (
+              <span className="text-aquaTurquesa font-semibold">
+                ✔️ Tu factura CFDI 4.0 está siendo timbrada y se enviará en formato PDF y XML en unos minutos a tu correo.<br />
+              </span>
+            )}
             ✔️ Si adquiriste consultoría, te llegará un enlace de reserva en breve.
           </div>
         </div>

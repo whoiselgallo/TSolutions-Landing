@@ -125,7 +125,8 @@ $stripeSecret = getenv("STRIPE_SECRET_KEY") ?: (isset($_ENV["STRIPE_SECRET_KEY"]
 // Si estamos en desarrollo local o no se ha configurado la key real, activar simulador
 if (!$stripeSecret || $stripeSecret === "sk_test_mock") {
     $cancelUrl = $_SERVER["HTTP_REFERER"] ?? "#";
-    $successUrl = strtok($cancelUrl, '#') . "?status=success&itemId=" . $itemId;
+    $wantsInvoiceStr = (isset($input["wantsInvoice"]) && $input["wantsInvoice"]) ? "true" : "false";
+    $successUrl = strtok($cancelUrl, '#') . "?status=success&itemId=" . $itemId . "&wantsInvoice=" . $wantsInvoiceStr;
     echo json_encode([
         "status" => "mock",
         "message" => "Simulación de Stripe Checkout activa (sk_test_mock)",
@@ -145,7 +146,8 @@ curl_setopt($ch, CURLOPT_USERPWD, $stripeSecret . ":");
 $email = $input["email"] ?? null;
 $refererUrl = $_SERVER["HTTP_REFERER"] ?? "https://tsolutionsipidd.com/";
 $cancelUrl = strtok($refererUrl, '?') . "?status=cancel&itemId=" . $itemId;
-$successUrl = strtok($refererUrl, '?') . "?status=success&itemId=" . $itemId;
+$wantsInvoiceStr = (isset($input["wantsInvoice"]) && $input["wantsInvoice"]) ? "true" : "false";
+$successUrl = strtok($refererUrl, '?') . "?status=success&itemId=" . $itemId . "&wantsInvoice=" . $wantsInvoiceStr;
 
 $data = [
     "line_items[0][price_data][currency]" => $currency,
@@ -158,6 +160,17 @@ $data = [
     "client_reference_id" => $itemId,
     "metadata[itemId]" => $itemId
 ];
+
+if (isset($input["wantsInvoice"]) && $input["wantsInvoice"]) {
+    $data["metadata[wants_invoice]"] = "true";
+    $data["metadata[rfc]"] = strtoupper(trim($input["rfc"] ?? ""));
+    $data["metadata[razon_social]"] = strtoupper(trim($input["legalName"] ?? ""));
+    $data["metadata[regimen_fiscal]"] = trim($input["taxSystem"] ?? "");
+    $data["metadata[postal_code]"] = trim($input["zip"] ?? "");
+    $data["metadata[uso_cfdi]"] = trim($input["usoCfdi"] ?? "");
+} else {
+    $data["metadata[wants_invoice]"] = "false";
+}
 
 if ($itemId === "membership") {
     $data["line_items[0][price_data][recurring][interval]"] = "month";
