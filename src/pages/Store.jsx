@@ -249,6 +249,22 @@ const products = [
     ],
     popular: false,
     icon: "🤝"
+  },
+  {
+    id: "custom_payment",
+    category: "consultoria",
+    title: "Pago Personalizado / A la Medida",
+    desc: "Ingresa el concepto y el monto acordado con tu consultor para realizar un pago a la medida.",
+    priceUsd: 0,
+    priceMxn: 0,
+    features: [
+      "Monto flexible acordado",
+      "Soporta pago en efectivo (OXXO)",
+      "Facturación fiscal CFDI 4.0 inmediata",
+      "Procesamiento seguro por Stripe"
+    ],
+    popular: false,
+    icon: "💳"
   }
 ];
 
@@ -270,6 +286,11 @@ export default function Store() {
   const [emailInput, setEmailInput] = useState(localStorage.getItem("ts_user_email") || "");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  // Estados de Pago Personalizado
+  const [customAmount, setCustomAmount] = useState("");
+  const [customConcept, setCustomConcept] = useState("");
+  const [cardError, setCardError] = useState("");
 
   // Estados de Facturación SAT
   const [wantsInvoice, setWantsInvoice] = useState(false);
@@ -311,6 +332,18 @@ export default function Store() {
   }, [searchParams, setSearchParams]);
 
   const handleOpenCheckout = (product) => {
+    setCardError("");
+    if (product.id === "custom_payment") {
+      if (!customConcept || !customConcept.trim()) {
+        setCardError("Por favor, ingresa el concepto del pago.");
+        return;
+      }
+      const amountFloat = parseFloat(customAmount);
+      if (isNaN(amountFloat) || amountFloat <= 0) {
+        setCardError("Por favor, ingresa un monto válido mayor a cero.");
+        return;
+      }
+    }
     setSelectedProduct(product);
     setCheckoutModalOpen(true);
     setWantsInvoice(false);
@@ -348,21 +381,27 @@ export default function Store() {
     setLoading(true);
     setErrorMsg("");
 
-    try {
+      const payload = {
+        itemId: selectedProduct.id,
+        currency: currency,
+        email: emailInput,
+        wantsInvoice,
+        rfc: rfc.trim(),
+        legalName: legalName.trim(),
+        taxSystem,
+        zip: zip.trim(),
+        usoCfdi
+      };
+
+      if (selectedProduct.id === "custom_payment") {
+        payload.customAmount = parseFloat(customAmount);
+        payload.customName = customConcept.trim() || "Pago Personalizado TSolutions";
+      }
+
       const response = await fetch("api/create-checkout-session.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          itemId: selectedProduct.id,
-          currency: currency,
-          email: emailInput,
-          wantsInvoice,
-          rfc: rfc.trim(),
-          legalName: legalName.trim(),
-          taxSystem,
-          zip: zip.trim(),
-          usoCfdi
-        })
+        body: JSON.stringify(payload)
       });
       const data = await response.json();
       setLoading(false);
@@ -483,9 +522,39 @@ export default function Store() {
                   <h3 className="text-xl font-bruno text-white mb-3 group-hover:text-naranjaEnergy transition-colors">
                     {prod.title}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-6 font-inter">
-                    {prod.desc}
-                  </p>
+                  {prod.id === "custom_payment" ? (
+                    <div className="space-y-4 mb-6 bg-white/5 p-4 rounded-medium border border-white/5">
+                      <div className="space-y-1">
+                        <label className="text-[10px] text-gray-400 uppercase font-bruno">Concepto de Pago</label>
+                        <input
+                          type="text"
+                          placeholder="Ej. Anticipo desarrollo"
+                          value={customConcept}
+                          onChange={(e) => setCustomConcept(e.target.value)}
+                          className="w-full bg-midnightPanel text-blancoPuro border border-deepGrid rounded-medium px-3 py-2 text-xs outline-none focus:border-naranjaEnergy transition duration-200"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] text-gray-400 uppercase font-bruno">Monto</label>
+                        <input
+                          type="number"
+                          placeholder="0.00"
+                          value={customAmount}
+                          onChange={(e) => setCustomAmount(e.target.value)}
+                          className="w-full bg-midnightPanel text-blancoPuro border border-deepGrid rounded-medium px-3 py-2 text-xs outline-none focus:border-naranjaEnergy transition duration-200"
+                        />
+                      </div>
+                      {cardError && (
+                        <div className="text-[10px] text-red-400 mt-1">
+                          ⚠️ {cardError}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="text-gray-400 text-sm leading-relaxed mb-6 font-inter">
+                      {prod.desc}
+                    </p>
+                  )}
 
                   {/* Características */}
                   <ul className="space-y-3 mb-8">
@@ -504,11 +573,22 @@ export default function Store() {
                     <span className="text-xs text-gray-500 uppercase tracking-widest font-bruno">Precio</span>
                     <div className="text-right">
                       <span className="text-2xl font-bruno text-white font-bold">
-                        {currency === "usd" ? `$${prod.priceUsd} USD` : `$${prod.priceMxn} MXN`}
+                        {prod.id === "custom_payment" ? (
+                          customAmount ? `$${parseFloat(customAmount).toLocaleString()} ${currency.toUpperCase()}` : `$0.00 ${currency.toUpperCase()}`
+                        ) : (
+                          currency === "usd" ? `$${prod.priceUsd} USD` : `$${prod.priceMxn} MXN`
+                        )}
                       </span>
-                      <span className="block text-[10px] text-gray-400 mt-1 font-inter">
-                        {currency === "usd" ? `(~ ${prod.priceMxn} MXN)` : `(~ ${prod.priceUsd} USD)`}
-                      </span>
+                      {prod.id !== "custom_payment" && (
+                        <span className="block text-[10px] text-gray-400 mt-1 font-inter">
+                          {currency === "usd" ? `(~ ${prod.priceMxn} MXN)` : `(~ ${prod.priceUsd} USD)`}
+                        </span>
+                      )}
+                      {currency === "mxn" && (
+                        <span className="block text-[10px] text-aquaTurquesa mt-1 font-bruno">
+                          💵 Pago en OXXO / Efectivo disponible
+                        </span>
+                      )}
                     </div>
                   </div>
 
@@ -518,7 +598,7 @@ export default function Store() {
                     className="w-full font-bruno uppercase tracking-wider py-3.5 text-xs text-negroProfundo hover:scale-[1.02] active:scale-[0.98] transition-transform"
                     onClick={() => handleOpenCheckout(prod)}
                   >
-                    Adquirir Ahora
+                    {prod.id === "custom_payment" ? "Pagar Concepto" : "Adquirir Ahora"}
                   </Button>
                 </div>
               </MagneticCard>
@@ -543,12 +623,18 @@ export default function Store() {
               <span className="text-xs text-gray-400 uppercase tracking-wider block mb-1 font-bruno">Producto</span>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-2xl">{selectedProduct.icon}</span>
-                <span className="font-bruno text-white text-base font-bold">{selectedProduct.title}</span>
+                <span className="font-bruno text-white text-base font-bold">
+                  {selectedProduct.id === "custom_payment" ? customConcept : selectedProduct.title}
+                </span>
               </div>
               <div className="flex justify-between items-baseline mt-4 border-t border-white/5 pt-3">
                 <span className="text-xs text-gray-400 font-bruno">Total a pagar:</span>
                 <span className="text-xl font-bruno text-naranjaEnergy font-black">
-                  {currency === "usd" ? `$${selectedProduct.priceUsd}.00 USD` : `$${selectedProduct.priceMxn}.00 MXN`}
+                  {selectedProduct.id === "custom_payment" ? (
+                    `$${parseFloat(customAmount).toFixed(2)} ${currency.toUpperCase()}`
+                  ) : (
+                    currency === "usd" ? `$${selectedProduct.priceUsd}.00 USD` : `$${selectedProduct.priceMxn}.00 MXN`
+                  )}
                 </span>
               </div>
             </div>

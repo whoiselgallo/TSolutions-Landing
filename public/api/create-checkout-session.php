@@ -117,7 +117,21 @@ $prices = [
     ]
 ];
 
-$item = $prices[$itemId] ?? $prices["complete_bundle"];
+if ($itemId === "custom_payment") {
+    $customAmount = floatval($input["customAmount"] ?? 0);
+    if ($customAmount <= 0) {
+        echo json_encode(["status" => "error", "message" => "El monto personalizado debe ser mayor a cero."]);
+        exit;
+    }
+    $customName = trim($input["customName"] ?? "Pago Personalizado TSolutions");
+    $item = [
+        "name" => $customName,
+        "usd" => round($customAmount * 100),
+        "mxn" => round($customAmount * 100)
+    ];
+} else {
+    $item = $prices[$itemId] ?? $prices["complete_bundle"];
+}
 $amount = $item[$currency];
 
 $stripeSecret = getenv("STRIPE_SECRET_KEY") ?: (isset($_ENV["STRIPE_SECRET_KEY"]) ? $_ENV["STRIPE_SECRET_KEY"] : null);
@@ -160,6 +174,16 @@ $data = [
     "client_reference_id" => $itemId,
     "metadata[itemId]" => $itemId
 ];
+
+if ($itemId === "custom_payment") {
+    $data["metadata[custom_name]"] = $item["name"];
+}
+
+// Configurar métodos de pago (Tarjeta por defecto; agregar OXXO si la moneda es MXN)
+$data["payment_method_types[0]"] = "card";
+if ($currency === "mxn") {
+    $data["payment_method_types[1]"] = "oxxo";
+}
 
 if (isset($input["wantsInvoice"]) && $input["wantsInvoice"]) {
     $data["metadata[wants_invoice]"] = "true";

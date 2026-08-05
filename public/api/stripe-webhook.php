@@ -158,7 +158,7 @@ if ($eventType === "checkout.session.completed") {
             ];
 
             $satProductKey = $satKeys[$itemId] ?? "82141502";
-            $productDesc = $productNames[$itemId] ?? "Servicio TSolutions";
+            $productDesc = $session["metadata"]["custom_name"] ?? ($productNames[$itemId] ?? "Servicio TSolutions");
 
             $totalPrice = $amount / 100;
             $basePrice = $totalPrice / 1.16;
