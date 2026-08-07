@@ -117,13 +117,13 @@ $prices = [
     ]
 ];
 
-if ($itemId === "custom_payment") {
+if ($itemId === "custom_payment" || $itemId === "cash_payment_presencial") {
     $customAmount = floatval($input["customAmount"] ?? 0);
     if ($customAmount <= 0) {
         echo json_encode(["status" => "error", "message" => "El monto personalizado debe ser mayor a cero."]);
         exit;
     }
-    $customName = trim($input["customName"] ?? "Pago Personalizado TSolutions");
+    $customName = trim($input["customName"] ?? ($itemId === "cash_payment_presencial" ? "Pago en Efectivo Presencial" : "Pago Personalizado TSolutions"));
     $item = [
         "name" => $customName,
         "usd" => round($customAmount * 100),
@@ -136,11 +136,92 @@ $amount = $item[$currency];
 
 $stripeSecret = getenv("STRIPE_SECRET_KEY") ?: (isset($_ENV["STRIPE_SECRET_KEY"]) ? $_ENV["STRIPE_SECRET_KEY"] : null);
 
+// Función auxiliar para peticiones a la API de Stripe
+function stripe_request($endpoint, $data, $secret) {
+    $ch = curl_init("https://api.stripe.com/v1/" . $endpoint);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_USERPWD, $secret . ":");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+    $res = curl_exec($ch);
+    curl_close($ch);
+    return json_decode($res, true);
+}
+
+// Si es pago en efectivo presencial con Stripe real, registrar fuera de banda
+if ($itemId === "cash_payment_presencial" && $stripeSecret && $stripeSecret !== "sk_test_mock") {
+    $email = $input["email"] ?? "cliente_presencial@tsolutionsipidd.com";
+    
+    // 1. Crear o buscar cliente
+    $custRes = stripe_request("customers", [
+        "email" => $email,
+        "name" => $input["legalName"] ?? "Cliente Presencial"
+    ], $stripeSecret);
+    $customerId = $custRes["id"] ?? null;
+    
+    if (!$customerId) {
+        echo json_encode(["status" => "error", "message" => "Error al registrar cliente en Stripe"]);
+        exit;
+    }
+    
+    // 2. Crear ítem de factura
+    stripe_request("invoiceitems", [
+        "customer" => $customerId,
+        "amount" => $amount,
+        "currency" => $currency,
+        "description" => $item["name"]
+    ], $stripeSecret);
+    
+    // 3. Crear factura
+    $invRes = stripe_request("invoices", [
+        "customer" => $customerId,
+        "auto_advance" => "false",
+        "metadata[payment_type]" => "cash_manual",
+        "metadata[wants_invoice]" => (isset($input["wantsInvoice"]) && $input["wantsInvoice"]) ? "true" : "false"
+    ], $stripeSecret);
+    $invoiceId = $invRes["id"] ?? null;
+    
+    if (!$invoiceId) {
+        echo json_encode(["status" => "error", "message" => "Error al generar factura en Stripe"]);
+        exit;
+    }
+    
+    // 4. Finalizar factura
+    stripe_request("invoices/" . $invoiceId . "/finalize", [], $stripeSecret);
+    
+    // 5. Pagar fuera de banda (en efectivo/presencial)
+    $payRes = stripe_request("invoices/" . $invoiceId . "/pay", [
+        "paid_out_of_band" => "true"
+    ], $stripeSecret);
+    
+    if (isset($payRes["error"])) {
+        echo json_encode(["status" => "error", "message" => "Error al registrar pago en Stripe: " . $payRes["error"]["message"]]);
+        exit;
+    }
+    
+    $refererUrl = $_SERVER["HTTP_REFERER"] ?? "https://tsolutionsipidd.com/";
+    $wantsInvoiceStr = (isset($input["wantsInvoice"]) && $input["wantsInvoice"]) ? "true" : "false";
+    $successUrl = strtok($refererUrl, '?') . "?status=success&itemId=" . $itemId . "&wantsInvoice=" . $wantsInvoiceStr . "&manual_code=" . $invoiceId;
+    
+    echo json_encode([
+        "status" => "ok",
+        "id" => $invoiceId,
+        "url" => $successUrl
+    ]);
+    exit;
+}
+
 // Si estamos en desarrollo local o no se ha configurado la key real, activar simulador
 if (!$stripeSecret || $stripeSecret === "sk_test_mock") {
     $cancelUrl = $_SERVER["HTTP_REFERER"] ?? "#";
     $wantsInvoiceStr = (isset($input["wantsInvoice"]) && $input["wantsInvoice"]) ? "true" : "false";
     $successUrl = strtok($cancelUrl, '#') . "?status=success&itemId=" . $itemId . "&wantsInvoice=" . $wantsInvoiceStr;
+    
+    if ($itemId === "cash_payment_presencial") {
+        $manualCode = "TS-CASH-" . strtoupper(bin2hex(random_bytes(4)));
+        $successUrl .= "&manual_code=" . $manualCode;
+    }
+    
     echo json_encode([
         "status" => "mock",
         "message" => "Simulación de Stripe Checkout activa (sk_test_mock)",

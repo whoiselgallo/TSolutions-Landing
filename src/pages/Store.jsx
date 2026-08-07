@@ -265,6 +265,22 @@ const products = [
     ],
     popular: false,
     icon: "💳"
+  },
+  {
+    id: "cash_payment_presencial",
+    category: "consultoria",
+    title: "Pago en Efectivo (Presencial)",
+    desc: "Registra cobros físicos en efectivo. Captura concepto y monto para emitir el código de venta manual en Stripe y permitir facturación CFDI.",
+    priceUsd: 0,
+    priceMxn: 0,
+    features: [
+      "Cobros físicos sin cantidad fija",
+      "Registro de venta manual en Stripe",
+      "Generación de código de venta único",
+      "Facturación fiscal CFDI 4.0 inmediata"
+    ],
+    popular: false,
+    icon: "💵"
   }
 ];
 
@@ -305,20 +321,28 @@ export default function Store() {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [purchasedItemName, setPurchasedItemName] = useState("");
   const [invoiceRequested, setInvoiceRequested] = useState(false);
+  const [manualCode, setManualCode] = useState("");
 
   useEffect(() => {
     const status = searchParams.get("status");
     const itemId = searchParams.get("itemId");
     const wantsInvoiceParam = searchParams.get("wantsInvoice");
+    const codeParam = searchParams.get("manual_code");
     if (status === "success" && itemId) {
       const prod = products.find(p => p.id === itemId);
       setPurchasedItemName(prod ? prod.title : itemId);
       setInvoiceRequested(wantsInvoiceParam === "true");
+      if (codeParam) {
+        setManualCode(codeParam);
+      } else {
+        setManualCode("");
+      }
       setSuccessModalOpen(true);
       // Limpiar parámetros de la URL
       searchParams.delete("status");
       searchParams.delete("itemId");
       searchParams.delete("wantsInvoice");
+      searchParams.delete("manual_code");
       setSearchParams(searchParams);
     } else if (status === "cancel" && itemId) {
       const prod = products.find(p => p.id === itemId);
@@ -333,7 +357,7 @@ export default function Store() {
 
   const handleOpenCheckout = (product) => {
     setCardError("");
-    if (product.id === "custom_payment") {
+    if (product.id === "custom_payment" || product.id === "cash_payment_presencial") {
       if (!customConcept || !customConcept.trim()) {
         setCardError("Por favor, ingresa el concepto del pago.");
         return;
@@ -381,6 +405,7 @@ export default function Store() {
     setLoading(true);
     setErrorMsg("");
 
+    try {
       const payload = {
         itemId: selectedProduct.id,
         currency: currency,
@@ -393,9 +418,11 @@ export default function Store() {
         usoCfdi
       };
 
-      if (selectedProduct.id === "custom_payment") {
+      if (selectedProduct.id === "custom_payment" || selectedProduct.id === "cash_payment_presencial") {
         payload.customAmount = parseFloat(customAmount);
-        payload.customName = customConcept.trim() || "Pago Personalizado TSolutions";
+        payload.customName = selectedProduct.id === "cash_payment_presencial"
+          ? `[Efectivo Presencial] ${customConcept.trim()}`
+          : (customConcept.trim() || "Pago Personalizado TSolutions");
       }
 
       const response = await fetch("api/create-checkout-session.php", {
@@ -522,7 +549,7 @@ export default function Store() {
                   <h3 className="text-xl font-bruno text-white mb-3 group-hover:text-naranjaEnergy transition-colors">
                     {prod.title}
                   </h3>
-                  {prod.id === "custom_payment" ? (
+                  {prod.id === "custom_payment" || prod.id === "cash_payment_presencial" ? (
                     <div className="space-y-4 mb-6 bg-white/5 p-4 rounded-medium border border-white/5">
                       <div className="space-y-1">
                         <label className="text-[10px] text-gray-400 uppercase font-bruno">Concepto de Pago</label>
@@ -573,13 +600,13 @@ export default function Store() {
                     <span className="text-xs text-gray-500 uppercase tracking-widest font-bruno">Precio</span>
                     <div className="text-right">
                       <span className="text-2xl font-bruno text-white font-bold">
-                        {prod.id === "custom_payment" ? (
+                        {prod.id === "custom_payment" || prod.id === "cash_payment_presencial" ? (
                           customAmount ? `$${parseFloat(customAmount).toLocaleString()} ${currency.toUpperCase()}` : `$0.00 ${currency.toUpperCase()}`
                         ) : (
                           currency === "usd" ? `$${prod.priceUsd} USD` : `$${prod.priceMxn} MXN`
                         )}
                       </span>
-                      {prod.id !== "custom_payment" && (
+                      {prod.id !== "custom_payment" && prod.id !== "cash_payment_presencial" && (
                         <span className="block text-[10px] text-gray-400 mt-1 font-inter">
                           {currency === "usd" ? `(~ ${prod.priceMxn} MXN)` : `(~ ${prod.priceUsd} USD)`}
                         </span>
@@ -791,8 +818,21 @@ export default function Store() {
             Pago Procesado Correctamente
           </h3>
           <p className="text-gray-400 text-sm leading-relaxed">
-            Tu transacción para adquirir <strong>{purchasedItemName}</strong> se ha completado de forma segura a través de Stripe.
+            {manualCode ? (
+              <span>
+                Registro de pago en efectivo procesado y validado mediante Stripe (Venta Manual).
+              </span>
+            ) : (
+              <span>
+                Tu transacción para adquirir <strong>{purchasedItemName}</strong> se ha completado de forma segura a través de Stripe.
+              </span>
+            )}
           </p>
+          {manualCode && (
+            <div className="p-3 bg-naranjaEnergy/10 border border-naranjaEnergy/30 rounded-medium text-xs text-center text-naranjaEnergy font-bruno">
+              CÓDIGO DE VENTA MANUAL: <span className="text-white font-bold">{manualCode}</span>
+            </div>
+          )}
           <div className="bg-white/5 p-4 rounded-medium text-xs text-gray-300 border border-white/5 max-w-sm mx-auto text-left leading-relaxed">
             ✔️ Se ha enviado una confirmación de pago a tu correo.<br />
             ✔️ El sistema de base de datos de TSolutions ha registrado tu acceso.<br />
