@@ -1,8 +1,10 @@
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/api/contact",                  "destination": "/api/contact.js" },
+    { "source": "/api/create-checkout-session",  "destination": "/api/create-checkout-session.js" },
+    { "source": "/api/stripe-webhook",           "destination": "/api/stripe-webhook.js" },
+    { "source": "/api/validate-access",          "destination": "/api/validate-access.js" },
+    { "source": "/api/gemini",                   "destination": "/api/gemini.js" },
+    { "source": "/(.*)",                         "destination": "/index.html" }
   ]
 }

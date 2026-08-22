@@ -322,6 +322,7 @@ export default function Store() {
   const [purchasedItemName, setPurchasedItemName] = useState("");
   const [invoiceRequested, setInvoiceRequested] = useState(false);
   const [manualCode, setManualCode] = useState("");
+  const [accessCode, setAccessCode] = useState("");
 
   useEffect(() => {
     const status = searchParams.get("status");
@@ -332,17 +333,18 @@ export default function Store() {
       const prod = products.find(p => p.id === itemId);
       setPurchasedItemName(prod ? prod.title : itemId);
       setInvoiceRequested(wantsInvoiceParam === "true");
-      if (codeParam) {
-        setManualCode(codeParam);
-      } else {
-        setManualCode("");
-      }
+      const accessCodeParam = searchParams.get("access_code");
+      if (codeParam) setManualCode(codeParam);
+      else setManualCode("");
+      if (accessCodeParam) setAccessCode(accessCodeParam);
+      else setAccessCode("");
       setSuccessModalOpen(true);
       // Limpiar parámetros de la URL
       searchParams.delete("status");
       searchParams.delete("itemId");
       searchParams.delete("wantsInvoice");
       searchParams.delete("manual_code");
+      searchParams.delete("access_code");
       setSearchParams(searchParams);
     } else if (status === "cancel" && itemId) {
       const prod = products.find(p => p.id === itemId);
@@ -425,7 +427,7 @@ export default function Store() {
           : (customConcept.trim() || "Pago Personalizado TSolutions");
       }
 
-      const response = await fetch("api/create-checkout-session.php", {
+      const response = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -810,7 +812,7 @@ export default function Store() {
         title="¡Gracias por tu compra!"
         glow={true}
       >
-        <div className="space-y-4 pt-4 text-center font-inter">
+        <div className="space-y-5 pt-4 text-center font-inter">
           <div className="w-16 h-16 bg-naranjaEnergy/25 border border-naranjaEnergy text-4xl flex items-center justify-center rounded-full mx-auto animate-scaleIn shadow-[0_0_20px_rgba(249,115,22,0.4)]">
             🎉
           </div>
@@ -818,30 +820,40 @@ export default function Store() {
             Pago Procesado Correctamente
           </h3>
           <p className="text-gray-400 text-sm leading-relaxed">
-            {manualCode ? (
-              <span>
-                Registro de pago en efectivo procesado y validado mediante Stripe (Venta Manual).
-              </span>
-            ) : (
-              <span>
-                Tu transacción para adquirir <strong>{purchasedItemName}</strong> se ha completado de forma segura a través de Stripe.
-              </span>
-            )}
+            Tu transacción para <strong className="text-white">{purchasedItemName}</strong> se ha completado de forma segura.
           </p>
+
+          {/* Código de acceso principal */}
+          {accessCode && (
+            <div className="bg-negroProfundo border border-aquaTurquesa/40 rounded-large p-5 shadow-[0_0_20px_rgba(0,229,255,0.1)]">
+              <p className="text-[10px] text-aquaTurquesa font-bruno uppercase tracking-widest mb-2">🔑 Tu Código de Acceso</p>
+              <p className="font-mono text-2xl font-bold text-white tracking-widest mb-3 select-all">{accessCode}</p>
+              <p className="text-[10px] text-gray-500 mb-4">Guarda este código — lo necesitas para entrar a tu herramienta</p>
+              <a
+                href={`/acceso/${accessCode}`}
+                className="block w-full bg-aquaTurquesa text-negroProfundo font-bruno text-sm py-3 px-6 rounded-medium hover:shadow-[0_0_20px_rgba(0,229,255,0.4)] transition duration-300 uppercase tracking-wider"
+              >
+                Acceder a mi Herramienta →
+              </a>
+            </div>
+          )}
+
+          {/* Código de venta manual (efectivo presencial) */}
           {manualCode && (
             <div className="p-3 bg-naranjaEnergy/10 border border-naranjaEnergy/30 rounded-medium text-xs text-center text-naranjaEnergy font-bruno">
               CÓDIGO DE VENTA MANUAL: <span className="text-white font-bold">{manualCode}</span>
             </div>
           )}
-          <div className="bg-white/5 p-4 rounded-medium text-xs text-gray-300 border border-white/5 max-w-sm mx-auto text-left leading-relaxed">
-            ✔️ Se ha enviado una confirmación de pago a tu correo.<br />
-            ✔️ El sistema de base de datos de TSolutions ha registrado tu acceso.<br />
+
+          <div className="bg-white/5 p-4 rounded-medium text-xs text-gray-300 border border-white/5 text-left leading-relaxed">
+            ✔️ Confirmación de pago enviada a tu correo.<br />
+            ✔️ Código de acceso registrado en nuestra base de datos.<br />
             {invoiceRequested && (
               <span className="text-aquaTurquesa font-semibold">
-                ✔️ Tu factura CFDI 4.0 está siendo timbrada y se enviará en formato PDF y XML en unos minutos a tu correo.<br />
+                ✔️ Tu factura CFDI 4.0 se enviará en PDF y XML a tu correo en breve.<br />
               </span>
             )}
-            ✔️ Si adquiriste consultoría, te llegará un enlace de reserva en breve.
+            ✔️ Para ingresar después: ve a <strong className="text-naranjaEnergy">/acceso</strong> e ingresa tu código.
           </div>
         </div>
       </Modal>

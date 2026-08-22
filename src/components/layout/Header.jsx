@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAI } from "../../context/AIContext";
 
 const navLinks = [
   { label: "Inicio", to: "/" },
@@ -14,6 +15,7 @@ const navLinks = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { openChat } = useAI();
 
   const linkClass = ({ isActive }) =>
     `font-bruno text-xs tracking-wider transition-all duration-300 relative py-1 px-2 ${
@@ -24,11 +26,21 @@ export default function Header() {
 
   return (
     <header className="w-full sticky top-0 z-50 bg-negroProfundo/90 backdrop-blur-md border-b border-naranjaEnergy/10 text-blancoPuro px-6 py-4 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
-      {/* ===== LOGO ===== */}
-      <NavLink to="/" className="flex items-center gap-2 group">
-        <span className="font-bruno text-blancoPuro text-2xl tracking-wide transition-colors group-hover:text-naranjaEnergy">TSolutions</span>
-        <span className="text-naranjaEnergy font-bruno text-xs bg-naranjaEnergy/10 px-1.5 py-0.5 rounded border border-naranjaEnergy/25">IPIDD</span>
-      </NavLink>
+      {/* ===== LOGO & FERREBOT ===== */}
+      <div className="flex items-center gap-6">
+        <NavLink to="/" className="flex items-center gap-2 group">
+          <span className="font-bruno text-blancoPuro text-2xl tracking-wide transition-colors group-hover:text-naranjaEnergy">TSolutions</span>
+          <span className="text-naranjaEnergy font-bruno text-xs bg-naranjaEnergy/10 px-1.5 py-0.5 rounded border border-naranjaEnergy/25">IPIDD</span>
+        </NavLink>
+        
+        <button 
+          onClick={openChat}
+          className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-aquaTurquesa/10 border border-aquaTurquesa/30 text-aquaTurquesa font-inter text-xs tracking-wide hover:bg-aquaTurquesa/20 transition-all shadow-[0_0_10px_rgba(0,229,255,0.2)] hover:shadow-[0_0_15px_rgba(0,229,255,0.4)]"
+        >
+          <span className="text-sm">🤖</span>
+          <span>Ask Ferrebot</span>
+        </button>
+      </div>
 
       {/* ===== NAV DESKTOP ===== */}
       <nav className="hidden md:flex gap-8 items-center">

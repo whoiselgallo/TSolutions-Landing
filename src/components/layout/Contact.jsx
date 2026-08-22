@@ -19,7 +19,7 @@ export default function Contact() {
     setStatusMsg("");
 
     try {
-      const response = await fetch("/contact.php", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -8,7 +8,8 @@ import {
   Contact,
   Footer,
   Modules,
-  Showcase
+  Showcase,
+  RuaAgent
 } from "../components/layout";
 
 // Page transition effect
@@ -28,6 +29,9 @@ export default function Home() {
       </PageTransition>
 
       <Footer />
+
+      {/* RUA Agent — Asistente inteligente flotante powered by Gemini */}
+      <RuaAgent />
     </div>
   );
 }

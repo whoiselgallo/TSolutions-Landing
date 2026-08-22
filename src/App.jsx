@@ -17,40 +17,50 @@ import CuevaDelGuero from "./pages/CuevaDelGuero.jsx";
 import BrandIdentity from "./pages/BrandIdentity.jsx";
 import ConsultoriaNegocios from "./pages/ConsultoriaNegocios.jsx";
 import Store from "./pages/Store.jsx";
+import AccessGate from "./pages/AccessGate.jsx";
 
 
 // Transition wrapper
 import PageTransition from "./effects/transitions/PageTransition.jsx";
 
+// AI Context & Chat
+import { AIProvider } from "./context/AIContext.jsx";
+import { AIChatWidget } from "./components/ai";
+
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        {/* ===== HOME / LANDING ===== */}
-        <Route path="/" element={<Home />} />
-        <Route path="/landing" element={<PageTransition type="fade"><LandingPreview /></PageTransition>} />
-        
-        {/* ===== PRODUCT MODULES ===== */}
-        <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />
-        <Route path="/ferreteria-smart/demo" element={<PageTransition type="fade" glow><FerreteriaDashboard /></PageTransition>} />
-        <Route path="/la-cueva-del-guero" element={<PageTransition type="fade"><CuevaDelGuero /></PageTransition>} />
-        <Route path="/brand-builder" element={<PageTransition type="fade"><BrandIdentity /></PageTransition>} />
-        <Route path="/consultoria" element={<PageTransition type="fade"><ConsultoriaNegocios /></PageTransition>} />
-        <Route path="/tienda" element={<PageTransition type="fade"><Store /></PageTransition>} />
+    <AIProvider>
+      <Router>
+        <Routes>
+          {/* ===== HOME / LANDING ===== */}
+          <Route path="/" element={<Home />} />
+          <Route path="/landing" element={<PageTransition type="fade"><LandingPreview /></PageTransition>} />
+          
+          {/* ===== PRODUCT MODULES ===== */}
+          <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />
+          <Route path="/ferreteria-smart/demo" element={<PageTransition type="fade" glow><FerreteriaDashboard /></PageTransition>} />
+          <Route path="/la-cueva-del-guero" element={<PageTransition type="fade"><CuevaDelGuero /></PageTransition>} />
+          <Route path="/brand-builder" element={<PageTransition type="fade"><BrandIdentity /></PageTransition>} />
+          <Route path="/consultoria" element={<PageTransition type="fade"><ConsultoriaNegocios /></PageTransition>} />
+          <Route path="/tienda" element={<PageTransition type="fade"><Store /></PageTransition>} />
+          <Route path="/acceso" element={<PageTransition type="fade"><AccessGate /></PageTransition>} />
+          <Route path="/acceso/:codigo" element={<PageTransition type="fade"><AccessGate /></PageTransition>} />
 
 
-        {/* ===== UI PREVIEWS ===== */}
-        <Route path="/components" element={<PageTransition type="slide" direction="up"><ComponentsPreview /></PageTransition>} />
-        <Route path="/effects" element={<PageTransition type="slide" direction="up"><EffectsPreview /></PageTransition>} />
-        <Route path="/tokens" element={<PageTransition type="fade"><TokensPreview /></PageTransition>} />
+          {/* ===== UI PREVIEWS ===== */}
+          <Route path="/components" element={<PageTransition type="slide" direction="up"><ComponentsPreview /></PageTransition>} />
+          <Route path="/effects" element={<PageTransition type="slide" direction="up"><EffectsPreview /></PageTransition>} />
+          <Route path="/tokens" element={<PageTransition type="fade"><TokensPreview /></PageTransition>} />
 
-        {/* ===== DASHBOARD ===== */}
-        <Route path="/dashboard" element={<PageTransition type="fade" glow><Dashboard /></PageTransition>} />
-        <Route path="/dashboard/showcase" element={<PageTransition type="fade" glow><DashboardShowcase /></PageTransition>} />
-        <Route path="/dashboard/full-demo" element={<PageTransition type="fade" glow><DashboardFullDemo /></PageTransition>} />
-        <Route path="/dashboard/preview" element={<PageTransition type="fade" glow><DashboardPreview /></PageTransition>} />
-        <Route path="/dashboard/progress" element={<PageTransition type="fade" glow><ProgressDashboard /></PageTransition>} />
-      </Routes>
-    </Router>
+          {/* ===== DASHBOARD ===== */}
+          <Route path="/dashboard" element={<PageTransition type="fade" glow><Dashboard /></PageTransition>} />
+          <Route path="/dashboard/showcase" element={<PageTransition type="fade" glow><DashboardShowcase /></PageTransition>} />
+          <Route path="/dashboard/full-demo" element={<PageTransition type="fade" glow><DashboardFullDemo /></PageTransition>} />
+          <Route path="/dashboard/preview" element={<PageTransition type="fade" glow><DashboardPreview /></PageTransition>} />
+          <Route path="/dashboard/progress" element={<PageTransition type="fade" glow><ProgressDashboard /></PageTransition>} />
+        </Routes>
+        <AIChatWidget />
+      </Router>
+    </AIProvider>
   );
 }

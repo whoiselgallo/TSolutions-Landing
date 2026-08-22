@@ -11,3 +11,4 @@ export { default as Showcase } from "./Showcase";
 export { default as Contact } from "./Contact";
 export { default as Footer } from "./Footer";
 export { default as Modules } from "./Modules";
+export { default as RuaAgent } from "./RuaAgent";
