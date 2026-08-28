@@ -25,7 +25,6 @@ export default function AgendaPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // Cargar datos previos de localStorage si no vienen en la URL
     try {
       const storedDiag = localStorage.getItem("tsolutions_latest_diagnostic");
       if (storedDiag) {
@@ -47,7 +46,7 @@ export default function AgendaPage() {
       }
     } catch (e) {}
 
-    // Calcular próximos 3 días
+    // Calcular próximos 3 días con fechas exactas
     const days = [];
     const today = new Date();
     const formatter = new Intl.DateTimeFormat("es-MX", { weekday: "long", day: "numeric", month: "short" });
@@ -57,15 +56,15 @@ export default function AgendaPage() {
     while (count < 3) {
       const d = new Date(today);
       d.setDate(today.getDate() + offset);
-      // Evitamos solo domingos si se desea, o los 3 días continuos
-      const dayOfWeek = d.getDay();
       const dateStr = formatter.format(d);
       const capitalized = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
       
       days.push({
         id: count,
+        dateObj: d,
         label: count === 0 ? `Mañana (${capitalized})` : capitalized,
         fullDate: d.toLocaleDateString("es-MX", { weekday: "long", year: "numeric", month: "long", day: "numeric" }),
+        isoDate: d.toISOString().split("T")[0],
         badge: count === 0 ? "🔥 Mayor Disponibilidad" : count === 1 ? "⚡ Pocos Lugares" : "📅 Últimos Horarios"
       });
       count++;
@@ -75,13 +74,52 @@ export default function AgendaPage() {
   }, []);
 
   const timeSlots = [
-    { time: "10:00 AM", period: "Mañana" },
-    { time: "11:30 AM", period: "Mañana" },
-    { time: "01:00 PM", period: "Tarde" },
-    { time: "04:00 PM", period: "Tarde" },
-    { time: "05:30 PM", period: "Tarde" },
-    { time: "07:00 PM", period: "Noche" }
+    { time: "10:00 AM", hour24: 10, min: 0, period: "Mañana" },
+    { time: "11:30 AM", hour24: 11, min: 30, period: "Mañana" },
+    { time: "01:00 PM", hour24: 13, min: 0, period: "Tarde" },
+    { time: "04:00 PM", hour24: 16, min: 0, period: "Tarde" },
+    { time: "05:30 PM", hour24: 17, min: 30, period: "Tarde" },
+    { time: "07:00 PM", hour24: 19, min: 0, period: "Noche" }
   ];
+
+  // Generador de URL de Google Calendar con campos 100% pre-llenados
+  const generateGoogleCalendarUrl = (chosenDay, chosenSlot) => {
+    const d = chosenDay?.dateObj ? new Date(chosenDay.dateObj) : new Date();
+    d.setHours(chosenSlot.hour24, chosenSlot.min, 0, 0);
+
+    const endDate = new Date(d);
+    endDate.setMinutes(d.getMinutes() + 25); // 25 min session
+
+    const formatGCalDate = (date) => {
+      return date.toISOString().replace(/-|:|\.\d+/g, "");
+    };
+
+    const startISO = formatGCalDate(d);
+    const endISO = formatGCalDate(endDate);
+
+    const eventTitle = `🚀 Sesión Estratégica TSolutions IPIDD - ${name || "Cliente"}`;
+    const eventDetails = `SESIÓN ESTRATÉGICA 1 A 1 (20 MIN) - ENTREGA DE RESULTADOS
+====================================================
+PROSPECTO:
+- Nombre: ${name}
+- Empresa / Negocio: ${businessName || "N/A"}
+- Correo: ${email}
+- Teléfono / WhatsApp: ${phone}
+- Paquete de Interés: ${pkg}
+- Notas: ${notes || "Revisión de Diagnóstico de Madurez Digital"}
+
+OBJETIVOS DE LA SESIÓN:
+1. Análisis de fugas operativas en Google Maps, WhatsApp y pedidos.
+2. Presentación de arquitectura recomendada a la medida.
+3. Plan de capacitación andragógica y constancia de dominio tecnológico.
+
+"Tecnología instalada. Conocimiento transferido. Negocios escalados."
+Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
+
+    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startISO}/${endISO}&details=${encodeURIComponent(eventDetails)}&location=${encodeURIComponent("Google Meet (Enlace en confirmación)")}&add=${encodeURIComponent(email ? `${email},contacto@tsolutionsipidd.com` : "contacto@tsolutionsipidd.com")}`;
+
+    return gcalUrl;
+  };
 
   const handleBooking = async (e) => {
     e.preventDefault();
@@ -96,6 +134,10 @@ export default function AgendaPage() {
     setErrorMsg("");
 
     const chosenDay = availableDays[selectedDayIdx];
+    const chosenSlot = timeSlots.find(s => s.time === selectedTime) || timeSlots[0];
+
+    const gcalDirectUrl = generateGoogleCalendarUrl(chosenDay, chosenSlot);
+
     const appointmentPayload = {
       name,
       email,
@@ -105,6 +147,7 @@ export default function AgendaPage() {
       selectedTime,
       package: pkg,
       notes,
+      gcalUrl: gcalDirectUrl,
       createdAt: new Date().toISOString()
     };
 
@@ -119,11 +162,19 @@ export default function AgendaPage() {
       // 2. Guardar reserva en localStorage
       localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
 
-      // 3. Redirigir a la sección de Descarga de E-books Gratis
+      // 3. Abrir Google Calendar pre-llenado automáticamente en pestaña nueva
+      try {
+        window.open(gcalDirectUrl, "_blank", "noopener,noreferrer");
+      } catch (errPop) {}
+
+      // 4. Redirigir al cliente a la biblioteca de E-books
       navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
 
     } catch (err) {
       localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
+      try {
+        window.open(gcalDirectUrl, "_blank", "noopener,noreferrer");
+      } catch (errPop) {}
       navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
     }
   };
@@ -172,7 +223,7 @@ export default function AgendaPage() {
         <div className="max-w-3xl mx-auto relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-midnightPanel border border-naranjaEnergy/40 text-naranjaEnergy text-xs font-semibold mb-3 shadow-glowEnergy">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Disponibilidad Oficial &bull; Sesión 1 a 1 de 20 Minutos</span>
+            <span>Google Calendar Sync Automático &bull; Sesión 1 a 1 de 20 Minutos</span>
           </div>
 
           <h1 className="font-bruno text-2xl sm:text-4xl text-blancoPuro leading-tight mb-3">
@@ -180,7 +231,7 @@ export default function AgendaPage() {
           </h1>
 
           <p className="font-inter text-xs sm:text-sm text-humo max-w-2xl mx-auto leading-relaxed">
-            Hemos preparado los próximos 3 días con horarios disponibles para entregarte tu diagnóstico, analizar tus fugas operativas y mostrarte la arquitectura digital recomendada.
+            Al presionar el botón de reserva, <strong>el sistema llenará de forma automática todos los datos requeridos en Google Calendar</strong> y recibirás la invitación con enlace a Google Meet en tu correo.
           </p>
         </div>
       </section>
@@ -208,7 +259,7 @@ export default function AgendaPage() {
                 </h2>
               </div>
               <span className="text-[11px] text-emerald-400 font-bold hidden sm:block">
-                ⚡ Horarios Actualizados
+                ⚡ Sincronización Inmediata
               </span>
             </div>
 
@@ -280,10 +331,10 @@ export default function AgendaPage() {
                 PASO 3
               </span>
               <h2 className="font-bruno text-base sm:text-lg text-blancoPuro">
-                👤 Confirmación de Datos del Asistente
+                👤 Datos para Auto-Llenado en Google Calendar
               </h2>
               <p className="text-xs text-humo mt-0.5">
-                Hemos auto-llenado los datos de tu diagnóstico. Puedes verificarlos antes de confirmar:
+                Estos datos se integrarán automáticamente en los campos requeridos de Google Calendar:
               </p>
             </div>
 
@@ -317,7 +368,7 @@ export default function AgendaPage() {
 
               <div>
                 <label className="block text-[11px] font-bold text-blancoPuro uppercase tracking-wider mb-1.5">
-                  Correo Electrónico (para enlace Google Meet) *
+                  Correo Electrónico (Google Calendar & Meet) *
                 </label>
                 <input
                   type="email"
@@ -358,19 +409,19 @@ export default function AgendaPage() {
             </div>
           </div>
 
-          {/* BOTÓN FINAL DE CONFIRMACIÓN */}
+          {/* BOTÓN FINAL DE CONFIRMACIÓN Y AUTO-LLENADO */}
           <div className="space-y-3 pt-2">
             <button
               type="submit"
               disabled={status === "loading"}
               className="w-full py-4 px-8 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-base sm:text-lg rounded-medium shadow-glowEnergy hover:shadow-glowEnergyHover transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
-              <span>{status === "loading" ? "Confirmando Cita..." : "📅 Confirmar y Reservar Cita de Entrega de Resultados"}</span>
+              <span>{status === "loading" ? "Auto-Llenando Google Calendar..." : "📅 Confirmar, Sincronizar Google Calendar y Desbloquear E-books"}</span>
               <span>→</span>
             </button>
 
             <div className="bg-naranjaEnergy/10 border border-naranjaEnergy/30 p-3 rounded-medium text-center text-xs text-blancoPuro/90">
-              🎁 Al confirmar tu cita, tendrás acceso inmediato a la <strong>Descarga Gratuita de nuestros 3 E-books Oficiales</strong> sobre Branding, Digitalización y E-commerce.
+              ⚡ Al hacer clic, se abrirá la invitación con todos tus datos en <strong>Google Calendar</strong> y serás redirigido a la <strong>Descarga Gratuita de nuestros 3 E-books Oficiales</strong>.
             </div>
           </div>
 

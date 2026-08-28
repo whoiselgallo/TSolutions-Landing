@@ -24,7 +24,6 @@ export default function DiagnosticProcessing() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // Load stored diagnostic from localStorage
     try {
       const stored = localStorage.getItem("tsolutions_latest_diagnostic");
       if (stored) {
@@ -37,7 +36,6 @@ export default function DiagnosticProcessing() {
       }
     } catch (e) {}
 
-    // Simulated multi-stage AI evaluation progression
     const timer1 = setTimeout(() => {
       setProgress(55);
       setStage("RUA Agent: Mapeando cuellos de botella en WhatsApp y logística...");
@@ -68,8 +66,10 @@ export default function DiagnosticProcessing() {
       
       days.push({
         id: count,
+        dateObj: d,
         label: count === 0 ? `Mañana (${capitalized})` : capitalized,
         fullDate: d.toLocaleDateString("es-MX", { weekday: "long", year: "numeric", month: "long", day: "numeric" }),
+        isoDate: d.toISOString().split("T")[0],
         badge: count === 0 ? "🔥 Mayor Disponibilidad" : count === 1 ? "⚡ Pocos Lugares" : "📅 Últimos Horarios"
       });
       count++;
@@ -85,19 +85,58 @@ export default function DiagnosticProcessing() {
   }, []);
 
   const timeSlots = [
-    { time: "10:00 AM", period: "Mañana" },
-    { time: "11:30 AM", period: "Mañana" },
-    { time: "01:00 PM", period: "Tarde" },
-    { time: "04:00 PM", period: "Tarde" },
-    { time: "05:30 PM", period: "Tarde" },
-    { time: "07:00 PM", period: "Noche" }
+    { time: "10:00 AM", hour24: 10, min: 0, period: "Mañana" },
+    { time: "11:30 AM", hour24: 11, min: 30, period: "Mañana" },
+    { time: "01:00 PM", hour24: 13, min: 0, period: "Tarde" },
+    { time: "04:00 PM", hour24: 16, min: 0, period: "Tarde" },
+    { time: "05:30 PM", hour24: 17, min: 30, period: "Tarde" },
+    { time: "07:00 PM", hour24: 19, min: 0, period: "Noche" }
   ];
+
+  const generateGoogleCalendarUrl = (chosenDay, chosenSlot) => {
+    const d = chosenDay?.dateObj ? new Date(chosenDay.dateObj) : new Date();
+    d.setHours(chosenSlot.hour24, chosenSlot.min, 0, 0);
+
+    const endDate = new Date(d);
+    endDate.setMinutes(d.getMinutes() + 25);
+
+    const formatGCalDate = (date) => {
+      return date.toISOString().replace(/-|:|\.\d+/g, "");
+    };
+
+    const startISO = formatGCalDate(d);
+    const endISO = formatGCalDate(endDate);
+
+    const eventTitle = `🚀 Sesión Estratégica TSolutions IPIDD - ${name || "Cliente"}`;
+    const eventDetails = `SESIÓN ESTRATÉGICA 1 A 1 (20 MIN) - ENTREGA DE RESULTADOS
+====================================================
+PROSPECTO:
+- Nombre: ${name}
+- Empresa: ${businessName || "N/A"}
+- Correo: ${email}
+- WhatsApp: ${phone}
+- Paquete de Interés: ${pkg}
+- Notas: ${notes || "Revisión de Diagnóstico de Madurez Digital"}
+
+OBJETIVOS:
+1. Análisis de fugas en Google Maps, WhatsApp y logística.
+2. Presentación de arquitectura recomendada.
+3. Plan de capacitación andragógica.
+
+"Tecnología instalada. Conocimiento transferido. Negocios escalados."
+Contacto: contacto@tsolutionsipidd.com`;
+
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startISO}/${endISO}&details=${encodeURIComponent(eventDetails)}&location=${encodeURIComponent("Google Meet (Enlace en confirmación)")}&add=${encodeURIComponent(email ? `${email},contacto@tsolutionsipidd.com` : "contacto@tsolutionsipidd.com")}`;
+  };
 
   const handleBooking = async (e) => {
     e.preventDefault();
     setStatus("loading");
 
     const chosenDay = availableDays[selectedDayIdx];
+    const chosenSlot = timeSlots.find(s => s.time === selectedTime) || timeSlots[0];
+    const gcalDirectUrl = generateGoogleCalendarUrl(chosenDay, chosenSlot);
+
     const appointmentPayload = {
       name,
       email,
@@ -107,6 +146,7 @@ export default function DiagnosticProcessing() {
       selectedTime,
       package: pkg,
       notes,
+      gcalUrl: gcalDirectUrl,
       createdAt: new Date().toISOString()
     };
 
@@ -118,9 +158,17 @@ export default function DiagnosticProcessing() {
       }).catch(() => {});
 
       localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
+      
+      try {
+        window.open(gcalDirectUrl, "_blank", "noopener,noreferrer");
+      } catch (errPop) {}
+
       navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
     } catch (err) {
       localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
+      try {
+        window.open(gcalDirectUrl, "_blank", "noopener,noreferrer");
+      } catch (errPop) {}
       navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
     }
   };
@@ -236,7 +284,7 @@ export default function DiagnosticProcessing() {
               <span>🗓️ Selección de Día y Horario para Entrega de Resultados</span>
             </h2>
             <p className="text-xs text-humo mt-1">
-              Elige entre los próximos 3 días hábiles disponibles para tu sesión 1 a 1 de 20 minutos con el Estratega Tecnológico.
+              Elige entre los próximos 3 días hábiles. Al confirmar, <strong>se auto-llenará la cita en Google Calendar</strong> y recibirás la invitación con Google Meet.
             </p>
           </div>
 
@@ -319,12 +367,12 @@ export default function DiagnosticProcessing() {
                 disabled={status === "loading"}
                 className="w-full py-4 px-8 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-base sm:text-lg rounded-medium shadow-glowEnergy hover:shadow-glowEnergyHover transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
               >
-                <span>{status === "loading" ? "Confirmando Cita..." : "📅 Confirmar Cita y Desbloquear E-books Gratis"}</span>
+                <span>{status === "loading" ? "Auto-Llenando Google Calendar..." : "📅 Confirmar, Sincronizar Google Calendar y Desbloquear E-books"}</span>
                 <span>→</span>
               </button>
 
               <div className="bg-naranjaEnergy/10 border border-naranjaEnergy/30 p-3 rounded-medium text-center text-xs text-blancoPuro/90">
-                🎁 Al reservar tu cita, serás redirigido a la <strong>Descarga Inmediata de nuestros 3 E-books Oficiales</strong>.
+                🎁 Al reservar tu cita, se abrirá la invitación en <strong>Google Calendar</strong> y serás redirigido a la <strong>Descarga Inmediata de nuestros 3 E-books Oficiales</strong>.
               </div>
             </div>
           </form>

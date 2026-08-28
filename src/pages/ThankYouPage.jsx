@@ -118,9 +118,23 @@ export default function ThankYouPage() {
                 </div>
                 <div>
                   <span className="text-humo block text-[11px]">Confirmación:</span>
-                  <strong className="text-emerald-400">✓ Notificado por Correo</strong>
+                  <strong className="text-emerald-400">✓ Sincronizado en Sistema</strong>
                 </div>
               </div>
+
+              {appointment.gcalUrl && (
+                <div className="mt-4 pt-3 border-t border-white/10 text-center">
+                  <a
+                    href={appointment.gcalUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-xs px-4 py-2 rounded-medium shadow-glowEnergy transition"
+                  >
+                    <span>📅 Ver / Añadir a mi Google Calendar</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+              )}
             </div>
           )}
 
