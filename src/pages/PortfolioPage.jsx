@@ -101,7 +101,7 @@ export default function PortfolioPage() {
       fallback: "/assets/iconografia/Delivery_truck_icon_design_2K_202608271205.jpeg",
       price: "$9,850 MXN",
       model: "Anticipo 40% + Medio 30% + Entrega 30%",
-      description: "Catálogo interactivo, tarjetas de producto, carrito con recuperación automática, menú digital QR, pasarela de pagos y conexión nativa con APIs de logística (Uber Direct / DiDi para locales; DHL / Estafeta para nacionales).",
+      description: "Catálogo interactivo, tarjetas de producto, carrito con recuperación automática, menú digital QR, pasarela de pagos (incluye Terminal Point Mini de Mercado Pago de regalo) y conexión nativa con APIs de logística (Uber Direct / DiDi para locales; DHL / Estafeta para nacionales).",
       ticketJustification: "Transforma el sitio en una máquina automática de despachos, liberando al dueño de triangular envíos manualmente y transparentando los costos logísticos.",
       variants: "Activa una iguala mensual obligatoria por 9 meses para mantenimiento y seguridad 24/7.",
       featured: false,
@@ -158,7 +158,7 @@ export default function PortfolioPage() {
     { cat: "Tecnología y Logística", name: "Integración de Envíos Nativos (API Uber/DiDi)", icon: "🛵", img: "/assets/iconografia/Uber_icon_design_for_agency_202608271159.jpeg", price: "$3,500 MXN", pay: "Pago 1 Exhibición" },
     { cat: "Tecnología y Logística", name: "Módulo de Inteligencia Artificial (Backend/Agentes)", icon: "🤖", img: "/assets/iconografia/inteligenciagenerativa.jpg", price: "$4,500 MXN", pay: "Anticipo 50% / 50%" },
     { cat: "Tecnología y Logística", name: "Autenticación rápida (OAuth Google)", icon: "🔑", img: "/assets/iconografia/oauth2.jpg", price: "$950 MXN", pay: "Pago 1 Exhibición" },
-    { cat: "Pasarelas de Pago", name: "Stripe, Mercado Pago, Conekta o PayPal", icon: "💳", img: "/assets/iconografia/Stripe_icon_for_tech_agency_202608271205.jpeg", price: "$1,200 MXN", pay: "Pago por Evento" },
+    { cat: "Pasarelas de Pago", name: "Stripe, Mercado Pago, Conekta o PayPal", bonus: "🎁 Incluye Terminal Point Mini de Mercado Pago de REGALO", icon: "💳", img: "/assets/iconografia/Stripe_icon_for_tech_agency_202608271205.jpeg", price: "$1,200 MXN", pay: "Pago por Evento" },
     { cat: "Chatbots Inteligentes", name: "WhatsApp Business (Árbol y pedidos)", icon: "💬", img: "/assets/iconografia/WhatsApp_Business_icon_design_2K_202608271203.jpeg", price: "$3,200 MXN", pay: "Pago 1 Exhibición" },
     { cat: "Chatbots Inteligentes", name: "Landing Page (Calificación de leads y Webhooks)", icon: "🎯", img: "/assets/iconografia/leads.jpeg", price: "$2,450 MXN", pay: "Pago 1 Exhibición" },
     { cat: "Chatbots Inteligentes", name: "Telegram (Comandos y catálogos en PDF)", icon: "✈️", img: "/assets/iconografia/Telegram_icon_design_2K_202608271203.jpeg", price: "$1,950 MXN", pay: "Pago 1 Exhibición" },
@@ -568,7 +568,14 @@ export default function PortfolioPage() {
                         <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-medium overflow-hidden border border-white/10 shrink-0 bg-negroProfundo p-1 shadow-card flex items-center justify-center">
                           <img src={item.img} alt={item.name} className="w-full h-full object-contain rounded" />
                         </div>
-                        <span className="font-medium text-blancoPuro">{item.name}</span>
+                        <div>
+                          <span className="font-medium text-blancoPuro block">{item.name}</span>
+                          {item.bonus && (
+                            <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded mt-1">
+                              {item.bonus}
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="py-3 px-4 font-bruno text-blancoPuro whitespace-nowrap">{item.price}</td>
                       <td className="py-3 px-4 text-humo whitespace-nowrap">{item.pay}</td>

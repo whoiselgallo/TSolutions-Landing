@@ -1,16 +1,19 @@
 <?php
 // ============================================================
 // TSolutions IPIDD — Backend de Formulario de Contacto (PHP)
-// Guarda los leads en base de datos MySQL de Hostinger
+// Guarda los leads en base de datos MySQL de Hostinger y CSV
 // ============================================================
 
-// Habilitar CORS y cabeceras JSON
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Content-Type: application/json; charset=UTF-8");
 
-// Solo procesar peticiones POST
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(["success" => false, "message" => "Método no permitido"]);
@@ -19,25 +22,25 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // ------------------------------------------------------------
 // ⚙️ CONFIGURACIÓN DE BASE DE DATOS (HOSTINGER)
-// Modifica estos valores con las credenciales que crees en hPanel
 // ------------------------------------------------------------
-define('DB_HOST', 'localhost');
-define('DB_USER', 'u115767692_rua');
-define('DB_PASS', 'exhsbcmvsJ87e/$');
-define('DB_NAME', 'u115767692_ipiddsolutions');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_USER', getenv('DB_USER') ?: 'u115767692_rua');
+define('DB_PASS', getenv('DB_PASS') ?: 'exhsbcmvsJ87e/$');
+define('DB_NAME', getenv('DB_NAME') ?: 'u115767692_ipiddsolutions');
 
-// Obtener datos enviados en formato JSON
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, TRUE);
 
-// Validar campos requeridos
 $name = isset($input['name']) ? trim($input['name']) : '';
 $email = isset($input['email']) ? trim($input['email']) : '';
+$phone = isset($input['phone']) ? trim($input['phone']) : '';
+$pkg = isset($input['package']) ? trim($input['package']) : '';
 $message = isset($input['message']) ? trim($input['message']) : '';
+$source = isset($input['source']) ? trim($input['source']) : 'Landing Contact Form';
 
-if (empty($name) || empty($email) || empty($message)) {
+if (empty($name) || empty($email)) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Todos los campos son obligatorios"]);
+    echo json_encode(["success" => false, "message" => "Nombre y correo son obligatorios"]);
     exit;
 }
 
@@ -47,68 +50,73 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// ------------------------------------------------------------
-// 🗄️ MÉTODOS DE ALMACENAMIENTO
-// ------------------------------------------------------------
-
-// 1. Intento de guardar en Base de Datos MySQL
-$db_connected = false;
+// 1. Guardar en Base de Datos MySQL
+$db_saved = false;
 try {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     if (!$conn->connect_error) {
-        $db_connected = true;
         $conn->set_charset("utf8mb4");
 
-        // Crear la tabla si no existe de forma automática
+        // Crear la tabla si no existe
         $table_query = "CREATE TABLE IF NOT EXISTS contact_leads (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL,
-            message TEXT NOT NULL,
+            phone VARCHAR(100) DEFAULT '',
+            package VARCHAR(255) DEFAULT '',
+            message TEXT,
+            source VARCHAR(100) DEFAULT 'Web',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
         $conn->query($table_query);
 
-        // Insertar registro
-        $stmt = $conn->prepare("INSERT INTO contact_leads (name, email, message) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $name, $email, $message);
-        
-        if ($stmt->execute()) {
+        $stmt = $conn->prepare("INSERT INTO contact_leads (name, email, phone, package, message, source) VALUES (?, ?, ?, ?, ?, ?)");
+        if ($stmt) {
+            $stmt->bind_param("ssssss", $name, $email, $phone, $pkg, $message, $source);
+            if ($stmt->execute()) {
+                $db_saved = true;
+            }
             $stmt->close();
-            $conn->close();
-            echo json_encode(["success" => true, "message" => "¡Solicitud registrada con éxito en Base de Datos!"]);
-            exit;
         }
-        $stmt->close();
         $conn->close();
     }
 } catch (Exception $e) {
-    // Falla silenciosa para pasar al plan de contingencia de archivos local
+    // Continuar a respaldo
 }
 
-// 2. Plan B: Si la base de datos no está configurada, guardar en archivo CSV local en Hostinger
+// 2. Respaldo en Archivo CSV
 $csv_file = __DIR__ . '/leads.csv';
 $is_new = !file_exists($csv_file);
-
 $file = fopen($csv_file, 'a');
 if ($file) {
     if ($is_new) {
-        // UTF-8 BOM para Excel
-        fputs($file, $bom =(chr(0xEF) . chr(0xBB) . chr(0xBF)));
-        fputcsv($file, ['Fecha', 'Nombre', 'Correo', 'Mensaje']);
+        fputs($file, (chr(0xEF) . chr(0xBB) . chr(0xBF)));
+        fputcsv($file, ['Fecha', 'Nombre', 'Correo', 'Telefono', 'Paquete', 'Mensaje', 'Fuente']);
     }
     $date = date('Y-m-d H:i:s');
-    fputcsv($file, [$date, $name, $email, $message]);
+    fputcsv($file, [$date, $name, $email, $phone, $pkg, $message, $source]);
     fclose($file);
-
-    echo json_encode([
-        "success" => true,
-        "message" => "¡Mensaje guardado localmente en leads.csv!"
-    ]);
-    exit;
 }
 
-// Si todo falla
-http_response_code(500);
-echo json_encode(["success" => false, "message" => "Error del servidor al procesar la solicitud"]);
+// 3. Notificación por Correo a contacto@tsolutionsipidd.com
+$to = "contacto@tsolutionsipidd.com";
+$subject = "🚀 Nuevo Lead de Marketing: $name ($pkg)";
+$email_body = "Se ha recibido un nuevo registro de contacto para marketing:\n\n" .
+              "Nombre: $name\n" .
+              "Correo: $email\n" .
+              "Teléfono / WhatsApp: $phone\n" .
+              "Paquete: $pkg\n" .
+              "Mensaje: $message\n" .
+              "Fecha: " . date('Y-m-d H:i:s') . "\n";
+$headers = "From: webmaster@tsolutionsipidd.com\r\n" .
+           "Reply-To: $email\r\n" .
+           "X-Mailer: PHP/" . phpversion();
+
+@mail($to, $subject, $email_body, $headers);
+
+echo json_encode([
+    "success" => true,
+    "message" => "¡Solicitud registrada con éxito en Base de Datos para Marketing!",
+    "db_saved" => $db_saved
+]);
 ?>

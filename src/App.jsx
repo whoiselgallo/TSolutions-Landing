@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import LandingPreview from "./pages/LandingPreview.jsx";
 import PortfolioPage from "./pages/PortfolioPage.jsx";
+import AgendaPage from "./pages/AgendaPage.jsx";
+import DigitalDiagnostic from "./pages/DigitalDiagnostic.jsx";
+import DiagnosticProcessing from "./pages/DiagnosticProcessing.jsx";
 import ComponentsPreview from "./pages/ComponentsPreview.jsx";
 import EffectsPreview from "./pages/EffectsPreview.jsx";
 import TokensPreview from "./pages/TokensPreview.jsx";
@@ -36,6 +39,9 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/landing" element={<PageTransition type="fade"><LandingPreview /></PageTransition>} />
           <Route path="/portafolio" element={<PageTransition type="fade"><PortfolioPage /></PageTransition>} />
+          <Route path="/agenda" element={<PageTransition type="fade"><AgendaPage /></PageTransition>} />
+          <Route path="/diagnostico" element={<PageTransition type="fade"><DigitalDiagnostic /></PageTransition>} />
+          <Route path="/diagnostico-procesando" element={<PageTransition type="fade"><DiagnosticProcessing /></PageTransition>} />
           
           {/* ===== PRODUCT MODULES ===== */}
           <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />

@@ -37,13 +37,19 @@ export default function LandingHeader() {
           >
             <span>📦 Portafolio</span>
           </Link>
-          <a 
-            href="#contacto" 
-            className="inline-flex items-center gap-2 bg-naranjaEnergy/20 hover:bg-naranjaEnergy text-naranjaEnergy hover:text-white border border-naranjaEnergy/50 hover:border-naranjaEnergy px-3.5 sm:px-4 py-2 rounded-medium text-xs font-bold transition-all duration-300 shadow-glowEnergy"
+          <Link
+            to="/diagnostico"
+            className="hidden md:inline-flex items-center gap-1.5 text-xs text-blancoPuro hover:text-naranjaEnergy font-bold px-3 py-2 rounded-medium transition"
           >
-            <span>Cotizar Proyecto</span>
+            <span>🧠 Diagnóstico</span>
+          </Link>
+          <Link
+            to="/agenda"
+            className="inline-flex items-center gap-1.5 bg-naranjaEnergy/20 hover:bg-naranjaEnergy text-naranjaEnergy hover:text-white border border-naranjaEnergy/50 hover:border-naranjaEnergy px-3 sm:px-4 py-2 rounded-medium text-xs font-bold transition-all duration-300 shadow-glowEnergy"
+          >
+            <span>📅 Agenda</span>
             <span className="text-sm">→</span>
-          </a>
+          </Link>
         </div>
 
       </div>

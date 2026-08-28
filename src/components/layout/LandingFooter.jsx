@@ -40,9 +40,10 @@ export default function LandingFooter() {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-6">
             <Link to="/portafolio" className="text-naranjaEnergy font-semibold hover:underline">Portafolio Comercial</Link>
+            <Link to="/diagnostico" className="hover:text-naranjaEnergy transition">Diagnóstico Digital</Link>
+            <Link to="/agenda" className="hover:text-naranjaEnergy transition">Agenda en Vivo</Link>
             <a href="#contacto" className="hover:text-naranjaEnergy transition">Aviso de Privacidad</a>
             <a href="#contacto" className="hover:text-naranjaEnergy transition">Términos del Servicio</a>
-            <a href="#contacto" className="hover:text-naranjaEnergy transition">Soporte Técnico</a>
           </div>
         </div>
       </footer>
