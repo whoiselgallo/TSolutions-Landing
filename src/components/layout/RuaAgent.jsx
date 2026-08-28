@@ -75,7 +75,7 @@ function generateRuaResponse(userText) {
 
   // 7. Capacitación / Constancia / Miedo al cambio
   if (text.includes("capacitacion") || text.includes("capacitación") || text.includes("curso") || text.includes("constancia") || text.includes("equipo") || text.includes("cambio") || text.includes("andragog")) {
-    return "Ese es el **Diferenciador TSolutions IPIDD**: no dejamos software huérfano. Al entregar cualquier ecosistema, capacitamos a tu personal bajo principios andragógicos en los 3 dominios (Cognitivo, Psicomotor y Afectivo) y entregamos la **Constancia de Aprendizaje y Dominio Tecnológico** emitida por TSolutions para que tu equipo opere con total autonomía.";
+    return "Ese es el **Diferenciador TSolutions IPIDD**: transferencia de conocimiento 100% garantizada. Al entregar cualquier ecosistema, capacitamos a tu personal bajo principios andragógicos en los 3 dominios (Cognitivo, Psicomotor y Afectivo) y entregamos la **Constancia de Aprendizaje y Dominio Tecnológico** emitida por TSolutions para que tu equipo opere con total autonomía.";
   }
 
   // 7. Saludo / Qué es RUA

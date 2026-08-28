@@ -41,7 +41,7 @@ export default function EbooksPage() {
       icon: "🚀",
       tag: "Volumen 2",
       title: "El Manual Anticaos: Erradica el Desorden en Google Maps, WhatsApp y Pedidos Manuales",
-      subtitle: "Guía definitiva para PYMES: Cómo eliminar el 'código huérfano' y capacitar a tu equipo con principios andragógicos.",
+      subtitle: "Guía definitiva para PYMES: Cómo erradicar la resistencia al cambio y capacitar a tu equipo con principios andragógicos.",
       img: "/assets/iconografia/Kaizen_tech_icon_design_2K_202608271201.jpeg",
       fallback: "/assets/iconografia/Developer_icon_design_for_agency_202608271202.jpeg",
       pages: "42 Páginas",
@@ -129,12 +129,6 @@ export default function EbooksPage() {
           </Link>
 
           <div className="flex items-center gap-3">
-            <Link 
-              to="/agenda" 
-              className="text-xs text-humo hover:text-blancoPuro font-semibold px-3 py-2 rounded-medium transition hidden sm:block"
-            >
-              📅 Ver Agenda
-            </Link>
             <Link 
               to="/" 
               className="text-xs bg-midnightPanel hover:bg-negroProfundo text-blancoPuro border border-white/10 px-4 py-2 rounded-medium font-bold transition"

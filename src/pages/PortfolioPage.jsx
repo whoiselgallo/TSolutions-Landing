@@ -247,16 +247,9 @@ export default function PortfolioPage() {
           <div className="flex items-center gap-3">
             <Link 
               to="/" 
-              className="text-xs text-humo hover:text-blancoPuro font-semibold px-3 py-2 rounded-medium transition"
+              className="text-xs bg-midnightPanel hover:bg-negroProfundo text-blancoPuro border border-white/10 px-4 py-2 rounded-medium font-bold transition"
             >
               ← Volver al Inicio
-            </Link>
-            <Link 
-              to="/?modo=agenda#contacto" 
-              className="inline-flex items-center gap-2 bg-naranjaEnergy text-white px-4 py-2 rounded-medium text-xs font-bold shadow-glowEnergy hover:bg-orange-600 transition"
-            >
-              <span>📅 Agendar en Calendario</span>
-              <span className="text-sm">→</span>
             </Link>
           </div>
 
@@ -612,17 +605,18 @@ export default function PortfolioPage() {
               Recibe un diagnóstico personalizado sin costo y descubre el plan exacto para tu modelo de negocio.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link
-                to="/?modo=agenda#contacto"
-                className="w-full sm:w-auto px-8 py-3.5 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-sm rounded-medium shadow-glowEnergy transition flex items-center justify-center gap-2"
+              <a
+                href="/#contacto"
+                className="w-full sm:w-auto px-8 py-4 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-sm rounded-medium shadow-glowEnergy transition flex items-center justify-center gap-2"
               >
-                <span>📅 Agendar Diagnóstico en Calendario</span>
-              </Link>
+                <span>🚀 Iniciar Diagnóstico de Fugas Operativas</span>
+                <span>→</span>
+              </a>
               <Link
                 to="/"
-                className="w-full sm:w-auto px-6 py-3.5 bg-negroProfundo hover:bg-midnightPanel text-blancoPuro border border-white/10 rounded-medium text-xs font-bold transition"
+                className="w-full sm:w-auto px-6 py-4 bg-negroProfundo hover:bg-midnightPanel text-blancoPuro border border-white/10 rounded-medium text-xs font-bold transition"
               >
-                ← Volver a la Landing Principal
+                ← Volver al Inicio
               </Link>
             </div>
           </div>

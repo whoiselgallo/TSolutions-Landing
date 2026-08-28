@@ -14,9 +14,9 @@ export default function ProblemSolution() {
       img: "/assets/iconografia/resistenciaalcambio.jpeg",
       fallback: "/assets/iconografia/Developer_icon_design_for_agency_202608271202.jpeg",
       tag: "Falta de Capacitación",
-      title: "El Síndrome del 'Código Huérfano'",
-      pain: "Las agencias tradicionales entregan un software o sitio web y desaparecen. Tu personal no sabe usarlo, surge resistencia al cambio y la inversión se pierde en el olvido.",
-      solution: "Capacitación andragógica al equipo, manuales SOP y entrega de constancia de aprendizaje y dominio tecnológico."
+      title: "Resistencia al Cambio y Falta de Capacitación",
+      pain: "Muchas implementaciones entregan herramientas tecnológicas sin preparar al equipo humano. El personal no sabe usarlas, surge rechazo al cambio y la inversión queda desaprovechada.",
+      solution: "Capacitación andragógica en 3 dominios, manuales SOP y constancia de dominio tecnológico para que tu equipo opere con absoluta soltura e independencia."
     },
     {
       img: "/assets/iconografia/Kaizen_tech_icon_design_2K_202608271201.jpeg",

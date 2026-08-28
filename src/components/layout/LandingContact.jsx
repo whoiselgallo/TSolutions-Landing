@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function LandingContact({ selectedPackage }) {
   const [searchParams] = useSearchParams();
@@ -65,14 +65,12 @@ export default function LandingContact({ selectedPackage }) {
         body: JSON.stringify(leadData),
       }).catch(() => {});
 
-      // Guardar copia local de respaldo
       localStorage.setItem("tsolutions_lead_contact", JSON.stringify(leadData));
 
       // 2. Redirigir al cliente al Formulario de Diagnóstico Digital
       navigate(`/diagnostico?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&telefono=${encodeURIComponent(phone)}&paquete=${encodeURIComponent(pkg)}`);
 
     } catch (err) {
-      // Fallback: guardar y redirigir
       localStorage.setItem("tsolutions_lead_contact", JSON.stringify(leadData));
       navigate(`/diagnostico?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&telefono=${encodeURIComponent(phone)}&paquete=${encodeURIComponent(pkg)}`);
     }
@@ -95,7 +93,7 @@ export default function LandingContact({ selectedPackage }) {
           </p>
         </div>
 
-        {/* FORMULARIO DE CAPTURA & MARKETING */}
+        {/* FORMULARIO DE CAPTURA & MARKETING (ÚNICA VÍA DE ACCESO: EL BOTÓN CTA) */}
         <form 
           onSubmit={handleSubmit}
           className="bg-midnightPanel p-8 sm:p-10 rounded-large border border-naranjaEnergy/30 shadow-card space-y-5"
@@ -150,18 +148,9 @@ export default function LandingContact({ selectedPackage }) {
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <label className="block text-xs font-bold text-blancoPuro uppercase tracking-wider">
-                Paquete o Servicio de Interés
-              </label>
-              <Link 
-                to="/portafolio" 
-                className="text-[11px] text-naranjaEnergy hover:underline font-semibold flex items-center gap-1"
-              >
-                <span>🔍 Ver catálogo completo</span>
-                <span>→</span>
-              </Link>
-            </div>
+            <label className="block text-xs font-bold text-blancoPuro uppercase tracking-wider mb-2">
+              Paquete o Servicio de Interés
+            </label>
             <select
               value={pkg}
               onChange={(e) => setPkg(e.target.value)}
@@ -178,21 +167,6 @@ export default function LandingContact({ selectedPackage }) {
               <option value="Manifiesto de Marca y Auditoría Legal ($1,550 MXN)">Manifiesto de Marca y Auditoría Legal ($1,550 MXN)</option>
               <option value="Elevator Pitch ($850 MXN)">Elevator Pitch Estratégico ($850 MXN)</option>
             </select>
-
-            {/* SUGERENCIA DINÁMICA SI NO SABE POR DÓNDE EMPEZAR */}
-            {pkg.includes("No sé por dónde empezar") && (
-              <div className="mt-2.5 p-3 rounded-medium bg-naranjaEnergy/10 border border-naranjaEnergy/30 flex items-center justify-between gap-3 text-xs">
-                <span className="text-blancoPuro/90">
-                  💡 ¿Deseas ver la comparativa de todos los paquetes antes de agendar?
-                </span>
-                <Link
-                  to="/portafolio"
-                  className="shrink-0 bg-naranjaEnergy text-white font-bold px-3 py-1.5 rounded text-[11px] hover:bg-orange-600 transition"
-                >
-                  Explorar Portafolio →
-                </Link>
-              </div>
-            )}
           </div>
 
           <div>
@@ -208,7 +182,7 @@ export default function LandingContact({ selectedPackage }) {
             ></textarea>
           </div>
 
-          {/* BOTÓN CON LAS 2 FUNCIONES */}
+          {/* ÚNICO PUERTO DE ACCESO: BOTÓN CTA PRINCIPAL */}
           <button
             type="submit"
             disabled={status === "loading"}
@@ -218,22 +192,7 @@ export default function LandingContact({ selectedPackage }) {
             <span className="text-lg">→</span>
           </button>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
-            <Link
-              to="/agenda"
-              className="text-humo hover:text-naranjaEnergy font-semibold transition"
-            >
-              📅 ¿Quieres ir directo a la agenda? 👉 <strong>Ver disponibilidad</strong>
-            </Link>
-            <Link
-              to="/diagnostico"
-              className="text-naranjaEnergy hover:underline font-semibold"
-            >
-              📝 Llenar Diagnóstico Completo →
-            </Link>
-          </div>
-
-          <p className="text-[11px] text-center text-humo">
+          <p className="text-[11px] text-center text-humo pt-1">
             🔒 Tus datos están protegidos bajo nuestro Aviso de Privacidad. Cero spam, solo asesoría estratégica real.
           </p>
         </form>

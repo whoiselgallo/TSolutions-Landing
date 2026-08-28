@@ -31,44 +31,27 @@ export default function LandingFooter() {
         </div>
       </section>
 
-      {/* ===== FOOTER LEGAL ===== */}
-      <footer className="py-10 bg-negroProfundo text-humo text-xs border-t border-white/5">
+      {/* ===== FOOTER LEGAL (SIN MENÚS NI ENLACES DE ACCESO) ===== */}
+      <footer className="py-8 bg-negroProfundo text-humo text-xs border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div>
             <span className="font-bruno text-blancoPuro">TSOLUTIONS IPIDD</span> &bull; 
             <span className="ml-2">“Tecnología instalada. Conocimiento transferido. Negocios escalados.”</span>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            <Link to="/portafolio" className="text-naranjaEnergy font-semibold hover:underline">Portafolio Comercial</Link>
-            <Link to="/diagnostico" className="hover:text-naranjaEnergy transition">Diagnóstico Digital</Link>
-            <Link to="/agenda" className="hover:text-naranjaEnergy transition">Agenda en Vivo</Link>
-            <a href="#contacto" className="hover:text-naranjaEnergy transition">Aviso de Privacidad</a>
-            <a href="#contacto" className="hover:text-naranjaEnergy transition">Términos del Servicio</a>
+          <div className="text-[11px] text-humo/60">
+            &copy; 2026 TSolutions IPIDD. Todos los derechos reservados.
           </div>
         </div>
       </footer>
 
       {/* ===== BARRA FLOTANTE EN ZONA DE PULGAR (MOBILE-FIRST) ===== */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 p-2.5 bg-negroProfundo/95 backdrop-blur-md border-t border-white/10 z-50 flex items-center gap-2">
-        <Link
-          to="/portafolio"
-          className="flex-1 bg-midnightPanel hover:bg-negroProfundo text-blancoPuro border border-white/10 font-bold py-3 px-2 rounded-medium text-xs flex items-center justify-center gap-1 shadow-card"
-        >
-          <span>📦 Portafolio</span>
-        </Link>
-        <a
-          href="https://wa.me/5215512345678?text=Hola,%20deseo%20solicitar%20el%20diagn%C3%B3stico%20de%20TSolutions"
-          target="_blank"
-          rel="noreferrer"
-          className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-2 rounded-medium text-xs flex items-center justify-center gap-1 shadow-card"
-        >
-          <span>💬 WhatsApp</span>
-        </a>
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 p-2.5 bg-negroProfundo/95 backdrop-blur-md border-t border-white/10 z-50">
         <a
           href="#contacto"
-          className="flex-[1.5] bg-naranjaEnergy hover:bg-orange-600 text-white font-bold py-3 px-3 rounded-medium text-xs flex items-center justify-center gap-1 shadow-glowEnergy"
+          className="w-full bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno py-3 px-4 rounded-medium text-xs flex items-center justify-center gap-1.5 shadow-glowEnergy"
         >
-          <span>⚡ Cotizar</span>
+          <span>🚀 Iniciar Diagnóstico de Negocio</span>
+          <span>→</span>
         </a>
       </div>
     </>

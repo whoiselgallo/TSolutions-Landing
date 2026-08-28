@@ -150,31 +150,9 @@ export default function Portfolio({ onSelectPackage }) {
               <h3 className="font-bruno text-xl sm:text-2xl text-blancoPuro mb-2">
                 Explora el Portafolio Completo de Soluciones & Consultoría
               </h3>
-              <p className="text-xs sm:text-sm text-humo leading-relaxed mb-4">
+              <p className="text-xs sm:text-sm text-humo leading-relaxed">
                 Compara todos los niveles de infraestructura, módulos de Inteligencia Artificial, Consultoría de Procesos (SOPs), Registro de Marca y el menú de complementos con <strong>75% de descuento preferencial</strong>.
               </p>
-
-              {/* CHIPS DE ACCESO DIRECTO */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                <Link
-                  to="/portafolio?cat=paquetes"
-                  className="text-[11px] bg-negroProfundo hover:bg-midnightPanel text-blancoPuro/90 border border-white/10 hover:border-naranjaEnergy px-3 py-1.5 rounded-full transition"
-                >
-                  🚀 Paquetes Web & IA
-                </Link>
-                <Link
-                  to="/portafolio?cat=consultoria"
-                  className="text-[11px] bg-negroProfundo hover:bg-midnightPanel text-blancoPuro/90 border border-white/10 hover:border-naranjaEnergy px-3 py-1.5 rounded-full transition"
-                >
-                  🏛️ Consultoría & Branding
-                </Link>
-                <Link
-                  to="/portafolio?cat=complementos"
-                  className="text-[11px] bg-negroProfundo hover:bg-midnightPanel text-blancoPuro/90 border border-white/10 hover:border-naranjaEnergy px-3 py-1.5 rounded-full transition"
-                >
-                  ⚙️ Complementos & Envíos
-                </Link>
-              </div>
             </div>
 
             {/* BOTÓN CTA DESTACADO */}

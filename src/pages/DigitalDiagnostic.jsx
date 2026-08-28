@@ -330,7 +330,7 @@ export default function DigitalDiagnostic() {
                 {[
                   "Solo redes sociales (Facebook / Instagram / TikTok)",
                   "No tengo página web ni bio link",
-                  "Tengo un sitio web pero está obsoleto o nadie en el equipo sabe actualizarlo ('código huérfano')",
+                  "Tengo un sitio web pero está desactualizado o el equipo no cuenta con capacitación para operarlo",
                   "Tengo sitio web o landing page moderna y activa"
                 ].map((opt) => (
                   <label key={opt} className={`flex items-center gap-3 p-3.5 rounded-medium border cursor-pointer text-xs transition ${

@@ -87,7 +87,7 @@ export default function ThankYouPage() {
               Estamos sumamente felices, agradecidos y comprometidos de que nos hagas partícipes en la <strong>construcción, renovación y escalamiento digital</strong> de tu empresa.
             </p>
             <p>
-              En TSolutions IPIDD no creemos en el software huérfano ni en las soluciones genéricas. Nuestra misión es darte las herramientas exactas y transferirle el conocimiento a tu equipo para que operen con absoluta soltura y autonomía.
+              En TSolutions IPIDD nos enfocamos en tu autonomía real. Nuestra misión es darte la infraestructura tecnológica exacta y transferirle todo el conocimiento a tu equipo para que operen con absoluta soltura e independencia.
             </p>
             <p className="text-naranjaEnergy font-semibold">
               ¡Nos vemos en tu sesión de Entrega de Resultados! Prepararemos el análisis detallado de tus fugas operativas para trazar el mapa hacia tu independencia tecnológica.

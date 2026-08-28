@@ -29,21 +29,13 @@ export default function LeadMagnet() {
               Solicita hoy mismo tu <strong>Auditoría de Fugas Operativas y Diagnóstico de Madurez Digital</strong>. Recibe un reporte PDF detallado y una sesión estratégica 1 a 1 de 20 minutos con nuestro Estratega Tecnológico sin costo alguno.
             </p>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="/diagnostico"
-                className="inline-flex items-center gap-2 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-xs sm:text-sm px-6 py-3.5 rounded-medium transition-all duration-300 transform hover:-translate-y-0.5 shadow-glowEnergy"
-              >
-                <span>🚀 Llenar Diagnóstico (2 min)</span>
-                <span>→</span>
-              </a>
-              <a
-                href="/agenda"
-                className="inline-flex items-center gap-2 bg-negroProfundo hover:bg-midnightPanel text-blancoPuro border border-white/15 font-bruno text-xs sm:text-sm px-5 py-3.5 rounded-medium transition-all"
-              >
-                <span>📅 Agendar Sesión 1 a 1</span>
-              </a>
-            </div>
+            <a
+              href="#contacto"
+              className="inline-flex items-center gap-2 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-xs sm:text-sm px-7 py-3.5 rounded-medium transition-all duration-300 transform hover:-translate-y-0.5 shadow-glowEnergy"
+            >
+              <span>🚀 Solicitar Diagnóstico Gratuito</span>
+              <span>→</span>
+            </a>
           </div>
 
         </div>
