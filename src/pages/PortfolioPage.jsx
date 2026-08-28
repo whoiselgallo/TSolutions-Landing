@@ -252,10 +252,10 @@ export default function PortfolioPage() {
               ← Volver al Inicio
             </Link>
             <Link 
-              to="/#contacto" 
+              to="/?modo=agenda#contacto" 
               className="inline-flex items-center gap-2 bg-naranjaEnergy text-white px-4 py-2 rounded-medium text-xs font-bold shadow-glowEnergy hover:bg-orange-600 transition"
             >
-              <span>Agendar Diagnóstico</span>
+              <span>📅 Agendar en Calendario</span>
               <span className="text-sm">→</span>
             </Link>
           </div>
@@ -606,10 +606,10 @@ export default function PortfolioPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
-                to="/#contacto"
-                className="w-full sm:w-auto px-8 py-3.5 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-sm rounded-medium shadow-glowEnergy transition"
+                to="/?modo=agenda#contacto"
+                className="w-full sm:w-auto px-8 py-3.5 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-sm rounded-medium shadow-glowEnergy transition flex items-center justify-center gap-2"
               >
-                🚀 Solicitar Diagnóstico Gratuito
+                <span>📅 Agendar Diagnóstico en Calendario</span>
               </Link>
               <Link
                 to="/"
