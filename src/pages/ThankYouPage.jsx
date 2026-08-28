@@ -122,19 +122,10 @@ export default function ThankYouPage() {
                 </div>
               </div>
 
-              {appointment.gcalUrl && (
-                <div className="mt-4 pt-3 border-t border-white/10 text-center">
-                  <a
-                    href={appointment.gcalUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-xs px-4 py-2 rounded-medium shadow-glowEnergy transition"
-                  >
-                    <span>📅 Ver / Añadir a mi Google Calendar</span>
-                    <span>↗</span>
-                  </a>
-                </div>
-              )}
+              <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <span className="text-emerald-400 font-semibold">✓ Recibirás el enlace de Google Meet por correo</span>
+                <span className="text-humo text-[11px]">Soporte: contacto@tsolutionsipidd.com</span>
+              </div>
             </div>
           )}
 

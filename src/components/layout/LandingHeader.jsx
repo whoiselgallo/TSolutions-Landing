@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 export default function LandingHeader() {
   return (
-    <header className="w-full border-b border-white/10 bg-negroProfundo/95 backdrop-blur-md sticky top-0 z-40 py-3 px-4 sm:px-8">
+    <header className="w-full border-b border-white/10 bg-negroProfundo/95 backdrop-blur-md sticky top-0 z-40 py-3.5 px-4 sm:px-8">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
-        {/* LOGO OFICIAL TSOLUTIONS */}
+        {/* LOGO OFICIAL TSOLUTIONS — ÚNICO ELEMENTO SUPERIOR */}
         <Link to="/" className="flex items-center gap-3 group">
           <div 
             className="w-11 h-11 border border-naranjaEnergy bg-midnightPanel flex items-center justify-center p-1.5 shadow-glowEnergy group-hover:scale-105 transition-transform"
@@ -29,27 +29,10 @@ export default function LandingHeader() {
           </div>
         </Link>
 
-        {/* ACCIONES DE NAVEGACIÓN */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Link
-            to="/portafolio"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs text-blancoPuro hover:text-naranjaEnergy font-bold px-3 py-2 rounded-medium transition"
-          >
-            <span>📦 Portafolio</span>
-          </Link>
-          <Link
-            to="/diagnostico"
-            className="hidden md:inline-flex items-center gap-1.5 text-xs text-blancoPuro hover:text-naranjaEnergy font-bold px-3 py-2 rounded-medium transition"
-          >
-            <span>🧠 Diagnóstico</span>
-          </Link>
-          <Link
-            to="/agenda"
-            className="inline-flex items-center gap-1.5 bg-naranjaEnergy/20 hover:bg-naranjaEnergy text-naranjaEnergy hover:text-white border border-naranjaEnergy/50 hover:border-naranjaEnergy px-3 sm:px-4 py-2 rounded-medium text-xs font-bold transition-all duration-300 shadow-glowEnergy"
-          >
-            <span>📅 Agenda</span>
-            <span className="text-sm">→</span>
-          </Link>
+        {/* DISTINTIVO DE CALIDAD */}
+        <div className="hidden sm:flex items-center gap-2 text-[11px] text-humo bg-midnightPanel/70 border border-white/5 px-3 py-1.5 rounded-full">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Plataforma Oficial &bull; Consultoría & Ecosistemas</span>
         </div>
 
       </div>

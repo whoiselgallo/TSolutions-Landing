@@ -82,45 +82,6 @@ export default function AgendaPage() {
     { time: "07:00 PM", hour24: 19, min: 0, period: "Noche" }
   ];
 
-  // Generador de URL de Google Calendar con campos 100% pre-llenados
-  const generateGoogleCalendarUrl = (chosenDay, chosenSlot) => {
-    const d = chosenDay?.dateObj ? new Date(chosenDay.dateObj) : new Date();
-    d.setHours(chosenSlot.hour24, chosenSlot.min, 0, 0);
-
-    const endDate = new Date(d);
-    endDate.setMinutes(d.getMinutes() + 25); // 25 min session
-
-    const formatGCalDate = (date) => {
-      return date.toISOString().replace(/-|:|\.\d+/g, "");
-    };
-
-    const startISO = formatGCalDate(d);
-    const endISO = formatGCalDate(endDate);
-
-    const eventTitle = `🚀 Sesión Estratégica TSolutions IPIDD - ${name || "Cliente"}`;
-    const eventDetails = `SESIÓN ESTRATÉGICA 1 A 1 (20 MIN) - ENTREGA DE RESULTADOS
-====================================================
-PROSPECTO:
-- Nombre: ${name}
-- Empresa / Negocio: ${businessName || "N/A"}
-- Correo: ${email}
-- Teléfono / WhatsApp: ${phone}
-- Paquete de Interés: ${pkg}
-- Notas: ${notes || "Revisión de Diagnóstico de Madurez Digital"}
-
-OBJETIVOS DE LA SESIÓN:
-1. Análisis de fugas operativas en Google Maps, WhatsApp y pedidos.
-2. Presentación de arquitectura recomendada a la medida.
-3. Plan de capacitación andragógica y constancia de dominio tecnológico.
-
-"Tecnología instalada. Conocimiento transferido. Negocios escalados."
-Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
-
-    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startISO}/${endISO}&details=${encodeURIComponent(eventDetails)}&location=${encodeURIComponent("Google Meet (Enlace en confirmación)")}&add=${encodeURIComponent(email ? `${email},contacto@tsolutionsipidd.com` : "contacto@tsolutionsipidd.com")}`;
-
-    return gcalUrl;
-  };
-
   const handleBooking = async (e) => {
     e.preventDefault();
 
@@ -134,9 +95,6 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
     setErrorMsg("");
 
     const chosenDay = availableDays[selectedDayIdx];
-    const chosenSlot = timeSlots.find(s => s.time === selectedTime) || timeSlots[0];
-
-    const gcalDirectUrl = generateGoogleCalendarUrl(chosenDay, chosenSlot);
 
     const appointmentPayload = {
       name,
@@ -147,12 +105,11 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
       selectedTime,
       package: pkg,
       notes,
-      gcalUrl: gcalDirectUrl,
       createdAt: new Date().toISOString()
     };
 
     try {
-      // 1. Guardar en Base de Datos y Notificar a contacto@tsolutionsipidd.com
+      // 1. Guardar en Base de Datos y Notificar al Correo Corporativo
       await fetch("/api/appointment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -162,19 +119,11 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
       // 2. Guardar reserva en localStorage
       localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
 
-      // 3. Abrir Google Calendar pre-llenado automáticamente en pestaña nueva
-      try {
-        window.open(gcalDirectUrl, "_blank", "noopener,noreferrer");
-      } catch (errPop) {}
-
-      // 4. Redirigir al cliente a la biblioteca de E-books
+      // 3. Redirigir al cliente a la biblioteca de E-books (100% nativo sin cuentas externas)
       navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
 
     } catch (err) {
       localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
-      try {
-        window.open(gcalDirectUrl, "_blank", "noopener,noreferrer");
-      } catch (errPop) {}
       navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
     }
   };
@@ -183,7 +132,7 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
     <div className="bg-negroProfundo text-blancoPuro min-h-screen selection:bg-naranjaEnergy selection:text-white pb-20 sm:pb-12">
       
       {/* ================= HEADER ================= */}
-      <header className="w-full border-b border-white/10 bg-negroProfundo/95 backdrop-blur-md sticky top-0 z-50 py-3 px-4 sm:px-8">
+      <header className="w-full border-b border-white/10 bg-negroProfundo/95 backdrop-blur-md sticky top-0 z-50 py-3.5 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 group">
             <div 
@@ -223,7 +172,7 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
         <div className="max-w-3xl mx-auto relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-midnightPanel border border-naranjaEnergy/40 text-naranjaEnergy text-xs font-semibold mb-3 shadow-glowEnergy">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Google Calendar Sync Automático &bull; Sesión 1 a 1 de 20 Minutos</span>
+            <span>Disponibilidad Oficial &bull; Sesión 1 a 1 de 20 Minutos</span>
           </div>
 
           <h1 className="font-bruno text-2xl sm:text-4xl text-blancoPuro leading-tight mb-3">
@@ -231,7 +180,7 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
           </h1>
 
           <p className="font-inter text-xs sm:text-sm text-humo max-w-2xl mx-auto leading-relaxed">
-            Al presionar el botón de reserva, <strong>el sistema llenará de forma automática todos los datos requeridos en Google Calendar</strong> y recibirás la invitación con enlace a Google Meet en tu correo.
+            Reserva directa en nuestra plataforma sin necesidad de cuentas externas. Tu sesión de 20 minutos queda confirmada de inmediato.
           </p>
         </div>
       </section>
@@ -259,7 +208,7 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
                 </h2>
               </div>
               <span className="text-[11px] text-emerald-400 font-bold hidden sm:block">
-                ⚡ Sincronización Inmediata
+                ⚡ Horarios Disponibles
               </span>
             </div>
 
@@ -331,10 +280,10 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
                 PASO 3
               </span>
               <h2 className="font-bruno text-base sm:text-lg text-blancoPuro">
-                👤 Datos para Auto-Llenado en Google Calendar
+                👤 Confirmación de Datos del Asistente
               </h2>
               <p className="text-xs text-humo mt-0.5">
-                Estos datos se integrarán automáticamente en los campos requeridos de Google Calendar:
+                Datos integrados para la entrega de resultados y envío de la sesión:
               </p>
             </div>
 
@@ -368,7 +317,7 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
 
               <div>
                 <label className="block text-[11px] font-bold text-blancoPuro uppercase tracking-wider mb-1.5">
-                  Correo Electrónico (Google Calendar & Meet) *
+                  Correo Electrónico (para enlace de sesión) *
                 </label>
                 <input
                   type="email"
@@ -409,19 +358,19 @@ Soporte: contacto@tsolutionsipidd.com | www.tsolutionsipidd.com`;
             </div>
           </div>
 
-          {/* BOTÓN FINAL DE CONFIRMACIÓN Y AUTO-LLENADO */}
+          {/* BOTÓN FINAL DE CONFIRMACIÓN */}
           <div className="space-y-3 pt-2">
             <button
               type="submit"
               disabled={status === "loading"}
               className="w-full py-4 px-8 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-base sm:text-lg rounded-medium shadow-glowEnergy hover:shadow-glowEnergyHover transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
-              <span>{status === "loading" ? "Auto-Llenando Google Calendar..." : "📅 Confirmar, Sincronizar Google Calendar y Desbloquear E-books"}</span>
+              <span>{status === "loading" ? "Confirmando Cita..." : "📅 Confirmar y Reservar Cita de Entrega de Resultados"}</span>
               <span>→</span>
             </button>
 
             <div className="bg-naranjaEnergy/10 border border-naranjaEnergy/30 p-3 rounded-medium text-center text-xs text-blancoPuro/90">
-              ⚡ Al hacer clic, se abrirá la invitación con todos tus datos en <strong>Google Calendar</strong> y serás redirigido a la <strong>Descarga Gratuita de nuestros 3 E-books Oficiales</strong>.
+              🎁 Al confirmar tu cita, serás redirigido directamente a la <strong>Descarga Gratuita de nuestros 3 E-books Oficiales</strong>.
             </div>
           </div>
 

@@ -134,8 +134,6 @@ Contacto: contacto@tsolutionsipidd.com`;
     setStatus("loading");
 
     const chosenDay = availableDays[selectedDayIdx];
-    const chosenSlot = timeSlots.find(s => s.time === selectedTime) || timeSlots[0];
-    const gcalDirectUrl = generateGoogleCalendarUrl(chosenDay, chosenSlot);
 
     const appointmentPayload = {
       name,
@@ -146,7 +144,6 @@ Contacto: contacto@tsolutionsipidd.com`;
       selectedTime,
       package: pkg,
       notes,
-      gcalUrl: gcalDirectUrl,
       createdAt: new Date().toISOString()
     };
 
@@ -158,17 +155,9 @@ Contacto: contacto@tsolutionsipidd.com`;
       }).catch(() => {});
 
       localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
-      
-      try {
-        window.open(gcalDirectUrl, "_blank", "noopener,noreferrer");
-      } catch (errPop) {}
-
       navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
     } catch (err) {
       localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
-      try {
-        window.open(gcalDirectUrl, "_blank", "noopener,noreferrer");
-      } catch (errPop) {}
       navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
     }
   };
@@ -367,12 +356,12 @@ Contacto: contacto@tsolutionsipidd.com`;
                 disabled={status === "loading"}
                 className="w-full py-4 px-8 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-base sm:text-lg rounded-medium shadow-glowEnergy hover:shadow-glowEnergyHover transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
               >
-                <span>{status === "loading" ? "Auto-Llenando Google Calendar..." : "📅 Confirmar, Sincronizar Google Calendar y Desbloquear E-books"}</span>
+                <span>{status === "loading" ? "Confirmando Cita..." : "📅 Confirmar Cita y Desbloquear E-books Gratis"}</span>
                 <span>→</span>
               </button>
 
               <div className="bg-naranjaEnergy/10 border border-naranjaEnergy/30 p-3 rounded-medium text-center text-xs text-blancoPuro/90">
-                🎁 Al reservar tu cita, se abrirá la invitación en <strong>Google Calendar</strong> y serás redirigido a la <strong>Descarga Inmediata de nuestros 3 E-books Oficiales</strong>.
+                🎁 Al reservar tu cita, serás redirigido directamente a la <strong>Descarga Inmediata de nuestros 3 E-books Oficiales</strong>.
               </div>
             </div>
           </form>
