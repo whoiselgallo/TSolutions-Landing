@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 export default function DiagnosticProcessing() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  const name = searchParams.get("nombre") || "Empresario";
-  const email = searchParams.get("email") || "";
-  const pkg = searchParams.get("paquete") || "Diagnóstico Estratégico";
+  const [name, setName] = useState(searchParams.get("nombre") || "Empresario");
+  const [email, setEmail] = useState(searchParams.get("email") || "");
+  const [phone, setPhone] = useState(searchParams.get("telefono") || searchParams.get("phone") || "");
+  const [businessName, setBusinessName] = useState(searchParams.get("empresa") || "");
+  const [pkg, setPkg] = useState(searchParams.get("paquete") || "Diagnóstico Estratégico");
+  const [notes, setNotes] = useState("");
 
-  const [diagnosticData, setDiagnosticData] = useState(null);
   const [progress, setProgress] = useState(25);
   const [stage, setStage] = useState("Analizando infraestructura y presencia en Google Maps...");
 
-  const calendarUrl = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ0136SdwB5GlQxFc0PD_JxhollDfXPPWRkDyOryHIGg62IKkS9EhL_kSLnFRNxcyGFbm3Gnuq78?gv=true";
+  // Estado de Selección de Cita
+  const [selectedDayIdx, setSelectedDayIdx] = useState(0);
+  const [selectedTime, setSelectedTime] = useState("10:00 AM");
+  const [status, setStatus] = useState("idle"); // idle | loading | error
+  const [availableDays, setAvailableDays] = useState([]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -21,7 +28,12 @@ export default function DiagnosticProcessing() {
     try {
       const stored = localStorage.getItem("tsolutions_latest_diagnostic");
       if (stored) {
-        setDiagnosticData(JSON.parse(stored));
+        const parsed = JSON.parse(stored);
+        if (parsed.name) setName(parsed.name);
+        if (parsed.email) setEmail(parsed.email);
+        if (parsed.phone) setPhone(parsed.phone);
+        if (parsed.businessName) setBusinessName(parsed.businessName);
+        if (parsed.selectedPkg) setPkg(parsed.selectedPkg);
       }
     } catch (e) {}
 
@@ -29,17 +41,41 @@ export default function DiagnosticProcessing() {
     const timer1 = setTimeout(() => {
       setProgress(55);
       setStage("RUA Agent: Mapeando cuellos de botella en WhatsApp y logística...");
-    }, 1200);
+    }, 1000);
 
     const timer2 = setTimeout(() => {
       setProgress(85);
       setStage("Sincronizando con base de datos y notificando a contacto@tsolutionsipidd.com...");
-    }, 2400);
+    }, 2000);
 
     const timer3 = setTimeout(() => {
       setProgress(100);
-      setStage("✓ Evaluación preliminar completada. Listo para la sesión 1 a 1.");
-    }, 3600);
+      setStage("✓ Evaluación preliminar completada. Listo para reservar sesión de entrega.");
+    }, 3000);
+
+    // Calcular próximos 3 días
+    const days = [];
+    const today = new Date();
+    const formatter = new Intl.DateTimeFormat("es-MX", { weekday: "long", day: "numeric", month: "short" });
+
+    let count = 0;
+    let offset = 1;
+    while (count < 3) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + offset);
+      const dateStr = formatter.format(d);
+      const capitalized = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+      
+      days.push({
+        id: count,
+        label: count === 0 ? `Mañana (${capitalized})` : capitalized,
+        fullDate: d.toLocaleDateString("es-MX", { weekday: "long", year: "numeric", month: "long", day: "numeric" }),
+        badge: count === 0 ? "🔥 Mayor Disponibilidad" : count === 1 ? "⚡ Pocos Lugares" : "📅 Últimos Horarios"
+      });
+      count++;
+      offset++;
+    }
+    setAvailableDays(days);
 
     return () => {
       clearTimeout(timer1);
@@ -47,6 +83,47 @@ export default function DiagnosticProcessing() {
       clearTimeout(timer3);
     };
   }, []);
+
+  const timeSlots = [
+    { time: "10:00 AM", period: "Mañana" },
+    { time: "11:30 AM", period: "Mañana" },
+    { time: "01:00 PM", period: "Tarde" },
+    { time: "04:00 PM", period: "Tarde" },
+    { time: "05:30 PM", period: "Tarde" },
+    { time: "07:00 PM", period: "Noche" }
+  ];
+
+  const handleBooking = async (e) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    const chosenDay = availableDays[selectedDayIdx];
+    const appointmentPayload = {
+      name,
+      email,
+      phone,
+      businessName,
+      selectedDate: chosenDay?.fullDate || chosenDay?.label || "Próximo día hábil",
+      selectedTime,
+      package: pkg,
+      notes,
+      createdAt: new Date().toISOString()
+    };
+
+    try {
+      await fetch("/api/appointment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(appointmentPayload),
+      }).catch(() => {});
+
+      localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
+      navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
+    } catch (err) {
+      localStorage.setItem("tsolutions_confirmed_appointment", JSON.stringify(appointmentPayload));
+      navigate(`/ebooks?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&cita=confirmada`);
+    }
+  };
 
   return (
     <div className="bg-negroProfundo text-blancoPuro min-h-screen selection:bg-naranjaEnergy selection:text-white pb-20 sm:pb-12">
@@ -86,7 +163,7 @@ export default function DiagnosticProcessing() {
       </header>
 
       {/* ================= PROCESAMIENTO & AVISO AL CLIENTE ================= */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
         
         {/* BANNER PRINCIPAL DE AVISO DE INFORMACIÓN */}
         <div className="bg-midnightPanel p-6 sm:p-10 rounded-large border border-naranjaEnergy/40 shadow-glowEnergy text-center relative overflow-hidden mb-10">
@@ -140,7 +217,7 @@ export default function DiagnosticProcessing() {
 
           {/* BOTÓN CTA PRINCIPAL HACIA LA AGENDA */}
           <a
-            href="#agenda-en-vivo"
+            href="#agenda-directa"
             className="inline-flex items-center gap-2 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-sm sm:text-base px-8 py-4 rounded-medium shadow-glowEnergy hover:shadow-glowEnergyHover transition-all transform hover:-translate-y-0.5"
           >
             <span>📅 Agendar Cita para Entrega de Resultados (20 min)</span>
@@ -148,57 +225,109 @@ export default function DiagnosticProcessing() {
           </a>
         </div>
 
-        {/* ================= SECCIÓN DE AGENDA EN VIVO ================= */}
-        <section id="agenda-en-vivo" className="bg-midnightPanel p-6 sm:p-8 rounded-large border border-naranjaEnergy/40 shadow-card">
+        {/* ================= SECCIÓN DE AGENDA NATIVA (PRÓXIMOS 3 DÍAS) ================= */}
+        <section id="agenda-directa" className="bg-midnightPanel p-6 sm:p-8 rounded-large border border-naranjaEnergy/40 shadow-card space-y-6">
           
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 mb-6 border-b border-white/10 gap-2">
+          <div className="border-b border-white/10 pb-4">
+            <span className="text-xs font-bold text-naranjaEnergy uppercase tracking-widest">
+              PASO FINAL: APARTA TU LUGAR
+            </span>
+            <h2 className="font-bruno text-xl sm:text-2xl text-blancoPuro mt-1 flex items-center gap-2">
+              <span>🗓️ Selección de Día y Horario para Entrega de Resultados</span>
+            </h2>
+            <p className="text-xs text-humo mt-1">
+              Elige entre los próximos 3 días hábiles disponibles para tu sesión 1 a 1 de 20 minutos con el Estratega Tecnológico.
+            </p>
+          </div>
+
+          <form onSubmit={handleBooking} className="space-y-6">
+            {/* DÍAS DISPONIBLES */}
             <div>
-              <span className="text-xs font-bold text-naranjaEnergy uppercase tracking-widest">
-                PASO FINAL: APARTA TU LUGAR
-              </span>
-              <h2 className="font-bruno text-xl sm:text-2xl text-blancoPuro mt-1 flex items-center gap-2">
-                <span>🗓️ Selección de Día y Horario</span>
-                <span className="text-[10px] font-sans font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                  Google Calendar en Vivo
-                </span>
-              </h2>
-              <p className="text-xs text-humo mt-1">
-                Elige el horario de tu preferencia para tu sesión 1 a 1 de entrega de resultados y propuesta tecnológica.
-              </p>
+              <label className="block text-xs font-bold text-blancoPuro uppercase tracking-wider mb-2.5">
+                1. Elige tu Día de Preferencia:
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {availableDays.map((day, idx) => (
+                  <button
+                    type="button"
+                    key={day.id}
+                    onClick={() => setSelectedDayIdx(idx)}
+                    className={`p-4 rounded-medium border text-left transition-all relative flex flex-col justify-between ${
+                      selectedDayIdx === idx
+                        ? "bg-naranjaEnergy/20 border-2 border-naranjaEnergy shadow-glowEnergy text-white scale-[1.02]"
+                        : "bg-negroProfundo border-white/10 text-blancoPuro/80 hover:border-naranjaEnergy/50"
+                    }`}
+                  >
+                    <span className="text-[10px] font-bold text-naranjaEnergy uppercase tracking-wider mb-1 block">
+                      {day.badge}
+                    </span>
+                    <strong className="font-bruno text-sm sm:text-base text-blancoPuro block mb-1">
+                      {day.label}
+                    </strong>
+                    <span className="text-[11px] text-humo">
+                      {selectedDayIdx === idx ? "✓ Seleccionado" : "Click para elegir"}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
-            
-            <Link
-              to={`/agenda?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&paquete=${encodeURIComponent(pkg)}`}
-              className="text-xs text-naranjaEnergy hover:underline font-bold whitespace-nowrap"
-            >
-              Ver en página dedicada de agenda →
-            </Link>
-          </div>
 
-          {/* IFRAME DE GOOGLE CALENDAR EMBEBIDO */}
-          <div className="w-full rounded-medium overflow-hidden border border-white/15 bg-white shadow-card relative min-h-[620px]">
-            <iframe
-              src={calendarUrl}
-              style={{ border: 0 }}
-              width="100%"
-              height="650"
-              frameBorder="0"
-              title="Disponibilidad Google Calendar"
-              className="w-full h-[620px] sm:h-[680px]"
-            ></iframe>
-          </div>
+            {/* HORAS DISPONIBLES */}
+            <div>
+              <label className="block text-xs font-bold text-blancoPuro uppercase tracking-wider mb-2.5">
+                2. Elige la Hora (Centro de México):
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5">
+                {timeSlots.map((slot) => (
+                  <button
+                    type="button"
+                    key={slot.time}
+                    onClick={() => setSelectedTime(slot.time)}
+                    className={`py-3 px-2 rounded-medium border text-center transition-all ${
+                      selectedTime === slot.time
+                        ? "bg-naranjaEnergy text-white font-bold border-naranjaEnergy shadow-glowEnergy scale-105"
+                        : "bg-negroProfundo border-white/10 text-blancoPuro/90 hover:border-naranjaEnergy/60 hover:text-white"
+                    }`}
+                  >
+                    <span className="text-xs sm:text-sm font-bruno block">{slot.time}</span>
+                    <span className="text-[10px] text-humo block mt-0.5">{slot.period}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs text-humo">
-            <span className="flex items-center gap-1.5">
-              <span className="text-emerald-400 font-bold">✓</span> Confirmación inmediata a tu correo electrónico
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="text-emerald-400 font-bold">✓</span> Enlace directo de Google Meet incluido
-            </span>
-            <Link to="/" className="text-naranjaEnergy hover:underline font-bold">
-              Volver al inicio
-            </Link>
-          </div>
+            {/* CONFIRMACIÓN DE DATOS AUTO-LLENADOS */}
+            <div className="p-4 bg-negroProfundo/70 rounded-medium border border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div>
+                <span className="text-humo block text-[11px]">Asistente:</span>
+                <strong className="text-blancoPuro">{name}</strong>
+              </div>
+              <div>
+                <span className="text-humo block text-[11px]">Correo Meet:</span>
+                <strong className="text-blancoPuro">{email || "Se enviará confirmación"}</strong>
+              </div>
+              <div>
+                <span className="text-humo block text-[11px]">WhatsApp:</span>
+                <strong className="text-blancoPuro">{phone || "Registrado"}</strong>
+              </div>
+            </div>
+
+            {/* BOTÓN RESERVA */}
+            <div className="space-y-3 pt-2">
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="w-full py-4 px-8 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-base sm:text-lg rounded-medium shadow-glowEnergy hover:shadow-glowEnergyHover transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              >
+                <span>{status === "loading" ? "Confirmando Cita..." : "📅 Confirmar Cita y Desbloquear E-books Gratis"}</span>
+                <span>→</span>
+              </button>
+
+              <div className="bg-naranjaEnergy/10 border border-naranjaEnergy/30 p-3 rounded-medium text-center text-xs text-blancoPuro/90">
+                🎁 Al reservar tu cita, serás redirigido a la <strong>Descarga Inmediata de nuestros 3 E-books Oficiales</strong>.
+              </div>
+            </div>
+          </form>
 
         </section>
 

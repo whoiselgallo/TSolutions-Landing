@@ -15,19 +15,29 @@ Catálogo Oficial de Soluciones TSolutions IPIDD:
 - 🏛️ Consultoría Estructural (SOPs): Documentación de flujos de trabajo y procesos operativos.
 - 🎨 Brand Builder & Taller de Identidad ($1,850 MXN): Logotipo, manual de marca y narrativa comercial.
 - 🎓 Constancia de Aprendizaje: Capacitación en 3 dominios (Cognitivo, Psicomotor y Afectivo) para erradicar el miedo al cambio.
+- 📚 E-books Gratuitos: 3 manuales prácticos sobre Branding, Digitalización Anticaos y E-commerce en /ebooks.
 - 🧭 Diagnóstico Gratuito: Auditoría de 2 minutos en /diagnostico.
 - 📅 Agenda en Vivo: Sesión 1 a 1 de 20 min con un Estratega Tecnológico en /agenda.
 
 Reglas:
 - Habla en español con tono seguro, cálido, profesional y directo.
 - Mantén respuestas ágiles (1 a 3 párrafos concisos).
-- Guía al usuario a llenar su diagnóstico en /diagnostico o a seleccionar su horario en /agenda.`;
+- Guía al usuario a llenar su diagnóstico en /diagnostico, descargar e-books en /ebooks o seleccionar su horario en /agenda.`;
 
 // ---- Base de Conocimiento Resiliente Integrada en RUA (Offline/Fallback Inteligente) ----
 function generateRuaResponse(userText) {
   const text = userText.toLowerCase();
 
-  // 1. Diagnóstico / Auditoría / No sé por dónde empezar
+  // 1. Ebooks / Libros / Recursos gratis
+  if (text.includes("ebook") || text.includes("libro") || text.includes("pdf") || text.includes("gratis") || text.includes("descarga") || text.includes("recurso")) {
+    return "¡Sí! Contamos con **3 E-books Oficiales Gratuitos** listos para descargar:\n\n" +
+      "1. 🎨 *Arquitectura de Marca: Cómo Construir una Identidad que Venda*.\n" +
+      "2. 🚀 *El Manual Anticaos: Erradica el Desorden en Google Maps y WhatsApp*.\n" +
+      "3. 📦 *De Mostrador Local a Máquina de Despachos: E-commerce con Uber Direct*.\n\n" +
+      "Puedes descargarlos libremente en nuestra biblioteca digital: [/ebooks](/ebooks).";
+  }
+
+  // 2. Diagnóstico / Auditoría / No sé por dónde empezar
   if (text.includes("diagnostico") || text.includes("diagnóstico") || text.includes("no sé") || text.includes("no se") || text.includes("empezar") || text.includes("auditoria") || text.includes("auditoría")) {
     return "¡Excelente! La mejor forma de saber exactamente qué necesita tu negocio es nuestro **Diagnóstico de Madurez Digital (2 min)**. \n\nAl llenarlo, analizamos tus fugas en Google Maps, WhatsApp y logística, y te generamos tu reporte personalizado para revisarlo en una sesión 1 a 1 de 20 minutos. Puedes llenarlo en [/diagnostico](/diagnostico) o agendar directo en [/agenda](/agenda).";
   }

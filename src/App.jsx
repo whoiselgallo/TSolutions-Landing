@@ -7,6 +7,8 @@ import PortfolioPage from "./pages/PortfolioPage.jsx";
 import AgendaPage from "./pages/AgendaPage.jsx";
 import DigitalDiagnostic from "./pages/DigitalDiagnostic.jsx";
 import DiagnosticProcessing from "./pages/DiagnosticProcessing.jsx";
+import EbooksPage from "./pages/EbooksPage.jsx";
+import ThankYouPage from "./pages/ThankYouPage.jsx";
 import ComponentsPreview from "./pages/ComponentsPreview.jsx";
 import EffectsPreview from "./pages/EffectsPreview.jsx";
 import TokensPreview from "./pages/TokensPreview.jsx";
@@ -42,6 +44,8 @@ export default function App() {
           <Route path="/agenda" element={<PageTransition type="fade"><AgendaPage /></PageTransition>} />
           <Route path="/diagnostico" element={<PageTransition type="fade"><DigitalDiagnostic /></PageTransition>} />
           <Route path="/diagnostico-procesando" element={<PageTransition type="fade"><DiagnosticProcessing /></PageTransition>} />
+          <Route path="/ebooks" element={<PageTransition type="fade"><EbooksPage /></PageTransition>} />
+          <Route path="/gracias" element={<PageTransition type="fade"><ThankYouPage /></PageTransition>} />
           
           {/* ===== PRODUCT MODULES ===== */}
           <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />
