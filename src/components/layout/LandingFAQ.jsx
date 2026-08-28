@@ -30,13 +30,14 @@ export default function LandingFAQ() {
     <section className="py-20 bg-negroProfundo border-b border-blancoPuro/5">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left mb-12">
-          <div className="w-14 h-14 rounded-medium overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy bg-midnightPanel shrink-0">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-5 text-center sm:text-left mb-12">
+          {/* FAQ Icon — Ampliado */}
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-large overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy bg-midnightPanel shrink-0 p-1 flex items-center justify-center">
             <img
               src="/assets/iconografia/FAQs_icon.jpg"
               onError={(e) => { e.target.src = "/assets/iconografia/Chatbot.jpg"; }}
               alt="Preguntas Frecuentes"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain rounded-medium"
             />
           </div>
           <div>

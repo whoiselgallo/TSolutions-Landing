@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function LandingContact({ selectedPackage }) {
+  const [searchParams] = useSearchParams();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -9,11 +12,26 @@ export default function LandingContact({ selectedPackage }) {
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [statusMsg, setStatusMsg] = useState("");
 
+  // Sync with prop
   useEffect(() => {
     if (selectedPackage) {
       setPkg(selectedPackage);
     }
   }, [selectedPackage]);
+
+  // Sync with URL query parameter ?paquete=...
+  useEffect(() => {
+    const paramPkg = searchParams.get("paquete");
+    if (paramPkg) {
+      setPkg(paramPkg);
+      const el = document.getElementById("contacto");
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth" });
+        }, 150);
+      }
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +69,7 @@ export default function LandingContact({ selectedPackage }) {
         setPhone("");
         setMessage("");
       } else {
-        // Fallback friendly alert if backend API endpoint is not yet mounted on local preview
+        // Fallback friendly alert
         setStatus("success");
         setStatusMsg("¡Solicitud enviada! Nuestro consultor principal revisará tu proyecto de inmediato.");
       }
@@ -74,7 +92,7 @@ export default function LandingContact({ selectedPackage }) {
             Inicia la Transformación de tu Negocio
           </h2>
           <p className="text-humo text-sm mt-2">
-            Completa los datos esenciales. Un Estratega Tecnológico se pondrá en contacto contigo.
+            Completa los datos esenciales. Un Estratega Tecnológico se pondrá en contacto contigo para tu diagnóstico.
           </p>
         </div>
 
@@ -138,25 +156,49 @@ export default function LandingContact({ selectedPackage }) {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-blancoPuro uppercase tracking-wider mb-2">
-              Paquete o Servicio de Interés
-            </label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-xs font-bold text-blancoPuro uppercase tracking-wider">
+                Paquete o Servicio de Interés
+              </label>
+              <Link 
+                to="/portafolio" 
+                className="text-[11px] text-naranjaEnergy hover:underline font-semibold flex items-center gap-1"
+              >
+                <span>🔍 Ver catálogo completo</span>
+                <span>→</span>
+              </Link>
+            </div>
             <select
               value={pkg}
               onChange={(e) => setPkg(e.target.value)}
               className="w-full bg-negroProfundo border border-white/10 rounded-medium px-4 py-3.5 text-sm text-blancoPuro focus:outline-none focus:border-naranjaEnergy transition"
             >
-              <option value="Diagnóstico Gratuito">Diagnóstico Gratuito / No estoy seguro</option>
+              <option value="Diagnóstico Gratuito / No sé por dónde empezar">🧭 Diagnóstico Gratuito / No sé por dónde empezar</option>
               <option value="Tarjeta Smart ($950 MXN)">Nivel 1: Tarjeta Smart ($950 MXN)</option>
               <option value="Tu Negocio en Google ($2,750 MXN)">Nivel 2: Tu Negocio en Google ($2,750 MXN)</option>
-              <option value="Paquete Híbrido Escala Rápida ($3,700 MXN)">Paquete Híbrido Escala Rápida ($3,700 MXN)</option>
+              <option value="Paquete Híbrido Escala Rápida ($3,700 MXN)">Paquete Híbrido Escala Rápida ($3,700 MXN) — Recomendado</option>
               <option value="Ecosistema Total ($5,450 MXN)">Nivel 3: Ecosistema Total ($5,450 MXN)</option>
-              <option value="E-commerce Total Logística ($9,850 MXN)">E-commerce Total con Logística ($9,850 MXN)</option>
-              <option value="Consultoría Estructural (SOPs)">Consultoría Estructural (SOPs y Workflows)</option>
+              <option value="E-commerce Total con Logística ($9,850 MXN)">E-commerce Total con Logística ($9,850 MXN)</option>
+              <option value="Consultoría Estructural (SOPs)">Consultoría Estructural (SOPs y Flujos de Trabajo)</option>
               <option value="Taller Express Branding ($1,850 MXN)">Taller Express Branding ($1,850 MXN)</option>
-              <option value="Manifiesto & Auditoría Legal ($1,550 MXN)">Manifiesto de Marca & Auditoría Legal ($1,550 MXN)</option>
+              <option value="Manifiesto de Marca y Auditoría Legal ($1,550 MXN)">Manifiesto de Marca y Auditoría Legal ($1,550 MXN)</option>
               <option value="Elevator Pitch ($850 MXN)">Elevator Pitch Estratégico ($850 MXN)</option>
             </select>
+
+            {/* SUGERENCIA DINÁMICA SI NO SABE POR DÓNDE EMPEZAR */}
+            {pkg.includes("No sé por dónde empezar") && (
+              <div className="mt-2.5 p-3 rounded-medium bg-naranjaEnergy/10 border border-naranjaEnergy/30 flex items-center justify-between gap-3 text-xs">
+                <span className="text-blancoPuro/90">
+                  💡 ¿Deseas ver la comparativa de todos los paquetes antes de agendar?
+                </span>
+                <Link
+                  to="/portafolio"
+                  className="shrink-0 bg-naranjaEnergy text-white font-bold px-3 py-1.5 rounded text-[11px] hover:bg-orange-600 transition"
+                >
+                  Explorar Portafolio →
+                </Link>
+              </div>
+            )}
           </div>
 
           <div>

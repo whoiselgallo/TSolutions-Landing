@@ -6,13 +6,13 @@ export default function LeadMagnet() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
         <div className="p-8 sm:p-12 rounded-large bg-midnightPanel border border-naranjaEnergy/30 shadow-glowEnergy relative overflow-hidden flex flex-col md:flex-row items-center gap-8 text-left">
           
-          {/* 3D Visual Asset */}
-          <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-large overflow-hidden shrink-0 border border-naranjaEnergy/40 shadow-glowEnergy bg-negroProfundo">
+          {/* 3D Visual Asset — Ampliado */}
+          <div className="w-48 h-48 sm:w-60 sm:h-60 rounded-large overflow-hidden shrink-0 border border-naranjaEnergy/40 shadow-glowEnergy bg-negroProfundo p-2 flex items-center justify-center">
             <img
               src="/assets/iconografia/E-book_icon_design_2K_202608271204.jpeg"
               onError={(e) => { e.target.src = "/assets/iconografia/medir impacto.jpg"; }}
               alt="Diagnóstico de Madurez Digital"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain rounded-medium"
             />
           </div>
 

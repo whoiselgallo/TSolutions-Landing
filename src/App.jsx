@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // Pages
 import Home from "./pages/Home.jsx";
 import LandingPreview from "./pages/LandingPreview.jsx";
+import PortfolioPage from "./pages/PortfolioPage.jsx";
 import ComponentsPreview from "./pages/ComponentsPreview.jsx";
 import EffectsPreview from "./pages/EffectsPreview.jsx";
 import TokensPreview from "./pages/TokensPreview.jsx";
@@ -19,7 +20,6 @@ import ConsultoriaNegocios from "./pages/ConsultoriaNegocios.jsx";
 import Store from "./pages/Store.jsx";
 import AccessGate from "./pages/AccessGate.jsx";
 
-
 // Transition wrapper
 import PageTransition from "./effects/transitions/PageTransition.jsx";
 
@@ -35,6 +35,7 @@ export default function App() {
           {/* ===== HOME / LANDING ===== */}
           <Route path="/" element={<Home />} />
           <Route path="/landing" element={<PageTransition type="fade"><LandingPreview /></PageTransition>} />
+          <Route path="/portafolio" element={<PageTransition type="fade"><PortfolioPage /></PageTransition>} />
           
           {/* ===== PRODUCT MODULES ===== */}
           <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />
@@ -45,7 +46,6 @@ export default function App() {
           <Route path="/tienda" element={<PageTransition type="fade"><Store /></PageTransition>} />
           <Route path="/acceso" element={<PageTransition type="fade"><AccessGate /></PageTransition>} />
           <Route path="/acceso/:codigo" element={<PageTransition type="fade"><AccessGate /></PageTransition>} />
-
 
           {/* ===== UI PREVIEWS ===== */}
           <Route path="/components" element={<PageTransition type="slide" direction="up"><ComponentsPreview /></PageTransition>} />

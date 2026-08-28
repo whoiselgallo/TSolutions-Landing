@@ -9,12 +9,12 @@ export default function Differentiator() {
           <div className="absolute -right-20 -bottom-20 w-72 h-72 bg-naranjaEnergy/10 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 rounded-medium overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy shrink-0 bg-midnightPanel">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-large overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy shrink-0 bg-midnightPanel p-1 flex items-center justify-center">
               <img
                 src="/assets/iconografia/certificación.jpg"
                 onError={(e) => { e.target.src = "/assets/iconografia/Certification_icon.jpg"; }}
                 alt="Constancia de Aprendizaje y Dominio Tecnológico"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain rounded"
               />
             </div>
             <div>
@@ -28,13 +28,13 @@ export default function Differentiator() {
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-            <div className="p-5 rounded-medium bg-midnightPanel border border-white/5 flex flex-col justify-between group">
+            <div className="p-5 rounded-large bg-midnightPanel border border-white/5 flex flex-col justify-between group shadow-card">
               <div>
-                <div className="w-full h-28 rounded-medium overflow-hidden mb-3 border border-white/10 bg-negroProfundo">
+                <div className="w-full h-48 sm:h-52 rounded-medium overflow-hidden mb-4 border border-white/10 bg-negroProfundo p-1.5 flex items-center justify-center shadow-inner">
                   <img
                     src="/assets/iconografia/aprendizaje cognitivo.jpg"
                     alt="Dominio Cognitivo"
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300 opacity-85"
+                    className="w-full h-full object-contain rounded transform group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
                   />
                 </div>
                 <h4 className="font-bruno text-sm text-blancoPuro mb-1">Dominio Cognitivo</h4>
@@ -42,13 +42,13 @@ export default function Differentiator() {
               </div>
             </div>
 
-            <div className="p-5 rounded-medium bg-midnightPanel border border-white/5 flex flex-col justify-between group">
+            <div className="p-5 rounded-large bg-midnightPanel border border-white/5 flex flex-col justify-between group shadow-card">
               <div>
-                <div className="w-full h-28 rounded-medium overflow-hidden mb-3 border border-white/10 bg-negroProfundo">
+                <div className="w-full h-48 sm:h-52 rounded-medium overflow-hidden mb-4 border border-white/10 bg-negroProfundo p-1.5 flex items-center justify-center shadow-inner">
                   <img
                     src="/assets/iconografia/psychomotor_learning.jpg"
                     alt="Dominio Psicomotor"
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300 opacity-85"
+                    className="w-full h-full object-contain rounded transform group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
                   />
                 </div>
                 <h4 className="font-bruno text-sm text-blancoPuro mb-1">Dominio Psicomotor</h4>
@@ -56,13 +56,13 @@ export default function Differentiator() {
               </div>
             </div>
 
-            <div className="p-5 rounded-medium bg-midnightPanel border border-white/5 flex flex-col justify-between group">
+            <div className="p-5 rounded-large bg-midnightPanel border border-white/5 flex flex-col justify-between group shadow-card">
               <div>
-                <div className="w-full h-28 rounded-medium overflow-hidden mb-3 border border-white/10 bg-negroProfundo">
+                <div className="w-full h-48 sm:h-52 rounded-medium overflow-hidden mb-4 border border-white/10 bg-negroProfundo p-1.5 flex items-center justify-center shadow-inner">
                   <img
                     src="/assets/iconografia/dominio afectivo.jpg"
                     alt="Dominio Afectivo"
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300 opacity-85"
+                    className="w-full h-full object-contain rounded transform group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
                   />
                 </div>
                 <h4 className="font-bruno text-sm text-blancoPuro mb-1">Dominio Afectivo</h4>
@@ -71,11 +71,11 @@ export default function Differentiator() {
             </div>
           </div>
 
-          <div className="p-4 rounded-medium bg-naranjaEnergy/10 border border-naranjaEnergy/30 flex flex-col sm:flex-row items-center gap-4">
-            <div className="w-12 h-12 rounded overflow-hidden shrink-0 border border-naranjaEnergy/40">
-              <img src="/assets/iconografia/Certification_icon.jpg" alt="Constancia de Aprendizaje" className="w-full h-full object-cover" />
+          <div className="p-5 rounded-large bg-naranjaEnergy/10 border border-naranjaEnergy/30 flex flex-col sm:flex-row items-center gap-5 shadow-card">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-medium overflow-hidden shrink-0 border border-naranjaEnergy/40 bg-negroProfundo p-1 shadow-glowEnergy flex items-center justify-center">
+              <img src="/assets/iconografia/Certification_icon.jpg" alt="Constancia de Aprendizaje" className="w-full h-full object-contain rounded" />
             </div>
-            <p className="text-xs text-blancoPuro leading-relaxed">
+            <p className="text-xs sm:text-sm text-blancoPuro leading-relaxed">
               <strong>Constancia de Aprendizaje:</strong> Como facilitadores tecnológicos, otorgamos la <em>Constancia de Participación, Aprendizaje y Dominio Tecnológico</em> emitida por TSolutions (reconocimiento formativo interno de habilidades para tu equipo, sin validez ante la STPS), asegurando que tu negocio alcance una verdadera independencia operativa.
             </p>
           </div>

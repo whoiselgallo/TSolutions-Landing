@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import videoBg from "../../assets/videos/VIDTS.mp4";
 
 export default function LandingHero() {
@@ -94,12 +95,13 @@ export default function LandingHero() {
           >
             🚀 Agendar Diagnóstico
           </a>
-          <a
-            href="#portafolio"
-            className="w-full sm:w-auto py-4 px-6 bg-midnightPanel hover:bg-midnightPanel/70 text-blancoPuro border border-white/10 rounded-medium text-sm font-bold transition-all text-center"
+          <Link
+            to="/portafolio"
+            className="w-full sm:w-auto py-4 px-6 bg-midnightPanel hover:bg-midnightPanel/70 text-blancoPuro border border-white/10 hover:border-naranjaEnergy/50 rounded-medium text-sm font-bold transition-all text-center flex items-center justify-center gap-2"
           >
-            📦 Ver Portafolio
-          </a>
+            <span>📦 Ver Portafolio</span>
+            <span className="text-naranjaEnergy">→</span>
+          </Link>
         </div>
 
         {/* SOCIAL BADGES */}

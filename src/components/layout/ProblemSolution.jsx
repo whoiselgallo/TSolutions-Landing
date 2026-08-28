@@ -48,16 +48,16 @@ export default function ProblemSolution() {
               className="bg-midnightPanel p-6 sm:p-7 rounded-large border border-naranjaEnergy/20 hover:border-naranjaEnergy transition-all duration-300 flex flex-col justify-between shadow-card group"
             >
               <div>
-                {/* Visual Icon Header */}
-                <div className="relative w-full h-36 rounded-medium overflow-hidden mb-5 border border-white/10 bg-negroProfundo flex items-center justify-center">
+                {/* Visual Icon Header — Ampliado */}
+                <div className="relative w-full h-56 sm:h-64 rounded-large overflow-hidden mb-5 border border-white/10 bg-negroProfundo p-2 flex items-center justify-center shadow-inner">
                   <img
                     src={item.img}
                     onError={(e) => { e.target.src = item.fallback; }}
                     alt={item.title}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                    className="w-full h-full object-contain sm:object-cover rounded-medium transform group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-midnightPanel via-transparent to-transparent"></div>
-                  <span className="absolute bottom-2 left-2 text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-naranjaEnergy text-white shadow">
+                  <div className="absolute inset-0 bg-gradient-to-t from-midnightPanel/80 via-transparent to-transparent pointer-events-none"></div>
+                  <span className="absolute bottom-3 left-3 text-[10px] uppercase font-bold px-3 py-1 rounded-full bg-naranjaEnergy text-white shadow-glowEnergy">
                     {item.tag}
                   </span>
                 </div>

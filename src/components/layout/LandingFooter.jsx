@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function LandingFooter() {
   return (
@@ -13,12 +14,20 @@ export default function LandingFooter() {
           <p className="text-humo text-sm sm:text-base max-w-2xl mx-auto mb-8">
             Deja de perder clientes por herramientas desarticuladas o código que nadie sabe usar. Implementa infraestructura digital robusta hoy.
           </p>
-          <a
-            href="#contacto"
-            className="inline-flex items-center gap-2 py-4 px-9 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-base sm:text-lg rounded-medium shadow-glowEnergy hover:shadow-glowEnergyHover transition-all duration-300 transform hover:-translate-y-1"
-          >
-            <span>🚀 Iniciar Mi Transformación Digital</span>
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href="#contacto"
+              className="inline-flex items-center gap-2 py-4 px-9 bg-naranjaEnergy hover:bg-orange-600 text-white font-bruno text-base sm:text-lg rounded-medium shadow-glowEnergy hover:shadow-glowEnergyHover transition-all duration-300 transform hover:-translate-y-1"
+            >
+              <span>🚀 Iniciar Mi Transformación Digital</span>
+            </a>
+            <Link
+              to="/portafolio"
+              className="inline-flex items-center gap-2 py-4 px-6 bg-negroProfundo hover:bg-midnightPanel text-blancoPuro border border-white/10 hover:border-naranjaEnergy/50 rounded-medium text-sm font-bold transition-all"
+            >
+              <span>📦 Explorar Portafolio Completo</span>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -29,7 +38,8 @@ export default function LandingFooter() {
             <span className="font-bruno text-blancoPuro">TSOLUTIONS IPIDD</span> &bull; 
             <span className="ml-2">“Tecnología instalada. Conocimiento transferido. Negocios escalados.”</span>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            <Link to="/portafolio" className="text-naranjaEnergy font-semibold hover:underline">Portafolio Comercial</Link>
             <a href="#contacto" className="hover:text-naranjaEnergy transition">Aviso de Privacidad</a>
             <a href="#contacto" className="hover:text-naranjaEnergy transition">Términos del Servicio</a>
             <a href="#contacto" className="hover:text-naranjaEnergy transition">Soporte Técnico</a>
@@ -38,20 +48,26 @@ export default function LandingFooter() {
       </footer>
 
       {/* ===== BARRA FLOTANTE EN ZONA DE PULGAR (MOBILE-FIRST) ===== */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 p-3 bg-negroProfundo/95 backdrop-blur-md border-t border-white/10 z-50 flex gap-2">
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 p-2.5 bg-negroProfundo/95 backdrop-blur-md border-t border-white/10 z-50 flex items-center gap-2">
+        <Link
+          to="/portafolio"
+          className="flex-1 bg-midnightPanel hover:bg-negroProfundo text-blancoPuro border border-white/10 font-bold py-3 px-2 rounded-medium text-xs flex items-center justify-center gap-1 shadow-card"
+        >
+          <span>📦 Portafolio</span>
+        </Link>
         <a
           href="https://wa.me/5215512345678?text=Hola,%20deseo%20solicitar%20el%20diagn%C3%B3stico%20de%20TSolutions"
           target="_blank"
           rel="noreferrer"
-          className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-2 rounded-medium text-xs flex items-center justify-center gap-1.5 shadow-card"
+          className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-2 rounded-medium text-xs flex items-center justify-center gap-1 shadow-card"
         >
           <span>💬 WhatsApp</span>
         </a>
         <a
           href="#contacto"
-          className="flex-[2] bg-naranjaEnergy hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-medium text-xs flex items-center justify-center gap-1.5 shadow-glowEnergy"
+          className="flex-[1.5] bg-naranjaEnergy hover:bg-orange-600 text-white font-bold py-3 px-3 rounded-medium text-xs flex items-center justify-center gap-1 shadow-glowEnergy"
         >
-          <span>⚡ Cotizar / Diagnóstico</span>
+          <span>⚡ Cotizar</span>
         </a>
       </div>
     </>
