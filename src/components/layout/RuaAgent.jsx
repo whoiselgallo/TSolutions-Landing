@@ -58,7 +58,12 @@ function generateRuaResponse(userText) {
     return "Nuestro **E-commerce Total con Logística ($9,850 MXN)** no es solo un carrito de compras tradicional: se conecta nativamente con las APIs de Uber Direct y DiDi para entregas locales express, y con DHL/Estafeta para envíos nacionales. \n\nEl sistema cotiza y despacha automáticamente sin que tengas que triangular repartidores a mano.";
   }
 
-  // 6. Capacitación / Constancia / Miedo al cambio
+  // 6. Pasarelas de Pago / Terminal / Mercado Pago
+  if (text.includes("pago") || text.includes("pasarela") || text.includes("stripe") || text.includes("mercado pago") || text.includes("terminal") || text.includes("tarjeta")) {
+    return "Integramos pasarelas de cobro seguras en línea (Stripe, Mercado Pago, Conekta o PayPal) por **$1,200 MXN**, y además **¡te incluimos una Terminal Point Mini de Mercado Pago de REGALO!** 🎁 para que cobres con tarjeta física directamente en tu mostrador o local.\n\nPuedes cotizar este complemento en [/portafolio](/portafolio) o agendar tu asesoría en [/agenda](/agenda).";
+  }
+
+  // 7. Capacitación / Constancia / Miedo al cambio
   if (text.includes("capacitacion") || text.includes("capacitación") || text.includes("curso") || text.includes("constancia") || text.includes("equipo") || text.includes("cambio") || text.includes("andragog")) {
     return "Ese es el **Diferenciador TSolutions IPIDD**: no dejamos software huérfano. Al entregar cualquier ecosistema, capacitamos a tu personal bajo principios andragógicos en los 3 dominios (Cognitivo, Psicomotor y Afectivo) y entregamos la **Constancia de Aprendizaje y Dominio Tecnológico** emitida por TSolutions para que tu equipo opere con total autonomía.";
   }

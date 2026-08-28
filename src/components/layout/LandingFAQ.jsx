@@ -14,7 +14,7 @@ export default function LandingFAQ() {
     },
     {
       q: "¿Cuáles son los métodos y esquemas de pago?",
-      a: "Aceptamos transferencia SPEI, tarjetas de crédito/débito vía Stripe y Mercado Pago. Manejamos esquemas transparentes de anticipo (50%/50% o 40%/30%/30% para proyectos corporativos y E-commerce) para total seguridad y certidumbre de ambas partes."
+      a: "Aceptamos transferencia SPEI, tarjetas de crédito/débito vía Stripe y Mercado Pago. En la integración de pasarelas de pago te incluimos una Terminal Point Mini de Mercado Pago de regalo para tus cobros físicos. Manejamos esquemas transparentes de anticipo (50%/50% o 40%/30%/30% para proyectos corporativos y E-commerce) para total seguridad."
     },
     {
       q: "¿Qué incluye la iguala obligatoria de mantenimiento en los niveles superiores?",
