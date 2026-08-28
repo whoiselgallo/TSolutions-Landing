@@ -3,7 +3,7 @@ import React from "react";
 export default function ProblemSolution() {
   const points = [
     {
-      img: "/assets/iconografia/ubicacion google.jpg",
+      img: "/assets/iconografia/ubicaciongoogle.jpg",
       fallback: "/assets/iconografia/Design_business_logo_for_maps_202608270910.jpeg",
       tag: "Caos en Mapas & Pedidos",
       title: "Fuga de Clientes por Caos Local",
@@ -11,7 +11,7 @@ export default function ProblemSolution() {
       solution: "Rescate geográfico, depuración SEO Local en Google Maps y automatización directa de WhatsApp Business."
     },
     {
-      img: "/assets/iconografia/resistencia al cambio.jpg",
+      img: "/assets/iconografia/resistenciaalcambio.jpeg",
       fallback: "/assets/iconografia/Developer_icon_design_for_agency_202608271202.jpeg",
       tag: "Falta de Capacitación",
       title: "El Síndrome del 'Código Huérfano'",
@@ -20,7 +20,7 @@ export default function ProblemSolution() {
     },
     {
       img: "/assets/iconografia/Kaizen_tech_icon_design_2K_202608271201.jpeg",
-      fallback: "/assets/iconografia/orden.jpg",
+      fallback: "/assets/iconografia/orden.jpeg",
       tag: "Trabajo Manual Repetitivo",
       title: "Cuellos de Botella y Operación Manual",
       pain: "Dueños de negocio triangulando envíos manualmente por mensajes, respondiendo preguntas repetitivas y perdiendo horas en tareas administrativas no escalables.",

@@ -35,7 +35,7 @@ export default function LandingFAQ() {
           <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-large overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy bg-midnightPanel shrink-0 p-1 flex items-center justify-center">
             <img
               src="/assets/iconografia/FAQs_icon.jpg"
-              onError={(e) => { e.target.src = "/assets/iconografia/Chatbot.jpg"; }}
+              onError={(e) => { e.target.src = "/assets/iconografia/Chatbot.jpeg"; }}
               alt="Preguntas Frecuentes"
               className="w-full h-full object-contain rounded-medium"
             />

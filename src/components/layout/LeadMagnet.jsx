@@ -10,7 +10,7 @@ export default function LeadMagnet() {
           <div className="w-48 h-48 sm:w-60 sm:h-60 rounded-large overflow-hidden shrink-0 border border-naranjaEnergy/40 shadow-glowEnergy bg-negroProfundo p-2 flex items-center justify-center">
             <img
               src="/assets/iconografia/E-book_icon_design_2K_202608271204.jpeg"
-              onError={(e) => { e.target.src = "/assets/iconografia/medir impacto.jpg"; }}
+              onError={(e) => { e.target.src = "/assets/iconografia/medirimpacto.jpeg"; }}
               alt="Diagnóstico de Madurez Digital"
               className="w-full h-full object-contain rounded-medium"
             />

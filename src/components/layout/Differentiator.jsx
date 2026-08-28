@@ -11,8 +11,8 @@ export default function Differentiator() {
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-large overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy shrink-0 bg-midnightPanel p-1 flex items-center justify-center">
               <img
-                src="/assets/iconografia/certificación.jpg"
-                onError={(e) => { e.target.src = "/assets/iconografia/Certification_icon.jpg"; }}
+                src="/assets/iconografia/Certification_icon.jpeg"
+                onError={(e) => { e.target.src = "/assets/iconografia/certificación.jpeg"; }}
                 alt="Constancia de Aprendizaje y Dominio Tecnológico"
                 className="w-full h-full object-contain rounded"
               />
@@ -32,7 +32,8 @@ export default function Differentiator() {
               <div>
                 <div className="w-full h-48 sm:h-52 rounded-medium overflow-hidden mb-4 border border-white/10 bg-negroProfundo p-1.5 flex items-center justify-center shadow-inner">
                   <img
-                    src="/assets/iconografia/aprendizaje cognitivo.jpg"
+                    src="/assets/iconografia/aprendizajecognitivo.jpeg"
+                    onError={(e) => { e.target.src = "/assets/iconografia/Developer_icon_design_for_agency_202608271202.jpeg"; }}
                     alt="Dominio Cognitivo"
                     className="w-full h-full object-contain rounded transform group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
                   />
@@ -46,7 +47,8 @@ export default function Differentiator() {
               <div>
                 <div className="w-full h-48 sm:h-52 rounded-medium overflow-hidden mb-4 border border-white/10 bg-negroProfundo p-1.5 flex items-center justify-center shadow-inner">
                   <img
-                    src="/assets/iconografia/psychomotor_learning.jpg"
+                    src="/assets/iconografia/psychomotor_learning.jpeg"
+                    onError={(e) => { e.target.src = "/assets/iconografia/Kaizen_tech_icon_design_2K_202608271201.jpeg"; }}
                     alt="Dominio Psicomotor"
                     className="w-full h-full object-contain rounded transform group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
                   />
@@ -60,7 +62,8 @@ export default function Differentiator() {
               <div>
                 <div className="w-full h-48 sm:h-52 rounded-medium overflow-hidden mb-4 border border-white/10 bg-negroProfundo p-1.5 flex items-center justify-center shadow-inner">
                   <img
-                    src="/assets/iconografia/dominio afectivo.jpg"
+                    src="/assets/iconografia/dominioafectivo.jpeg"
+                    onError={(e) => { e.target.src = "/assets/iconografia/innovacion.jpeg"; }}
                     alt="Dominio Afectivo"
                     className="w-full h-full object-contain rounded transform group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100"
                   />
@@ -73,7 +76,12 @@ export default function Differentiator() {
 
           <div className="p-5 rounded-large bg-naranjaEnergy/10 border border-naranjaEnergy/30 flex flex-col sm:flex-row items-center gap-5 shadow-card">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-medium overflow-hidden shrink-0 border border-naranjaEnergy/40 bg-negroProfundo p-1 shadow-glowEnergy flex items-center justify-center">
-              <img src="/assets/iconografia/Certification_icon.jpg" alt="Constancia de Aprendizaje" className="w-full h-full object-contain rounded" />
+              <img 
+                src="/assets/iconografia/Certification_icon.jpeg" 
+                onError={(e) => { e.target.src = "/assets/iconografia/certificación.jpeg"; }}
+                alt="Constancia de Aprendizaje" 
+                className="w-full h-full object-contain rounded" 
+              />
             </div>
             <p className="text-xs sm:text-sm text-blancoPuro leading-relaxed">
               <strong>Constancia de Aprendizaje:</strong> Como facilitadores tecnológicos, otorgamos la <em>Constancia de Participación, Aprendizaje y Dominio Tecnológico</em> emitida por TSolutions (reconocimiento formativo interno de habilidades para tu equipo, sin validez ante la STPS), asegurando que tu negocio alcance una verdadera independencia operativa.
