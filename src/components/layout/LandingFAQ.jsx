@@ -9,8 +9,8 @@ export default function LandingFAQ() {
       a: "Para la Tarjeta Smart la entrega toma de 24 a 48 horas. Tu Negocio en Google y el paquete Escala Rápida se entregan en 4 a 7 días hábiles. Desarrollos complejos como Ecosistema Total o E-commerce con Logística toman de 2 a 3 semanas incluyendo integración de pasarelas, APIs de paquetería y pruebas."
     },
     {
-      q: "¿Cómo funciona la transferencia de conocimiento y la constancia DC-3?",
-      a: "Al finalizar el desarrollo técnico, realizamos sesiones de capacitación andragógica para tu equipo en los 3 dominios (Cognitivo, Psicomotor y Afectivo). Se evalúa el dominio y emitimos la Constancia de Participación y Dominio Tecnológico, además del Formato DC-3 de la STPS para la acreditación formal de competencias."
+      q: "¿Cómo funciona la transferencia de conocimiento y la constancia de aprendizaje?",
+      a: "Al finalizar el desarrollo técnico, realizamos sesiones de capacitación andragógica para tu equipo en los 3 dominios (Cognitivo, Psicomotor y Afectivo). Se evalúa el dominio y emitimos la Constancia de Participación, Aprendizaje y Dominio Tecnológico emitida por TSolutions (reconocimiento interno de competencias tecnológicas, sin validez ante la STPS)."
     },
     {
       q: "¿Cuáles son los métodos y esquemas de pago?",
@@ -30,13 +30,23 @@ export default function LandingFAQ() {
     <section className="py-20 bg-negroProfundo border-b border-blancoPuro/5">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
-        <div className="text-center mb-12">
-          <span className="text-xs font-bold text-naranjaEnergy uppercase tracking-widest">
-            Derribo de Objeciones
-          </span>
-          <h2 className="font-bruno text-2xl sm:text-4xl text-blancoPuro mt-2">
-            Preguntas Frecuentes
-          </h2>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left mb-12">
+          <div className="w-14 h-14 rounded-medium overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy bg-midnightPanel shrink-0">
+            <img
+              src="/assets/iconografia/FAQs_icon.jpg"
+              onError={(e) => { e.target.src = "/assets/iconografia/Chatbot.jpg"; }}
+              alt="Preguntas Frecuentes"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div>
+            <span className="text-xs font-bold text-naranjaEnergy uppercase tracking-widest block">
+              Derribo de Objeciones
+            </span>
+            <h2 className="font-bruno text-2xl sm:text-3xl text-blancoPuro">
+              Preguntas Frecuentes
+            </h2>
+          </div>
         </div>
 
         <div className="space-y-4">

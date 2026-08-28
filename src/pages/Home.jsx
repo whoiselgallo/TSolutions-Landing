@@ -38,7 +38,7 @@ export default function Home() {
         {/* 5. Portafolio Comercial de Productos y Servicios */}
         <Portfolio onSelectPackage={setSelectedPackage} />
 
-        {/* 6. El Gran Diferenciador: Formación Andragógica y DC-3 */}
+        {/* 6. El Gran Diferenciador: Formación Andragógica y Constancia de Aprendizaje */}
         <Differentiator />
 
         {/* 7. Lead Magnet: Oferta de Diagnóstico Gratuito */}

@@ -22,8 +22,8 @@ export default function SocialProof() {
             <p className="text-xs text-humo mt-1 font-medium">Cognitivo, Psicomotor, Afectivo</p>
           </div>
           <div className="p-5 rounded-medium bg-negroProfundo/70 border border-naranjaEnergy/20 shadow-card">
-            <p className="text-2xl sm:text-3xl font-bruno text-blancoPuro">DC-3</p>
-            <p className="text-xs text-humo mt-1 font-medium">Constancia de Competencias STPS</p>
+            <p className="text-2xl sm:text-3xl font-bruno text-blancoPuro">Constancia</p>
+            <p className="text-xs text-humo mt-1 font-medium">De Aprendizaje & Dominio</p>
           </div>
         </div>
       </div>

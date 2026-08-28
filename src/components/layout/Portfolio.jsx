@@ -6,7 +6,8 @@ export default function Portfolio({ onSelectPackage }) {
       level: "Nivel 1",
       name: "Tarjeta Smart",
       subtitle: "El Gancho — Mobile First",
-      icon: "📱",
+      img: "/assets/iconografia/Smart_web_icon_design_2K_202608271207.jpeg",
+      fallback: "/assets/iconografia/tarjeta muestra.jpg",
       price: "$950 MXN",
       model: "Pago único en 1 exhibición",
       description: "\"Smart Web\" vertical (tipo Bio Link) optimizada mobile-first. Incluye cabecera, acciones rápidas en la zona de pulgar, enlaces destacados y bloque interactivo ligero.",
@@ -18,7 +19,8 @@ export default function Portfolio({ onSelectPackage }) {
       level: "Nivel 2",
       name: "Tu Negocio en Google",
       subtitle: "Conversión Local & Maps",
-      icon: "📍",
+      img: "/assets/iconografia/Design_business_logo_for_maps_202608270910.jpeg",
+      fallback: "/assets/iconografia/ubicacion google.jpg",
       price: "$2,750 MXN",
       model: "Anticipo 50% y 50% a la entrega",
       description: "Landing Page de sección larga orientada a la conversión y rescate geográfico. Incluye alta, optimización SEO y depuración en Google Maps, unificación de horarios y automatización de WhatsApp Business.",
@@ -30,7 +32,8 @@ export default function Portfolio({ onSelectPackage }) {
       level: "Híbrido N1+N2",
       name: "Escala Rápida",
       subtitle: "Smart Web + Conversión Local",
-      icon: "🤝",
+      img: "/assets/iconografia/red de crecimiento.jpg",
+      fallback: "/assets/iconografia/innovacion.jpg",
       price: "$3,700 MXN",
       model: "Anticipo 50% y 50% a la entrega",
       description: "Fusión completa de la Smart Web móvil y la Landing Page de conversión local con optimización de mapas.",
@@ -42,7 +45,8 @@ export default function Portfolio({ onSelectPackage }) {
       level: "Nivel 3",
       name: "Ecosistema Total",
       subtitle: "Comercio Integral & IA",
-      icon: "🌐",
+      img: "/assets/iconografia/ecosistema total.jpg",
+      fallback: "/assets/iconografia/Full-stack_tech_agency_icon_design_202608271207.jpeg",
       price: "$5,450 MXN",
       model: "Anticipo 40% + Medio 30% + Entrega 30%",
       description: "Sitio web corporativo completo (hasta 5 páginas), correo corporativo, 3 plantillas editables para redes y Middleware de IA embebido en el backend para optimizar desempeño.",
@@ -54,7 +58,8 @@ export default function Portfolio({ onSelectPackage }) {
       level: "E-Commerce",
       name: "E-commerce Total con Logística Integrada",
       subtitle: "Arquitectura Transaccional & Envíos",
-      icon: "🛒",
+      img: "/assets/iconografia/Shopping_cart_icon_ui_design_202608271158.jpeg",
+      fallback: "/assets/iconografia/Delivery_truck_icon_design_2K_202608271205.jpeg",
       price: "$9,850 MXN",
       model: "Anticipo 40% + Medio 30% + Entrega 30%",
       description: "Catálogo interactivo, tarjetas de producto, carrito con recuperación automática, menú digital QR, pasarela de pagos y conexión nativa con APIs de logística (Uber Direct / DiDi para locales; DHL / Estafeta para nacionales).",
@@ -68,7 +73,7 @@ export default function Portfolio({ onSelectPackage }) {
   const consultoria = [
     {
       name: "Consultoría Estructural (SOPs y Workflows)",
-      icon: "🏛️",
+      img: "/assets/iconografia/consultoria estructural.jpg",
       price: "A cotizar",
       model: "40% / 30% / 30%",
       description: "Diagnóstico interno, mapeo de procesos y documentación de Procedimientos Operativos Estándar (SOPs) y flujos de trabajo.",
@@ -76,7 +81,7 @@ export default function Portfolio({ onSelectPackage }) {
     },
     {
       name: "Taller Express Identity Branding & Logotipos",
-      icon: "🎨",
+      img: "/assets/iconografia/identidad de marca.jpg",
       price: "$1,850 MXN",
       model: "50% / 50%",
       description: "Sesión formativa, diseño de logotipo, tipografías, paleta de colores y narrativa de marca (Brand Story).",
@@ -84,7 +89,7 @@ export default function Portfolio({ onSelectPackage }) {
     },
     {
       name: "Manifiesto de Marca y Auditoría Legal",
-      icon: "⚖️",
+      img: "/assets/iconografia/Legal_icon_for_tech_agency_202608271205.jpeg",
       price: "$1,550 MXN",
       model: "50% / 50%",
       description: "Consultoría de identidad discursiva (historia, misión, valores) y reporte de viabilidad legal y disponibilidad de registro.",
@@ -92,7 +97,7 @@ export default function Portfolio({ onSelectPackage }) {
     },
     {
       name: "Elevator Pitch Estratégico",
-      icon: "🗣️",
+      img: "/assets/iconografia/Call_to_action_icon_design_202608271429.jpeg",
       price: "$850 MXN",
       model: "Pago en 1 exhibición",
       description: "Redacción persuasiva para estructurar la propuesta de valor en un guion de ventas maestro (30-60 seg) para bios y WhatsApp.",
@@ -101,21 +106,21 @@ export default function Portfolio({ onSelectPackage }) {
   ];
 
   const complementos = [
-    { cat: "Tecnología y Logística", name: "Integración de Envíos Nativos (API Uber/DiDi)", price: "$3,500 MXN", pay: "Pago 1 Exhibición" },
-    { cat: "Tecnología y Logística", name: "Módulo de Inteligencia Artificial (Backend/Agentes)", price: "$4,500 MXN", pay: "Anticipo 50% / 50%" },
-    { cat: "Tecnología y Logística", name: "Autenticación rápida (OAuth Google)", price: "$950 MXN", pay: "Pago 1 Exhibición" },
-    { cat: "Pasarelas de Pago", name: "Stripe, Mercado Pago, Conekta o PayPal", price: "$1,200 MXN", pay: "Pago por Evento" },
-    { cat: "Chatbots Inteligentes", name: "WhatsApp Business (Árbol y pedidos)", price: "$3,200 MXN", pay: "Pago 1 Exhibición" },
-    { cat: "Chatbots Inteligentes", name: "Landing Page (Calificación de leads y Webhooks)", price: "$2,450 MXN", pay: "Pago 1 Exhibición" },
-    { cat: "Chatbots Inteligentes", name: "Telegram (Comandos y catálogos en PDF)", price: "$1,950 MXN", pay: "Pago 1 Exhibición" },
-    { cat: "Chatbots Inteligentes", name: "Smart Web (Widget guiado y FAQs)", price: "$1,450 MXN", pay: "Pago 1 Exhibición" },
-    { cat: "Activos Físicos", name: "Tarjeta Inteligente NFC vCard", price: "$550 MXN c/u", pay: "Pago 1 Exhibición" },
-    { cat: "Activos Físicos", name: "Display Acrílico Inteligente (QR/NFC para mostrador)", price: "$350 MXN c/u", pay: "Pago 1 Exhibición" },
-    { cat: "Marketing y Visuales", name: "Producción de Comercial en Video (Locación y post)", price: "$5,500 MXN", pay: "Anticipo 50% / 50%" },
-    { cat: "Marketing y Visuales", name: "Levantamiento de Activos (Sesión fotos/video base)", price: "$2,500 MXN", pay: "Anticipo 50% / 50%" },
-    { cat: "Marketing y Visuales", name: "Setup de Campaña Publicitaria Ads (No incluye pauta)", price: "$2,500 MXN", pay: "Pago 1 Exhibición" },
-    { cat: "Marketing y Visuales", name: "Coherencia Visual para Redes (Auditoría Meta/TikTok)", price: "$1,800 MXN", pay: "Pago 1 Exhibición" },
-    { cat: "Marketing y Visuales", name: "Diseño de Carrusel de Marketing (5 Tarjetas)", price: "$650 MXN", pay: "Pago 1 Exhibición" }
+    { cat: "Tecnología y Logística", name: "Integración de Envíos Nativos (API Uber/DiDi)", icon: "🛵", img: "/assets/iconografia/Uber_icon_design_for_agency_202608271159.jpeg", price: "$3,500 MXN", pay: "Pago 1 Exhibición" },
+    { cat: "Tecnología y Logística", name: "Módulo de Inteligencia Artificial (Backend/Agentes)", icon: "🤖", img: "/assets/iconografia/inteligencia generativa.jpg", price: "$4,500 MXN", pay: "Anticipo 50% / 50%" },
+    { cat: "Tecnología y Logística", name: "Autenticación rápida (OAuth Google)", icon: "🔑", img: "/assets/iconografia/oauth2.jpg", price: "$950 MXN", pay: "Pago 1 Exhibición" },
+    { cat: "Pasarelas de Pago", name: "Stripe, Mercado Pago, Conekta o PayPal", icon: "💳", img: "/assets/iconografia/Stripe_icon_for_tech_agency_202608271205.jpeg", price: "$1,200 MXN", pay: "Pago por Evento" },
+    { cat: "Chatbots Inteligentes", name: "WhatsApp Business (Árbol y pedidos)", icon: "💬", img: "/assets/iconografia/WhatsApp_Business_icon_design_2K_202608271203.jpeg", price: "$3,200 MXN", pay: "Pago 1 Exhibición" },
+    { cat: "Chatbots Inteligentes", name: "Landing Page (Calificación de leads y Webhooks)", icon: "🎯", img: "/assets/iconografia/leads.jpg", price: "$2,450 MXN", pay: "Pago 1 Exhibición" },
+    { cat: "Chatbots Inteligentes", name: "Telegram (Comandos y catálogos en PDF)", icon: "✈️", img: "/assets/iconografia/Telegram_icon_design_2K_202608271203.jpeg", price: "$1,950 MXN", pay: "Pago 1 Exhibición" },
+    { cat: "Chatbots Inteligentes", name: "Smart Web (Widget guiado y FAQs)", icon: "📱", img: "/assets/iconografia/Chatbot.jpg", price: "$1,450 MXN", pay: "Pago 1 Exhibición" },
+    { cat: "Activos Físicos", name: "Tarjeta Inteligente NFC vCard", icon: "🏷️", img: "/assets/iconografia/NFC_vcard_icon_design_2K_202608271203.jpeg", price: "$550 MXN c/u", pay: "Pago 1 Exhibición" },
+    { cat: "Activos Físicos", name: "Display Acrílico Inteligente (QR/NFC para mostrador)", icon: "🪧", img: "/assets/iconografia/utileria.jpg", price: "$350 MXN c/u", pay: "Pago 1 Exhibición" },
+    { cat: "Marketing y Visuales", name: "Producción de Comercial en Video (Locación y post)", icon: "🎬", img: "/assets/iconografia/arte conceptual.jpg", price: "$5,500 MXN", pay: "Anticipo 50% / 50%" },
+    { cat: "Marketing y Visuales", name: "Levantamiento de Activos (Sesión fotos/video base)", icon: "📸", img: "/assets/iconografia/Corporate_email_interface_design_2K_202608271208.jpeg", price: "$2,500 MXN", pay: "Anticipo 50% / 50%" },
+    { cat: "Marketing y Visuales", name: "Setup de Campaña Publicitaria Ads (No incluye pauta)", icon: "📢", img: "/assets/iconografia/medir impacto.jpg", price: "$2,500 MXN", pay: "Pago 1 Exhibición" },
+    { cat: "Marketing y Visuales", name: "Coherencia Visual para Redes (Auditoría Meta/TikTok)", icon: "✨", img: "/assets/iconografia/identidad de marca2.jpg", price: "$1,800 MXN", pay: "Pago 1 Exhibición" },
+    { cat: "Marketing y Visuales", name: "Diseño de Carrusel de Marketing (5 Tarjetas)", icon: "📑", img: "/assets/iconografia/orientacion card.jpg", price: "$650 MXN", pay: "Pago 1 Exhibición" }
   ];
 
   const handleSelect = (packageName) => {
@@ -148,22 +153,29 @@ export default function Portfolio({ onSelectPackage }) {
           {packages.map((pkg, i) => (
             <div
               key={i}
-              className={`bg-midnightPanel rounded-large p-6 sm:p-8 flex flex-col justify-between border transition-all duration-300 shadow-card ${
+              className={`bg-midnightPanel rounded-large p-6 sm:p-7 flex flex-col justify-between border transition-all duration-300 shadow-card group ${
                 pkg.featured
                   ? "border-2 border-naranjaEnergy relative shadow-glowEnergy"
                   : "border-white/10 hover:border-naranjaEnergy/50"
               } ${pkg.wide ? "md:col-span-2 lg:col-span-2" : ""}`}
             >
               {pkg.featured && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-naranjaEnergy text-white text-[11px] font-bold uppercase px-4 py-1 rounded-full shadow-glowEnergy">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-naranjaEnergy text-white text-[11px] font-bold uppercase px-4 py-1 rounded-full shadow-glowEnergy z-10">
                   🔥 Más Recomendado
                 </div>
               )}
 
               <div>
-                <div className="flex items-center justify-between mb-4 mt-1">
-                  <span className="text-3xl">{pkg.icon}</span>
-                  <span className="text-xs uppercase font-bold px-2.5 py-1 rounded bg-negroProfundo text-naranjaEnergy border border-naranjaEnergy/30">
+                {/* Visual Image Render */}
+                <div className="relative w-full h-44 rounded-medium overflow-hidden mb-5 border border-white/10 bg-negroProfundo flex items-center justify-center">
+                  <img
+                    src={pkg.img}
+                    onError={(e) => { e.target.src = pkg.fallback; }}
+                    alt={pkg.name}
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 opacity-85 group-hover:opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-midnightPanel via-transparent to-transparent"></div>
+                  <span className="absolute top-2 right-2 text-[10px] uppercase font-bold px-2.5 py-1 rounded bg-negroProfundo/90 text-naranjaEnergy border border-naranjaEnergy/40 backdrop-blur-sm">
                     {pkg.level}
                   </span>
                 </div>
@@ -180,7 +192,7 @@ export default function Portfolio({ onSelectPackage }) {
                   {pkg.description}
                 </p>
 
-                <div className="bg-negroProfundo/60 p-3 rounded-medium border border-white/5 mb-4 text-[11px] text-blancoPuro/80">
+                <div className="bg-negroProfundo/70 p-3 rounded-medium border border-white/5 mb-4 text-[11px] text-blancoPuro/80">
                   <span className="text-naranjaEnergy font-bold block mb-0.5">💡 Justificación de Ticket:</span>
                   {pkg.ticketJustification}
                 </div>
@@ -217,12 +229,18 @@ export default function Portfolio({ onSelectPackage }) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {consultoria.map((c, i) => (
-              <div key={i} className="bg-midnightPanel p-6 rounded-large border border-white/10 flex flex-col justify-between shadow-card">
+              <div key={i} className="bg-midnightPanel p-5 rounded-large border border-white/10 flex flex-col justify-between shadow-card group">
                 <div>
-                  <span className="text-2xl mb-2 block">{c.icon}</span>
+                  <div className="relative w-full h-32 rounded-medium overflow-hidden mb-3 border border-white/10 bg-negroProfundo">
+                    <img
+                      src={c.img}
+                      alt={c.name}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300 opacity-80 group-hover:opacity-100"
+                    />
+                  </div>
                   <h4 className="font-bruno text-sm text-blancoPuro mb-1">{c.name}</h4>
-                  <p className="text-xs font-bold text-naranjaEnergy mb-1">{c.price}</p>
-                  <p className="text-[11px] text-humo mb-3">{c.model}</p>
+                  <p className="text-xs font-bold text-naranjaEnergy mb-0.5">{c.price}</p>
+                  <p className="text-[11px] text-humo mb-2">{c.model}</p>
                   <p className="text-xs text-humo leading-relaxed mb-3">{c.description}</p>
                   <p className="text-[11px] text-blancoPuro/70 italic mb-4">💡 {c.why}</p>
                 </div>
@@ -267,8 +285,15 @@ export default function Portfolio({ onSelectPackage }) {
               <tbody className="divide-y divide-white/5">
                 {complementos.map((item, i) => (
                   <tr key={i} className="hover:bg-negroProfundo/50 transition-colors">
-                    <td className="py-3 px-4 font-semibold text-naranjaEnergy">{item.cat}</td>
-                    <td className="py-3 px-4">{item.name}</td>
+                    <td className="py-3 px-4 font-semibold text-naranjaEnergy">
+                      <span className="mr-1.5">{item.icon}</span> {item.cat}
+                    </td>
+                    <td className="py-3 px-4 flex items-center gap-2">
+                      <div className="w-8 h-8 rounded overflow-hidden border border-white/10 shrink-0 bg-negroProfundo">
+                        <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                      </div>
+                      <span>{item.name}</span>
+                    </td>
                     <td className="py-3 px-4 font-bruno text-blancoPuro">{item.price}</td>
                     <td className="py-3 px-4 text-humo">{item.pay}</td>
                     <td className="py-3 px-4 text-right">
