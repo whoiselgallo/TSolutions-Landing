@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import PortfolioAccessModal from "../components/modals/PortfolioAccessModal.jsx";
 
 export default function PortfolioPage() {
   const [searchParams] = useSearchParams();
@@ -8,6 +9,16 @@ export default function PortfolioPage() {
   const [activeCategory, setActiveCategory] = useState("todos"); // todos | paquetes | consultoria | complementos
   const [selectedDiagnostic, setSelectedDiagnostic] = useState(null);
   const [searchComplemento, setSearchComplemento] = useState("");
+  const [isGateOpen, setIsGateOpen] = useState(false);
+
+  // Check if visitor has unlocked the portfolio filter
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    const isUnlocked = localStorage.getItem("tsolutions_portfolio_unlocked");
+    if (isUnlocked !== "true") {
+      setIsGateOpen(true);
+    }
+  }, []);
 
   // Read URL query params if user was directed to a specific category or product
   useEffect(() => {
@@ -216,6 +227,13 @@ export default function PortfolioPage() {
   return (
     <div className="bg-negroProfundo text-blancoPuro min-h-screen selection:bg-naranjaEnergy selection:text-white pb-20 sm:pb-12">
       
+      {/* Portfolio Access Gate Modal (Filtro Nombre, Correo, Teléfono) */}
+      <PortfolioAccessModal
+        isOpen={isGateOpen}
+        onClose={() => setIsGateOpen(false)}
+        targetUrl="/portafolio"
+      />
+
       {/* ================= HEADER DE NAVEGACIÓN ================= */}
       <header className="w-full border-b border-white/10 bg-negroProfundo/95 backdrop-blur-md sticky top-0 z-50 py-3 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">

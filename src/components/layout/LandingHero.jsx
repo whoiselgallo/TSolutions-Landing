@@ -1,11 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import videoBg from "../../assets/videos/VIDTS.mp4";
+import PortfolioAccessModal from "../modals/PortfolioAccessModal.jsx";
 
 export default function LandingHero() {
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenPortfolio = () => {
+    const isUnlocked = localStorage.getItem("tsolutions_portfolio_unlocked");
+    if (isUnlocked === "true") {
+      navigate("/portafolio");
+    } else {
+      setIsModalOpen(true);
+    }
+  };
+
   return (
     <section className="relative w-full min-h-[85vh] bg-negroProfundo text-blancoPuro flex flex-col items-center justify-center px-4 sm:px-6 py-16 text-center overflow-hidden border-b border-blancoPuro/5">
       
+      {/* Portfolio Access Filter Modal */}
+      <PortfolioAccessModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        targetUrl="/portafolio"
+      />
+
       {/* ===== BACKGROUND VIDEO & GLOWS ===== */}
       <video
         autoPlay
@@ -151,13 +171,14 @@ export default function LandingHero() {
           >
             🚀 Agendar Diagnóstico
           </a>
-          <Link
-            to="/portafolio"
-            className="w-full sm:w-auto py-4 px-6 bg-midnightPanel hover:bg-midnightPanel/70 text-blancoPuro border border-white/10 hover:border-naranjaEnergy/50 rounded-medium text-sm font-bold transition-all text-center flex items-center justify-center gap-2"
+          <button
+            type="button"
+            onClick={handleOpenPortfolio}
+            className="w-full sm:w-auto py-4 px-6 bg-midnightPanel hover:bg-midnightPanel/70 text-blancoPuro border border-white/10 hover:border-naranjaEnergy/50 rounded-medium text-sm font-bold transition-all text-center flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>📦 Ver Portafolio</span>
             <span className="text-naranjaEnergy">→</span>
-          </Link>
+          </button>
         </div>
 
         {/* SOCIAL BADGES */}

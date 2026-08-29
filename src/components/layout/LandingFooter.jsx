@@ -1,9 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PortfolioAccessModal from "../modals/PortfolioAccessModal.jsx";
 
 export default function LandingFooter() {
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenPortfolio = () => {
+    const isUnlocked = localStorage.getItem("tsolutions_portfolio_unlocked");
+    if (isUnlocked === "true") {
+      navigate("/portafolio");
+    } else {
+      setIsModalOpen(true);
+    }
+  };
+
   return (
     <>
+      {/* Portfolio Access Filter Modal */}
+      <PortfolioAccessModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        targetUrl="/portafolio"
+      />
+
       {/* ===== SEGUNDO CTA (ÚLTIMA OPORTUNIDAD) ===== */}
       <section className="py-20 bg-midnightPanel text-center border-b border-blancoPuro/5 relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-naranjaEnergy/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -21,12 +41,13 @@ export default function LandingFooter() {
             >
               <span>🚀 Iniciar Mi Transformación Digital</span>
             </a>
-            <Link
-              to="/portafolio"
-              className="inline-flex items-center gap-2 py-4 px-6 bg-negroProfundo hover:bg-midnightPanel text-blancoPuro border border-white/10 hover:border-naranjaEnergy/50 rounded-medium text-sm font-bold transition-all"
+            <button
+              type="button"
+              onClick={handleOpenPortfolio}
+              className="inline-flex items-center gap-2 py-4 px-6 bg-negroProfundo hover:bg-midnightPanel text-blancoPuro border border-white/10 hover:border-naranjaEnergy/50 rounded-medium text-sm font-bold transition-all cursor-pointer"
             >
               <span>📦 Explorar Portafolio Completo</span>
-            </Link>
+            </button>
           </div>
         </div>
       </section>

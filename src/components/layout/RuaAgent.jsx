@@ -92,8 +92,8 @@ const QUICK_SUGGESTIONS = [
   "¿Cuáles son los precios?",
   "Quiero llenar mi diagnóstico",
   "¿Cómo funciona la agenda?",
-  "¿Qué incluye el Paquete Híbrido?",
   "E-commerce con envíos Uber",
+  "💬 Chatear por WhatsApp",
 ];
 
 // ---- Componente de mensaje ----
@@ -291,12 +291,24 @@ export default function RuaAgent() {
                 Conectado a BD &bull; TSolutions IPIDD
               </p>
             </div>
-            <button
-              onClick={() => setOpen(false)}
-              className="ml-auto text-white/40 hover:text-white transition-colors text-base leading-none p-1"
-            >
-              ✕
-            </button>
+            <div className="ml-auto flex items-center gap-2">
+              <a
+                href="https://wa.me/5215512345678?text=Hola%20RUA,%20deseo%20asesoría%20sobre%20las%20soluciones%20de%20TSolutions"
+                target="_blank"
+                rel="noreferrer"
+                title="Continuar en WhatsApp Business"
+                className="bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 px-2.5 py-1 rounded-full text-[10px] font-bold flex items-center gap-1 transition-all shadow-card"
+              >
+                <span>💬 WhatsApp</span>
+              </a>
+              <button
+                onClick={() => setOpen(false)}
+                className="text-white/40 hover:text-white transition-colors text-base leading-none p-1"
+                aria-label="Cerrar chat"
+              >
+                ✕
+              </button>
+            </div>
           </div>
 
           {/* Mensajes */}
