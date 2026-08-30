@@ -7,6 +7,7 @@ import PortfolioPage from "./pages/PortfolioPage.jsx";
 import AgendaPage from "./pages/AgendaPage.jsx";
 import DigitalDiagnostic from "./pages/DigitalDiagnostic.jsx";
 import DiagnosticProcessing from "./pages/DiagnosticProcessing.jsx";
+import DiagnosticResultsPage from "./pages/DiagnosticResultsPage.jsx";
 import EbooksPage from "./pages/EbooksPage.jsx";
 import ThankYouPage from "./pages/ThankYouPage.jsx";
 import ComponentsPreview from "./pages/ComponentsPreview.jsx";
@@ -24,6 +25,10 @@ import BrandIdentity from "./pages/BrandIdentity.jsx";
 import ConsultoriaNegocios from "./pages/ConsultoriaNegocios.jsx";
 import Store from "./pages/Store.jsx";
 import AccessGate from "./pages/AccessGate.jsx";
+import AgentEvaluationPage from "./pages/AgentEvaluationPage.jsx";
+import KickoffAgendaPage from "./pages/KickoffAgendaPage.jsx";
+import DashboardPro from "./pages/DashboardPro.jsx";
+import ClientPortalPage from "./pages/ClientPortalPage.jsx";
 
 // Transition wrapper
 import PageTransition from "./effects/transitions/PageTransition.jsx";
@@ -44,9 +49,16 @@ export default function App() {
           <Route path="/agenda" element={<PageTransition type="fade"><AgendaPage /></PageTransition>} />
           <Route path="/diagnostico" element={<PageTransition type="fade"><DigitalDiagnostic /></PageTransition>} />
           <Route path="/diagnostico-procesando" element={<PageTransition type="fade"><DiagnosticProcessing /></PageTransition>} />
+          <Route path="/diagnostico-resultados" element={<PageTransition type="fade"><DiagnosticResultsPage /></PageTransition>} />
           <Route path="/ebooks" element={<PageTransition type="fade"><EbooksPage /></PageTransition>} />
           <Route path="/gracias" element={<PageTransition type="fade"><ThankYouPage /></PageTransition>} />
           
+          {/* ===== PRIVADAS: EVALUACIÓN, KICKOFF Y SEGUIMIENTO ===== */}
+          <Route path="/evaluacion-sesion" element={<PageTransition type="fade"><AgentEvaluationPage /></PageTransition>} />
+          <Route path="/kickoff-agenda" element={<PageTransition type="fade"><KickoffAgendaPage /></PageTransition>} />
+          <Route path="/dashboard-pro" element={<PageTransition type="fade" glow><DashboardPro /></PageTransition>} />
+          <Route path="/portal-cliente" element={<PageTransition type="fade"><ClientPortalPage /></PageTransition>} />
+
           {/* ===== PRODUCT MODULES ===== */}
           <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />
           <Route path="/ferreteria-smart/demo" element={<PageTransition type="fade" glow><FerreteriaDashboard /></PageTransition>} />
@@ -74,3 +86,4 @@ export default function App() {
     </AIProvider>
   );
 }
+

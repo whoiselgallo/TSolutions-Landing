@@ -1,191 +1,253 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import videoBg from "../../assets/videos/VIDTS.mp4";
-import PortfolioAccessModal from "../modals/PortfolioAccessModal.jsx";
+import { Link } from "react-router-dom";
 
 export default function LandingHero() {
-  const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Coordenadas del mouse para el destello perimetral de la tarjeta
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  const handleOpenPortfolio = () => {
-    const isUnlocked = localStorage.getItem("tsolutions_portfolio_unlocked");
-    if (isUnlocked === "true") {
-      navigate("/portafolio");
-    } else {
-      setIsModalOpen(true);
-    }
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
   };
 
+  const techBrands = [
+    { name: "Google Cloud", icon: "☁️" },
+    { name: "Google AI Studio", icon: "🧠" },
+    { name: "Vercel", icon: "▲" },
+    { name: "Render", icon: "⚡" },
+    { name: "Neon.tech", icon: "🟢" },
+    { name: "GitHub", icon: "🐙" },
+    { name: "Stripe", icon: "💳" },
+    { name: "Mercado Pago", icon: "🤝" },
+    { name: "OpenAI", icon: "🤖" },
+    { name: "Gemini", icon: "✨" },
+    { name: "Hostinger", icon: "🌐" },
+    { name: "Visual Studio Code", icon: "💻" },
+    { name: "Antigravity IDE", icon: "🚀" },
+    { name: "Dify", icon: "⚙️" },
+    { name: "Apache License", icon: "🪶" },
+  ];
+
   return (
-    <section className="relative w-full min-h-[85vh] bg-negroProfundo text-blancoPuro flex flex-col items-center justify-center px-4 sm:px-6 py-16 text-center overflow-hidden border-b border-blancoPuro/5">
+    <section className="bg-negroProfundo text-blancoPuro relative overflow-hidden pt-6 pb-20 selection:bg-naranjaEnergy selection:text-white">
       
-      {/* Portfolio Access Filter Modal */}
-      <PortfolioAccessModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        targetUrl="/portafolio"
-      />
-
-      {/* ===== BACKGROUND VIDEO & GLOWS ===== */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0 opacity-20 mix-blend-screen pointer-events-none"
-      >
-        <source src={videoBg} type="video/mp4" />
-      </video>
-
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-naranjaEnergy/20 rounded-full blur-3xl pointer-events-none"></div>
-
-      {/* ===== CONTENT WRAPPER ===== */}
-      <div className="relative z-10 flex flex-col items-center max-w-5xl w-full">
+      {/* ========================================================================= */}
+      {/* HERO ESTRUCTURADO FILA POR FILA                                           */}
+      {/* ========================================================================= */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
         
-        {/* BADGE DE IDENTIDAD */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-midnightPanel border border-naranjaEnergy/40 text-naranjaEnergy text-xs sm:text-sm font-semibold mb-6 shadow-glowEnergy">
-          <span className="w-2 h-2 rounded-full bg-naranjaEnergy animate-ping"></span>
-          <span>Ecosistemas Digitales &bull; Consultoría Estratégica para PYMES</span>
+        {/* Fila 1: Espaciador Superior */}
+        <div className="h-4 sm:h-6"></div>
+
+        {/* Fila 2: Parte superior del titular */}
+        <div className="mb-1">
+          <h1 className="font-bruno text-3xl sm:text-5xl md:text-6xl tracking-tight text-blancoPuro uppercase">
+            RECUPERA{" "}
+            <span className="inline-block transform scale-110 text-naranjaEnergy hover:text-orange-400 drop-shadow-[0_0_25px_rgba(255,107,0,0.9)] transition-all duration-300 cursor-default">
+              (EL CONTROL)
+            </span>
+          </h1>
         </div>
 
-        {/* LOGOTIPO OFICIAL TSOLUTIONS */}
-        <div className="relative flex flex-col items-center justify-center mb-6">
-          <div 
-            className="relative flex items-center justify-center w-28 h-28 sm:w-32 sm:h-32 border-2 border-naranjaEnergy shadow-glowEnergy animate-glowPulse bg-midnightPanel/90 backdrop-blur-md p-3"
-            style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
+        {/* Fila 3: Parte inferior del titular */}
+        <div className="mb-4">
+          <h2 className="font-bruno text-3xl sm:text-5xl md:text-6xl tracking-tight text-blancoPuro uppercase">
+            <span className="inline-block transform scale-110 text-naranjaEnergy hover:text-orange-400 drop-shadow-[0_0_25px_rgba(255,107,0,0.9)] transition-all duration-300 cursor-default">
+              (OPERATIVO)
+            </span>{" "}
+            Y ESCALA TU NEGOCIO
+          </h2>
+        </div>
+
+        {/* Fila 4: Espaciador */}
+        <div className="h-2"></div>
+
+        {/* Fila 5: Ecosistemas y Consultoría */}
+        <div className="mb-8">
+          <p className="font-inter text-sm sm:text-base font-semibold text-humo tracking-wide flex items-center justify-center gap-2 flex-wrap">
+            <span className="text-naranjaEnergy font-black">°</span> Ecosistemas Digitales
+            <span className="text-naranjaEnergy font-black">°</span> Consultoría Estratégica para PyMEs
+          </p>
+        </div>
+
+        {/* Fila 6: Espaciador */}
+        <div className="h-2"></div>
+
+        {/* Fila 7: CTA Botón Magnético Gigante con Luz Pulsante Naranja Energy */}
+        <div className="mb-8 flex justify-center">
+          <Link
+            to="/agenda"
+            className="group relative inline-flex items-center gap-3.5 py-5 px-10 sm:px-14 bg-gradient-to-r from-naranjaEnergy via-orange-500 to-naranjaEnergy text-white font-bruno text-base sm:text-xl rounded-large shadow-[0_0_35px_rgba(255,107,0,0.85)] hover:shadow-[0_0_60px_rgba(255,107,0,1)] hover:scale-105 active:scale-95 transition-all duration-300 animate-pulse hover:animate-none border border-orange-300/40"
           >
-            <img 
-              src="/assets/TSolutionslogo/logoTSVG.svg" 
-              onError={(e) => { e.target.src = "/assets/TSolutionslogo/logoWEBP.webp"; }}
-              alt="TSolutions Logo Oficial" 
-              className="relative z-10 w-full h-full object-contain drop-shadow-lg"
-            />
+            <span className="text-2xl sm:text-3xl filter drop-shadow">📅</span>
+            <span>AGENDAR MI SESIÓN DE 20 MIN</span>
+            <span className="text-xl group-hover:translate-x-1.5 transition-transform">→</span>
+          </Link>
+        </div>
+
+        {/* Fila 8: Espaciador */}
+        <div className="h-2"></div>
+
+        {/* Fila 9: Checkmarks */}
+        <div className="mb-12 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm font-semibold text-blancoPuro/90">
+          <span className="flex items-center gap-1.5 bg-midnightPanel/70 border border-white/10 px-3.5 py-1.5 rounded-full shadow-inner">
+            <span className="text-emerald-400 font-bold">✓</span> Constancia de Aprendizaje Tecnológico
+          </span>
+          <span className="flex items-center gap-1.5 bg-midnightPanel/70 border border-white/10 px-3.5 py-1.5 rounded-full shadow-inner">
+            <span className="text-cyan-400 font-bold">✓</span> Independencia Operativa Total
+          </span>
+          <span className="flex items-center gap-1.5 bg-midnightPanel/70 border border-white/10 px-3.5 py-1.5 rounded-full shadow-inner">
+            <span className="text-naranjaEnergy font-bold">✓</span> Zona de Pulgar Mobile-First
+          </span>
+        </div>
+
+        {/* Fila 10: Espaciador */}
+        <div className="h-2"></div>
+
+        {/* Fila 11: Logotipos de marcas utilizadas con efecto cristal semitransparente */}
+        <div className="mb-14">
+          <span className="text-[10px] font-bold text-humo/60 uppercase tracking-widest block mb-4">
+            INFRAESTRUCTURA Y STACK TECNOLÓGICO EMPRESARIAL
+          </span>
+          <div className="flex flex-wrap items-center justify-center gap-2.5 max-w-5xl mx-auto">
+            {techBrands.map((brand, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-medium bg-white/5 backdrop-blur-md border border-white/10 hover:border-naranjaEnergy/50 hover:bg-white/10 text-[11px] font-mono text-humo hover:text-white transition-all shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+              >
+                <span>{brand.icon}</span>
+                <span>{brand.name}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* H1 (HEADLINE): DOLOR DIRECTO Y PROMESA */}
-        <h1 className="font-bruno text-3xl sm:text-5xl lg:text-6xl text-blancoPuro tracking-wide leading-tight sm:leading-tight mb-6 max-w-4xl">
-          Recupera el{" "}
-          <span className="inline-block text-[1.5em] font-extrabold text-naranjaEnergy drop-shadow-[0_0_18px_rgba(255,107,0,0.9)] hover:drop-shadow-[0_0_32px_rgba(255,107,0,1)] hover:text-[#ff8533] hover:scale-105 transition-all duration-300 cursor-pointer align-baseline px-1 animate-pulse">
-            control operativo
-          </span>{" "}
-          y escala tu negocio.
-        </h1>
+        {/* Fila 12: Separador de Secciones */}
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent mb-16"></div>
 
-        {/* SUBTÍTULO DE ALTO IMPACTO */}
-        <p className="font-inter text-base sm:text-xl text-blancoPuro/90 max-w-3xl leading-relaxed mb-8">
-          Construimos tu infraestructura digital a la medida, capacitamos a tu personal bajo estándares andragógicos y garantizamos tu total independencia operativa.
-        </p>
+      </div>
 
-        {/* EL LEMA OFICIAL Y SUS 3 PILARES — MÁXIMA PRESENCIA & FONDO OFICIAL */}
-        <div className="w-full max-w-4xl relative rounded-large overflow-hidden border-2 border-naranjaEnergy/60 shadow-glowEnergy mb-10 p-6 sm:p-10 group">
-          
-          {/* IMAGEN DE FONDO OFICIAL CON OVERLAY DARK CYBERPUNK */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-            style={{ backgroundImage: "url('/assets/iconografia/fondo_naranja_intenso.jpeg')" }}
-          ></div>
-          <div className="absolute inset-0 bg-negroProfundo/85 backdrop-blur-md"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-negroProfundo via-transparent to-negroProfundo/60"></div>
-          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-naranjaEnergy/25 rounded-full blur-3xl pointer-events-none"></div>
+      {/* ========================================================================= */}
+      {/* SECCIÓN DE PROMESA DE VALOR (TARJETA MAGNÉTICA TRANSPARENTE GIGANTE)     */}
+      {/* ========================================================================= */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        
+        {/* TARJETA MAGNÉTICA TRANSPARENTE GIGANTE CON SOMBRA GOLD Y BORDE SPOTLIGHT */}
+        <div
+          onMouseMove={handleMouseMove}
+          className="relative rounded-2xl bg-midnightPanel/40 backdrop-blur-xl border border-amber-400/30 p-8 sm:p-12 shadow-[0_0_50px_rgba(255,215,0,0.25)] hover:shadow-[0_0_80px_rgba(255,215,0,0.45)] transition-all duration-300 overflow-hidden group"
+        >
+          {/* Destello Naranja Energy Neón que sigue al cursor por el contorno */}
+          <div
+            className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 107, 0, 0.4), transparent 80%)`,
+            }}
+          />
 
-          {/* CONTENIDO INTERNO */}
-          <div className="relative z-10">
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-naranjaEnergy/20 text-naranjaEnergy border border-naranjaEnergy/40 inline-block mb-3 shadow-glowEnergy">
-              🛡️ NUESTRA PROMESA DE VALOR
-            </span>
-
-            <h2 className="font-bruno text-xl sm:text-3xl lg:text-4xl text-blancoPuro tracking-wide leading-tight mb-6 drop-shadow-[0_0_20px_rgba(255,107,0,0.6)]">
-              “Tecnología instalada. <span className="text-naranjaEnergy">Conocimiento transferido.</span> Negocios escalados.”
-            </h2>
+          <div className="relative z-10 text-center">
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-left pt-4 border-t border-white/10">
+            {/* Fila 1: Título */}
+            <span className="text-xs font-mono font-bold text-amber-300 uppercase tracking-widest block mb-2">
+              COMPROMISO INSTITUCIONAL
+            </span>
+            <h2 className="font-bruno text-2xl sm:text-4xl text-blancoPuro mb-3">
+              Nuestra Promesa de Valor
+            </h2>
+
+            {/* Fila 2: Texto Principal */}
+            <p className="text-humo text-xs sm:text-base max-w-3xl mx-auto leading-relaxed mb-10">
+              Construimos tu infraestructura digital a la medida, capacitamos a tu personal bajo estándares andragógicos y garantizamos tu total independencia operativa.
+            </p>
+
+            {/* Fila 3: Dividida en 3 Columnas */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               
-              {/* PILAR 1: TECNOLOGÍA INSTALADA */}
-              <div className="bg-negroProfundo/90 backdrop-blur-md p-4 sm:p-5 rounded-large border border-white/10 hover:border-naranjaEnergy/70 hover:shadow-glowEnergy transition-all duration-300 group/card flex flex-col justify-between">
-                <div>
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-medium overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy bg-midnightPanel p-1 mb-3 group-hover/card:scale-105 transition-transform">
-                    <img 
-                      src="/assets/iconografia/tecnologia_instalada_2K_202608280454.jpeg" 
-                      alt="Tecnología Instalada" 
-                      className="w-full h-full object-cover rounded-sm"
-                    />
-                  </div>
-                  <strong className="font-bruno text-xs sm:text-sm text-naranjaEnergy block mb-1.5 group-hover/card:text-white transition-colors">
-                    🛠️ Tecnología Instalada
-                  </strong>
-                  <p className="text-[11px] sm:text-xs leading-relaxed text-blancoPuro/85">
-                    Ecosistemas robustos, Smart Web, Full-Stack, IA y APIs de logística para resolver fricciones reales.
-                  </p>
+              {/* Columna 1: Tecnología Instalada */}
+              <div className="bg-negroProfundo/70 border border-white/10 rounded-xl p-5 hover:border-cyan-400/60 transition-all duration-300 flex flex-col group/col">
+                <div className="h-44 w-full rounded-lg overflow-hidden mb-4 border border-white/10 bg-negroProfundo">
+                  <img
+                    src="/assets/iconografia/tecnologia_instalada_2K_202608280454.jpeg"
+                    alt="Tecnología Instalada"
+                    className="w-full h-full object-cover group-hover/col:scale-105 transition-transform duration-500"
+                  />
                 </div>
+                <h3 className="font-bruno text-base text-naranjaEnergy group-hover/col:text-cyan-400 group-hover/col:drop-shadow-[0_0_15px_rgba(34,211,238,0.9)] transition-all mb-2">
+                  Tecnología Instalada
+                </h3>
+                <p className="text-humo text-xs leading-relaxed flex-1">
+                  Arquitectura modular, APIs integradas y código propietario desplegado en servidores de alta disponibilidad sin dependencia forzada.
+                </p>
               </div>
 
-              {/* PILAR 2: CONOCIMIENTO TRANSFERIDO */}
-              <div className="bg-negroProfundo/90 backdrop-blur-md p-4 sm:p-5 rounded-large border border-white/10 hover:border-naranjaEnergy/70 hover:shadow-glowEnergy transition-all duration-300 group/card flex flex-col justify-between">
-                <div>
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-medium overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy bg-midnightPanel p-1 mb-3 group-hover/card:scale-105 transition-transform">
-                    <img 
-                      src="/assets/iconografia/conocimiento_2K_202608280455.jpeg" 
-                      alt="Conocimiento Transferido" 
-                      className="w-full h-full object-cover rounded-sm"
-                    />
-                  </div>
-                  <strong className="font-bruno text-xs sm:text-sm text-naranjaEnergy block mb-1.5 group-hover/card:text-white transition-colors">
-                    🎓 Conocimiento Transferido
-                  </strong>
-                  <p className="text-[11px] sm:text-xs leading-relaxed text-blancoPuro/85">
-                    Capacitación andragógica al equipo, manuales SOP y entrega de constancia de aprendizaje y dominio tecnológico.
-                  </p>
+              {/* Columna 2: Conocimiento Transferido */}
+              <div className="bg-negroProfundo/70 border border-white/10 rounded-xl p-5 hover:border-naranjaEnergy/60 transition-all duration-300 flex flex-col group/col">
+                <div className="h-44 w-full rounded-lg overflow-hidden mb-4 border border-white/10 bg-negroProfundo">
+                  <img
+                    src="/assets/iconografia/conocimiento_2K_202608280455.jpeg"
+                    alt="Conocimiento Transferido"
+                    className="w-full h-full object-cover group-hover/col:scale-105 transition-transform duration-500"
+                  />
                 </div>
+                <h3 className="font-bruno text-base text-cyan-400 group-hover/col:text-naranjaEnergy group-hover/col:drop-shadow-[0_0_15px_rgba(255,107,0,0.9)] transition-all mb-2">
+                  Conocimiento Transferido
+                </h3>
+                <p className="text-humo text-xs leading-relaxed flex-1">
+                  Metodología andragógica práctica, manuales operativos (SOPs) y constancias de dominio tecnológico para que tu equipo opere con autonomía total.
+                </p>
               </div>
 
-              {/* PILAR 3: NEGOCIOS ESCALADOS */}
-              <div className="bg-negroProfundo/90 backdrop-blur-md p-4 sm:p-5 rounded-large border border-white/10 hover:border-naranjaEnergy/70 hover:shadow-glowEnergy transition-all duration-300 group/card flex flex-col justify-between">
-                <div>
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-medium overflow-hidden border border-naranjaEnergy/40 shadow-glowEnergy bg-midnightPanel p-1 mb-3 group-hover/card:scale-105 transition-transform">
-                    <img 
-                      src="/assets/iconografia/negocio_escalado_2K_202608280458.jpeg" 
-                      alt="Negocios Escalados" 
-                      className="w-full h-full object-cover rounded-sm"
-                    />
-                  </div>
-                  <strong className="font-bruno text-xs sm:text-sm text-naranjaEnergy block mb-1.5 group-hover/card:text-white transition-colors">
-                    📈 Negocios Escalados
-                  </strong>
-                  <p className="text-[11px] sm:text-xs leading-relaxed text-blancoPuro/85">
-                    Transformación de negocios tradicionales en unidades de alta rentabilidad y verdadera autonomía.
-                  </p>
+              {/* Columna 3: Negocios Escalados */}
+              <div className="bg-negroProfundo/70 border border-white/10 rounded-xl p-5 hover:border-amber-300/60 transition-all duration-300 flex flex-col group/col">
+                <div className="h-44 w-full rounded-lg overflow-hidden mb-4 border border-white/10 bg-negroProfundo">
+                  <img
+                    src="/assets/iconografia/negocio_escalado_2K_202608280458.jpeg"
+                    alt="Negocios Escalados"
+                    className="w-full h-full object-cover group-hover/col:scale-105 transition-transform duration-500"
+                  />
                 </div>
+                <h3 className="font-bruno text-base text-blancoPuro group-hover/col:text-amber-300 group-hover/col:drop-shadow-[0_0_15px_rgba(255,215,0,0.9)] transition-all mb-2">
+                  Negocios Escalados
+                </h3>
+                <p className="text-humo text-xs leading-relaxed flex-1">
+                  Automatización de cobros, logística con Uber Direct y posicionamiento SEO local para convertir tráfico en facturación predecible.
+                </p>
               </div>
 
             </div>
+
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* FUERA DE LA TARJETA EN LA PARTE INFERIOR CENTRAL                         */}
+        {/* ========================================================================= */}
+        <div className="mt-12 text-center">
+          
+          {/* Fila 1: CTA Botón Gold Premium */}
+          <div className="mb-5 flex justify-center">
+            <Link
+              to="/diagnostico"
+              className="inline-flex items-center gap-3 py-4 px-10 sm:px-12 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-negroProfundo font-bruno text-sm sm:text-lg rounded-large shadow-[0_0_35px_rgba(255,215,0,0.7)] hover:shadow-[0_0_55px_rgba(255,215,0,1)] hover:scale-105 transition-all duration-300 border border-yellow-200"
+            >
+              <span>⭐ DIAGNÓSTICO + E-BOOK GRATUITO</span>
+              <span>→</span>
+            </Link>
           </div>
 
-        </div>
+          {/* Fila 2: Texto de Beneficios */}
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs font-semibold text-humo mb-8">
+            <span>✓ Entrenamiento Tecnológico a Medida</span>
+            <span>✓ Operaciones Estandarizadas Cubiertas</span>
+            <span>✓ Zona de Aprendizaje Continuo Asegurado</span>
+          </div>
 
-        {/* CTA PRINCIPAL (NARANJA ENERGY) */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
-          <a
-            href="#contacto"
-            className="w-full sm:w-auto flex-1 py-4 px-8 bg-naranjaEnergy text-white font-bruno text-base sm:text-lg rounded-medium shadow-glowEnergy hover:shadow-glowEnergyHover hover:bg-orange-600 transition-all duration-300 transform hover:-translate-y-1 text-center"
-          >
-            🚀 Agendar Diagnóstico
-          </a>
-          <button
-            type="button"
-            onClick={handleOpenPortfolio}
-            className="w-full sm:w-auto py-4 px-6 bg-midnightPanel hover:bg-midnightPanel/70 text-blancoPuro border border-white/10 hover:border-naranjaEnergy/50 rounded-medium text-sm font-bold transition-all text-center flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <span>📦 Ver Portafolio</span>
-            <span className="text-naranjaEnergy">→</span>
-          </button>
-        </div>
+          {/* Fila 3: Separador de Secciones */}
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"></div>
 
-        {/* SOCIAL BADGES */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-humo">
-          <span className="flex items-center gap-1.5"><span className="text-naranjaEnergy font-bold">✓</span> Constancia de Aprendizaje Tecnológico</span>
-          <span className="flex items-center gap-1.5"><span className="text-naranjaEnergy font-bold">✓</span> Independencia Operativa Total</span>
-          <span className="flex items-center gap-1.5"><span className="text-naranjaEnergy font-bold">✓</span> Zona de Pulgar Mobile-First</span>
         </div>
 
       </div>

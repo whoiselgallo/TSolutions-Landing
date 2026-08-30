@@ -86,16 +86,22 @@ export default function DigitalDiagnostic() {
         }),
       }).catch(() => {});
 
-      // 3. Guardar en localStorage para análisis en vivo de RUA
+      // 3. Calcular score preliminar
+      let calculatedScore = 65;
+      if (mapsStatus.includes("verificada") || mapsStatus.includes("actualizada")) calculatedScore += 10;
+      if (paymentMethods.includes("Terminal") || paymentMethods.includes("digitales")) calculatedScore += 10;
+      if (ordersFlow.includes("catálogo") || ordersFlow.includes("sistema")) calculatedScore += 10;
+      diagnosticPayload.calculatedScore = calculatedScore;
+
+      // Guardar en localStorage para análisis en vivo de RUA y resultados
       localStorage.setItem("tsolutions_latest_diagnostic", JSON.stringify(diagnosticPayload));
 
-      // 4. Redirigir a la página de procesamiento y aviso
-      navigate(`/diagnostico-procesando?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&paquete=${encodeURIComponent(selectedPkg)}`);
+      // 4. Redirigir a la página de resultados interactivos
+      navigate(`/diagnostico-resultados?nombre=${encodeURIComponent(name)}&score=${calculatedScore}`);
 
     } catch (err) {
-      // En caso de fallo de red, guardar localmente y redirigir
       localStorage.setItem("tsolutions_latest_diagnostic", JSON.stringify(diagnosticPayload));
-      navigate(`/diagnostico-procesando?nombre=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&paquete=${encodeURIComponent(selectedPkg)}`);
+      navigate(`/diagnostico-resultados?nombre=${encodeURIComponent(name)}`);
     }
   };
 
