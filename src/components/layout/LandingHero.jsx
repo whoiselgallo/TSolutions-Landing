@@ -46,8 +46,8 @@ export default function LandingHero() {
         <div className="mb-1">
           <h1 className="font-bruno text-3xl sm:text-5xl md:text-6xl tracking-tight text-blancoPuro uppercase">
             RECUPERA{" "}
-            <span className="inline-block transform scale-110 text-naranjaEnergy hover:text-orange-400 drop-shadow-[0_0_25px_rgba(255,107,0,0.9)] transition-all duration-300 cursor-default">
-              (EL CONTROL)
+            <span className="inline-block transform scale-120 text-naranjaEnergy hover:text-orange-400 drop-shadow-[0_0_25px_rgba(255,107,0,0.9)] transition-all duration-300 cursor-default">
+              EL CONTROL
             </span>
           </h1>
         </div>
@@ -55,8 +55,8 @@ export default function LandingHero() {
         {/* Fila 3: Parte inferior del titular */}
         <div className="mb-4">
           <h2 className="font-bruno text-3xl sm:text-5xl md:text-6xl tracking-tight text-blancoPuro uppercase">
-            <span className="inline-block transform scale-110 text-naranjaEnergy hover:text-orange-400 drop-shadow-[0_0_25px_rgba(255,107,0,0.9)] transition-all duration-300 cursor-default">
-              (OPERATIVO)
+            <span className="inline-block transform scale-120 text-naranjaEnergy hover:text-orange-400 drop-shadow-[0_0_25px_rgba(255,107,0,0.9)] transition-all duration-300 cursor-default">
+              OPERATIVO
             </span>{" "}
             Y ESCALA TU NEGOCIO
           </h2>
