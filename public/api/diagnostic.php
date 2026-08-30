@@ -1,13 +1,13 @@
 <?php
 // ============================================================
-// TSolutions IPIDD — Backend de Diagnóstico Digital (PHP)
-// Guarda evaluaciones en MySQL de Hostinger y envía email a contacto@tsolutionsipidd.com
+// TSolutions IPIDD — /public/api/diagnostic.php
+// Envío de Paquete y Diagnóstico por Gmail (javier.gallardo@tsolutionsipidd.com)
+// Incluye imagen de Código QR dinámico generado para el cliente
 // ============================================================
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Content-Type: application/json; charset=UTF-8");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -16,121 +16,147 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(["success" => false, "message" => "Método no permitido"]);
+    echo json_encode(["error" => "Método no permitido"]);
     exit;
 }
 
-// ------------------------------------------------------------
-// ⚙️ CONFIGURACIÓN DE BASE DE DATOS (HOSTINGER)
-// ------------------------------------------------------------
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_USER', getenv('DB_USER') ?: 'u115767692_rua');
-define('DB_PASS', getenv('DB_PASS') ?: 'exhsbcmvsJ87e/$');
-define('DB_NAME', getenv('DB_NAME') ?: 'u115767692_ipiddsolutions');
+$rawInput = file_get_contents('php://input');
+$data = json_decode($rawInput, true) ?: [];
 
-$inputJSON = file_get_contents('php://input');
-$input = json_decode($inputJSON, TRUE);
+$name = $data['name'] ?? 'Cliente';
+$email = $data['email'] ?? '';
+$phone = $data['phone'] ?? 'N/A';
+$businessName = $data['businessName'] ?? 'N/A';
+$industry = $data['industry'] ?? 'General';
+$selectedPkg = $data['selectedPkg'] ?? 'Paquete Híbrido Escala Rápida ($3,700 MXN)';
+$calculatedScore = $data['calculatedScore'] ?? 68;
 
-$name = isset($input['name']) ? trim($input['name']) : '';
-$email = isset($input['email']) ? trim($input['email']) : '';
-$phone = isset($input['phone']) ? trim($input['phone']) : '';
-$businessName = isset($input['businessName']) ? trim($input['businessName']) : '';
-$industry = isset($input['industry']) ? trim($input['industry']) : '';
-$selectedPkg = isset($input['selectedPkg']) ? trim($input['selectedPkg']) : '';
-$evaluation = isset($input['evaluation']) ? json_encode($input['evaluation'], JSON_UNESCAPED_UNICODE) : '{}';
-
-if (empty($name) || empty($email)) {
+if (empty($email)) {
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Nombre y correo son obligatorios"]);
+    echo json_encode(["error" => "El correo electrónico es requerido."]);
     exit;
 }
 
-// 1. Guardar en Base de Datos MySQL
-$db_saved = false;
-try {
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    if (!$conn->connect_error) {
-        $conn->set_charset("utf8mb4");
+// URL destino para agendar y Código QR dinámico con colores de la marca
+$targetUrl = "https://tsolutionsipidd.com/agenda?nombre=" . urlencode($name) . "&email=" . urlencode($email) . "&telefono=" . urlencode($phone);
+$qrImageUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" . urlencode($targetUrl) . "&bgcolor=11141a&color=ff6b00&margin=10";
 
-        // Crear la tabla de diagnósticos si no existe
-        $table_query = "CREATE TABLE IF NOT EXISTS diagnostic_evaluations (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL,
-            phone VARCHAR(100) DEFAULT '',
-            business_name VARCHAR(255) DEFAULT '',
-            industry VARCHAR(150) DEFAULT '',
-            selected_pkg VARCHAR(255) DEFAULT '',
-            evaluation_data LONGTEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-        $conn->query($table_query);
+// Plantilla de Correo HTML Profesional con Código QR
+$htmlContent = '
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tu Paquete y Diagnóstico TSolutions IPIDD</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0b0c10; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; color: #ffffff;">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #0b0c10; padding: 30px 10px;">
+    <tr>
+      <td align="center">
+        <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color: #11141a; border: 1px solid rgba(255,107,0,0.35); border-radius: 16px; overflow: hidden; box-shadow: 0 0 40px rgba(255,107,0,0.2);">
+          
+          <!-- HEADER -->
+          <tr>
+            <td style="background-color: #161b22; padding: 25px 30px; border-bottom: 2px solid #ff6b00; text-align: center;">
+              <h1 style="margin: 0; font-size: 24px; font-weight: 900; letter-spacing: 2px; color: #ffffff;">
+                TSOLUTIONS <span style="color: #ff6b00; font-size: 16px; background: rgba(255,107,0,0.15); border: 1px solid #ff6b00; padding: 2px 8px; border-radius: 4px;">IPIDD</span>
+              </h1>
+              <p style="margin: 6px 0 0 0; font-size: 11px; color: #94a3b8; letter-spacing: 1px;">
+                TECNOLOGÍA INSTALADA | CONOCIMIENTO TRANSFERIDO | NEGOCIOS ESCALADOS
+              </p>
+            </td>
+          </tr>
 
-        $stmt = $conn->prepare("INSERT INTO diagnostic_evaluations (name, email, phone, business_name, industry, selected_pkg, evaluation_data) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        if ($stmt) {
-            $stmt->bind_param("sssssss", $name, $email, $phone, $businessName, $industry, $selectedPkg, $evaluation);
-            if ($stmt->execute()) {
-                $db_saved = true;
-            }
-            $stmt->close();
-        }
-        $conn->close();
-    }
-} catch (Exception $e) {
-    // Continuar a respaldo
-}
+          <!-- BODY -->
+          <tr>
+            <td style="padding: 35px 30px;">
+              <p style="font-size: 16px; color: #ffffff; margin-top: 0;">
+                Hola <strong>' . htmlspecialchars($name) . '</strong>,
+              </p>
+              <p style="font-size: 14px; color: #cbd5e1; line-height: 1.6;">
+                Hemos procesado con éxito el diagnóstico digital y la propuesta de infraestructura para tu negocio <strong>' . htmlspecialchars($businessName) . '</strong> (' . htmlspecialchars($industry) . ').
+              </p>
 
-// 2. Respaldo en Archivo CSV de Diagnósticos
-$csv_file = __DIR__ . '/diagnostics.csv';
-$is_new = !file_exists($csv_file);
-$file = fopen($csv_file, 'a');
-if ($file) {
-    if ($is_new) {
-        fputs($file, (chr(0xEF) . chr(0xBB) . chr(0xBF)));
-        fputcsv($file, ['Fecha', 'Nombre', 'Correo', 'Telefono', 'Empresa', 'Giro', 'Paquete', 'Evaluacion']);
-    }
-    $date = date('Y-m-d H:i:s');
-    fputcsv($file, [$date, $name, $email, $phone, $businessName, $industry, $selectedPkg, $evaluation]);
-    fclose($file);
-}
+              <!-- PAQUETE SELECCIONADO -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: rgba(255,107,0,0.08); border: 1px solid #ff6b00; border-radius: 12px; margin: 20px 0; padding: 18px;">
+                <tr>
+                  <td>
+                    <span style="font-size: 10px; font-weight: bold; color: #ff6b00; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 4px;">
+                      PAQUETE SELECCIONADO / RECOMENDADO
+                    </span>
+                    <h2 style="margin: 0 0 6px 0; font-size: 18px; color: #ffffff;">
+                      ' . htmlspecialchars($selectedPkg) . '
+                    </h2>
+                    <p style="margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.5;">
+                      • Evaluación de Madurez Digital: <strong style="color: #22c55e;">' . $calculatedScore . ' / 100 Puntos</strong><br>
+                      • <strong>Regalo Incluido:</strong> Terminal Point Mini de Mercado Pago de regalo en pasarelas.<br>
+                      • <strong>Garantía:</strong> 30 días de soporte y transferencia andragógica de conocimiento.
+                    </p>
+                  </td>
+                </tr>
+              </table>
 
-// 3. Envío al Correo Corporativo contacto@tsolutionsipidd.com
-$to = "contacto@tsolutionsipidd.com";
-$subject = "🧠 Nuevo Diagnóstico Digital RUA: $businessName ($name)";
-$evalObj = json_decode($evaluation, true) ?: [];
+              <!-- CÓDIGO QR DESTACADO -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: #0b0c10; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin: 25px 0; padding: 20px; text-align: center;">
+                <tr>
+                  <td align="center">
+                    <span style="font-size: 11px; font-weight: bold; color: #ff6b00; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 12px;">
+                      📱 ESCANEA TU CÓDIGO QR PARA AGENDAR TU SESIÓN
+                    </span>
+                    
+                    <!-- IMAGEN DEL CÓDIGO QR -->
+                    <img src="' . $qrImageUrl . '" alt="Código QR TSolutions" width="200" height="200" style="display: block; margin: 0 auto; border: 3px solid #ff6b00; border-radius: 12px; box-shadow: 0 0 25px rgba(255,107,0,0.4);" />
+                    
+                    <p style="margin: 14px 0 0 0; font-size: 11px; color: #94a3b8;">
+                      Apunta la cámara de tu celular a este código QR para abrir tu agenda en vivo de 20 minutos con tu estratega asignado.
+                    </p>
+                  </td>
+                </tr>
+              </table>
 
-$email_body = "====================================================\n" .
-              "  AUDITORÍA DE MADUREZ DIGITAL - TSOLUTIONS IPIDD\n" .
-              "====================================================\n\n" .
-              "PROSPECTO:\n" .
-              "- Nombre: $name\n" .
-              "- Correo: $email\n" .
-              "- Teléfono / WhatsApp: $phone\n" .
-              "- Empresa: $businessName\n" .
-              "- Giro: $industry\n" .
-              "- Paquete de Interés: $selectedPkg\n\n" .
-              "EVALUACIÓN DE OPERACIONES:\n" .
-              "- Google Maps: " . ($evalObj['mapsStatus'] ?? 'N/A') . "\n" .
-              "- Presencia Web: " . ($evalObj['webPresence'] ?? 'N/A') . "\n" .
-              "- Toma de Pedidos: " . ($evalObj['ordersFlow'] ?? 'N/A') . "\n" .
-              "- Fricción en Respuestas: " . ($evalObj['responseFriction'] ?? 'N/A') . "\n" .
-              "- Métodos de Cobro: " . ($evalObj['paymentMethods'] ?? 'N/A') . "\n" .
-              "- Despacho Logístico: " . ($evalObj['shippingMethod'] ?? 'N/A') . "\n" .
-              "- Capacitación de Equipo: " . ($evalObj['teamTraining'] ?? 'N/A') . "\n" .
-              "- Procesos SOPs: " . ($evalObj['sopsStatus'] ?? 'N/A') . "\n" .
-              "- Fuga u Obstáculo Principal: " . ($evalObj['mainObstacle'] ?? 'N/A') . "\n\n" .
-              "Fecha y Hora: " . date('Y-m-d H:i:s') . "\n";
+              <!-- BOTÓN CTA -->
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 30px 0 10px 0;">
+                <tr>
+                  <td align="center">
+                    <a href="' . $targetUrl . '" target="_blank" style="background-color: #ff6b00; color: #ffffff; text-decoration: none; padding: 14px 30px; font-size: 14px; font-weight: bold; border-radius: 8px; display: inline-block; box-shadow: 0 0 20px rgba(255,107,0,0.6);">
+                      📅 Agendar Mi Sesión de Entrega (20 min) →
+                    </a>
+                  </td>
+                </tr>
+              </table>
 
-$headers = "From: webmaster@tsolutionsipidd.com\r\n" .
-           "Reply-To: $email\r\n" .
-           "X-Mailer: PHP/" . phpversion();
+            </td>
+          </tr>
 
-@mail($to, $subject, $email_body, $headers);
+          <!-- FOOTER -->
+          <tr>
+            <td style="background-color: #0b0c10; padding: 20px 30px; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; font-size: 11px; color: #64748b;">
+              TSolutions IPIDD &bull; Dirección Tecnológica: <a href="mailto:javier.gallardo@tsolutionsipidd.com" style="color: #ff6b00; text-decoration: none;">javier.gallardo@tsolutionsipidd.com</a><br>
+              Todos los derechos reservados 2026.
+            </td>
+          </tr>
 
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+';
+
+$headers = "MIME-Version: 1.0\r\n";
+$headers .= "Content-type: text/html; charset=UTF-8\r\n";
+$headers .= "From: Javier Gallardo | TSolutions IPIDD <javier.gallardo@tsolutionsipidd.com>\r\n";
+$headers .= "Reply-To: javier.gallardo@tsolutionsipidd.com\r\n";
+
+// Envío de correos
+$sentClient = @mail($email, "🚀 Tu Paquete y Diagnóstico Digital — " . ($businessName ?: $name) . " (TSolutions IPIDD)", $htmlContent, $headers);
+$sentAdmin = @mail("javier.gallardo@tsolutionsipidd.com", "🔔 [NUEVO DIAGNÓSTICO/PAQUETE] " . $name . " — " . $businessName, $htmlContent, $headers);
+
+http_response_code(200);
 echo json_encode([
     "success" => true,
-    "message" => "¡Diagnóstico digital registrado con éxito y conectado a RUA!",
-    "recipient" => $to,
-    "db_saved" => $db_saved
+    "qrUrl" => $qrImageUrl,
+    "clientEmailSent" => $sentClient,
+    "adminNotified" => $sentAdmin
 ]);
-?>
