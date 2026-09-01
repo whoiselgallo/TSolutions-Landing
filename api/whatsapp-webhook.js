@@ -1,121 +1,100 @@
 // ============================================================
 // TSolutions IPIDD — /api/whatsapp-webhook.js
 // Integración Oficial de RUA (Real Utility Agent) con WhatsApp Business API
+// Respuestas 100% en Vivo con Gemini AI (SIN Presets Genéricos)
 // ============================================================
 
 import fs from "fs";
 import path from "path";
 
-const WHATSAPP_TOKEN = process.env.WHATSAPP_TOKEN || process.env.META_WHATSAPP_TOKEN;
+const WHATSAPP_TOKEN = process.env.WHATSAPP_TOKEN;
 const WHATSAPP_PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
 const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || "TSOLUTIONS_RUA_VERIFY_TOKEN_2026";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
 
 // Sistema de Conocimiento RUA para WhatsApp Business
-const RUA_SYSTEM_PROMPT = `Eres RUA 🤖 (Real Utility Agent), el asistente oficial de Inteligencia Artificial y Estratega Tecnológico de TSolutions IPIDD.
-Atiendes a prospectos y clientes directamente en WhatsApp Business.
+const RUA_SYSTEM_PROMPT = `Eres RUA 🤖 (Real Utility Agent), el estratega tecnológico y asistente inteligente oficial de TSolutions IPIDD.
+Atiendes en tiempo real a dueños de negocios, directores y emprendedores en WhatsApp Business.
 
-Nuestra Promesa de Valor:
+Filosofía Institucional:
 “Tecnología instalada. Conocimiento transferido. Negocios escalados.”
 
-Información Clave de TSolutions IPIDD:
-- 💳 Nivel 1: Tarjeta Smart ($950 MXN) — Bio link mobile-first en zona de pulgar para captar ventas por WhatsApp.
-- 📍 Nivel 2: Tu Negocio en Google ($2,750 MXN) — Rescate geográfico y posicionamiento SEO Local en Google Maps.
-- 🔥 Paquete Híbrido Escala Rápida ($3,700 MXN) — Smart Web + Google Maps + automatización (El más pedido).
-- 🌐 Nivel 3: Ecosistema Total ($5,450 MXN) — Sitio web multi-sección, pasarela de pago y correos corporativos.
-- 📦 E-commerce Total con Logística ($9,850 MXN) — Tienda transaccional con APIs de Uber Direct / DHL y cobros online.
-- 🎁 REGALO ESPECIAL: En la contratación de pasarelas o E-commerce, incluimos una Terminal Point Mini de Mercado Pago de REGALO.
-- 🏛️ Consultoría Estructural (SOPs): Documentación de flujos de trabajo y procesos operativos.
-- 🎨 Brand Builder ($1,850 MXN): Logotipo, manual de identidad y narrativa comercial.
-- 🎓 Constancia de Aprendizaje: Capacitación andragógica en 3 dominios para que el equipo opere con autonomía.
-- 🧭 Diagnóstico Gratuito: https://tsolutionsipidd.com/diagnostico
-- 📅 Agenda de Resultados (Sesión 20 min): https://tsolutionsipidd.com/agenda
+Soluciones y Catálogo de Precios Transparentes:
+- 💳 Tarjeta Smart ($950 MXN): Bio link móvil de 1 sola sección en zona de pulgar para captar y cerrar ventas por WhatsApp en 1 toque.
+- 📍 Tu Negocio en Google ($2,750 MXN): Rescate de ficha en Google Maps, unificación de horarios, depuración de fotos y posicionamiento SEO Local.
+- 🔥 Paquete Híbrido Escala Rápida ($3,700 MXN): Smart Web + Google Maps optimizado (Nuestro paquete más vendido para PYMEs).
+- 🌐 Ecosistema Total ($5,450 MXN): Sitio web corporativo multi-sección, pasarela de cobro integrada, correos corporativos y Middleware de IA backend.
+- 📦 E-commerce Total con Logística ($9,850 MXN): Tienda transaccional con APIs de Uber Direct / DiDi para entregas locales y cobros automáticos.
+- 🎁 REGALO ESPECIAL: En la contratación de pasarelas de cobro o E-commerce, regalamos una Terminal Point Mini de Mercado Pago para cobros físicos en local.
+- 🏛️ Consultoría Estructural (SOPs): Mapeo de procesos y manuales operativos para eliminar el desorden operativo.
+- 🎨 Brand Builder ($1,850 MXN): Logotipo, paleta cromática, manual de identidad y narrativa comercial.
+- 🎓 Constancia de Aprendizaje Tecnológico: Capacitación andragógica al personal para que el cliente sea 100% independiente (cero código huérfano).
+
+Enlaces Oficiales para compartir:
+- 🧭 Diagnóstico de Fugas Operativas (2 min): https://tsolutionsipidd.com/diagnostico
+- 📅 Agenda de Sesión de 20 min con un Estratega: https://tsolutionsipidd.com/agenda
 - 📚 3 E-books Gratuitos: https://tsolutionsipidd.com/ebooks
+- 💼 Portafolio y Casos de Éxito: https://tsolutionsipidd.com/portafolio
 
-Reglas de Respuesta en WhatsApp:
-- Sé ágil, cálido, profesional, seguro y enfocado en negocios (máximo 2 a 4 párrafos cortos).
-- Usa emojis con buen gusto y saltos de línea para facilitar la lectura en móviles.
-- Si el cliente pregunta qué le conviene, recomiéndale el Diagnóstico Digital Gratuito o el Paquete Híbrido.`;
+Reglas de Comunicación en WhatsApp:
+- Responde de forma personalizada analizando exactamente lo que el usuario pregunta. NUNCA uses respuestas fijas predeterminadas.
+- Tono: Seguro, ejecutivo, entusiasta, cálido y enfocado en rentabilidad para negocios.
+- Formato: Mensajes ágiles (2 a 3 párrafos cortos), emojis bien colocados y saltos de línea legibles en celulares.`;
 
-// Motor de Respuestas de Respaldo RUA (Fallback Offline Inmediato)
-function getOfflineRuaResponse(userText) {
-  const text = (userText || "").toLowerCase();
-
-  if (text.includes("precio") || text.includes("costo") || text.includes("cuanto") || text.includes("paquete")) {
-    return "¡Hola! En *TSolutions IPIDD* manejamos precios transparentes y sin letras chiquitas:\n\n" +
-      "• 💳 *Tarjeta Smart:* $950 MXN (Mobile-first para WhatsApp)\n" +
-      "• 📍 *Tu Negocio en Google:* $2,750 MXN (Rescate en Google Maps)\n" +
-      "• 🔥 *Híbrido Escala Rápida:* $3,700 MXN (Smart Web + Maps - El más pedido)\n" +
-      "• 🌐 *Ecosistema Total:* $5,450 MXN (Sitio web + Correos corporativos)\n" +
-      "• 📦 *E-commerce Total:* $9,850 MXN (Con envíos Uber Direct y *Terminal Point Mini de regalo* 🎁)\n\n" +
-      "¿Te gustaría que te recomiende el paquete ideal para tu negocio?";
-  }
-
-  if (text.includes("diagnostico") || text.includes("diagnóstico") || text.includes("empezar") || text.includes("auditoria")) {
-    return "¡Excelente! Para evaluar las fugas operativas de tu negocio en Google Maps, WhatsApp y pedidos, diseñamos nuestro *Diagnóstico Digital de 2 minutos*:\n\n" +
-      "👉 Llénalo aquí: https://tsolutionsipidd.com/diagnostico\n\n" +
-      "Al completarlo, te agendaremos una sesión 1 a 1 de 20 min con un Estratega Tecnológico para entregarte tus resultados sin costo.";
-  }
-
-  if (text.includes("agenda") || text.includes("cita") || text.includes("horario") || text.includes("sesion")) {
-    return "¡Listo! Puedes apartar tu *Sesión Estratégica 1 a 1 de 20 minutos* directamente en nuestra agenda oficial:\n\n" +
-      "👉 Elige tu horario: https://tsolutionsipidd.com/agenda\n\n" +
-      "Revisaremos tu modelo de negocio y cómo automatizar tu operación.";
-  }
-
-  if (text.includes("ebook") || text.includes("libro") || text.includes("gratis") || text.includes("descarga")) {
-    return "¡Sí! Tenemos *3 E-books Oficiales Gratuitos* listos para descargar:\n\n" +
-      "1. 🎨 *Arquitectura de Marca: Cómo Construir una Identidad que Venda*\n" +
-      "2. 🚀 *El Manual Anticaos: Erradica el Desorden en Maps y WhatsApp*\n" +
-      "3. 📦 *De Mostrador a Máquina de Despachos: E-commerce con Uber Direct*\n\n" +
-      "👉 Descárgalos gratis aquí: https://tsolutionsipidd.com/ebooks";
-  }
-
-  return "¡Hola! Soy *RUA 🤖 (Real Utility Agent)*, el asesor de inteligencia artificial de *TSolutions IPIDD*.\n\n" +
-    "Estoy aquí para ayudarte a digitalizar tu negocio, erradicar cuellos de botella en pedidos y capacitar a tu equipo.\n\n" +
-    "¿En qué te puedo apoyar hoy?\n" +
-    "1️⃣ Cotizar un paquete web o tienda online\n" +
-    "2️⃣ Iniciar Diagnóstico de Fugas Operativas\n" +
-    "3️⃣ Agendar sesión de 20 min con un Estratega";
-}
-
-// Generador con Gemini AI
+// Generador Inteligente con Gemini AI (Si falla, reporta el error explícito)
 async function generateAIResponse(userMessage, senderPhone) {
-  if (!GEMINI_API_KEY) {
-    return getOfflineRuaResponse(userMessage);
+  if (!GEMINI_API_KEY || GEMINI_API_KEY.trim() === "") {
+    return "⚠️ [Error RUA]: La clave GEMINI_API_KEY no está configurada en el servidor. No es posible generar respuesta de IA.";
   }
 
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
-    const payload = {
-      contents: [{ role: "user", parts: [{ text: userMessage }] }],
-      systemInstruction: { role: "system", parts: [{ text: RUA_SYSTEM_PROMPT }] },
-      generationConfig: { temperature: 0.7, maxOutputTokens: 600 }
-    };
+  const modelsToTry = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+  let lastErrorDetail = "";
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
+  for (const model of modelsToTry) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+      const payload = {
+        contents: [{ role: "user", parts: [{ text: userMessage }] }],
+        systemInstruction: { role: "system", parts: [{ text: RUA_SYSTEM_PROMPT }] },
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 600,
+        }
+      };
 
-    if (!response.ok) {
-      return getOfflineRuaResponse(userMessage);
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (aiText && aiText.trim()) {
+          console.log(`[RUA WhatsApp AI] Respuesta generada exitosamente con ${model}`);
+          return aiText;
+        }
+      } else {
+        const errText = await response.text();
+        lastErrorDetail = `HTTP ${response.status}: ${errText}`;
+        console.error(`[Gemini ${model} Error] ${lastErrorDetail}`);
+      }
+    } catch (err) {
+      lastErrorDetail = err.message;
+      console.error(`[Gemini ${model} Exception]`, err);
     }
-
-    const data = await response.json();
-    const candidateText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    return candidateText || getOfflineRuaResponse(userMessage);
-  } catch (err) {
-    return getOfflineRuaResponse(userMessage);
   }
+
+  // En caso de fallo total de la IA, retornar el error explícito sin presets
+  return `⚠️ [Error RUA]: No fue posible conectar con el motor de Inteligencia Artificial (Gemini AI). Detalle: ${lastErrorDetail || "Fallo de conexión o cuota de API excedida"}.`;
 }
 
 // Enviar mensaje a WhatsApp vía Meta Graph API
 async function sendWhatsAppMessage(recipientPhone, messageText) {
   if (!WHATSAPP_TOKEN || !WHATSAPP_PHONE_NUMBER_ID) {
-    console.log(`[WhatsApp Simulation] Para: ${recipientPhone} -> Mensaje: ${messageText}`);
-    return { success: true, simulated: true };
+    console.error(`[WhatsApp Error] Faltan WHATSAPP_TOKEN o WHATSAPP_PHONE_NUMBER_ID.`);
+    return { error: "Faltan credenciales de WhatsApp en el servidor." };
   }
 
   try {
@@ -173,13 +152,13 @@ export default async function handler(req, res) {
       const message = changes?.messages?.[0];
 
       if (message && message.type === "text") {
-        const fromNumber = message.from; // Teléfono del prospecto
+        const fromNumber = message.from;
         const userText = message.text?.body || "";
         const contactProfile = changes?.contacts?.[0]?.profile?.name || "Prospecto";
 
         console.log(`[WhatsApp Inbound] De: ${contactProfile} (${fromNumber}): "${userText}"`);
 
-        // Generar respuesta con el cerebro de RUA
+        // Generar respuesta con IA en vivo (o reportar error)
         const ruaReply = await generateAIResponse(userText, fromNumber);
 
         // Enviar respuesta por WhatsApp

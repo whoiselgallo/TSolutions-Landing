@@ -8,6 +8,9 @@ import AgendaPage from "./pages/AgendaPage.jsx";
 import DigitalDiagnostic from "./pages/DigitalDiagnostic.jsx";
 import DiagnosticProcessing from "./pages/DiagnosticProcessing.jsx";
 import DiagnosticResultsPage from "./pages/DiagnosticResultsPage.jsx";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage.jsx";
+import TermsPage from "./pages/TermsPage.jsx";
+import DataDeletionPage from "./pages/DataDeletionPage.jsx";
 import EbooksPage from "./pages/EbooksPage.jsx";
 import ThankYouPage from "./pages/ThankYouPage.jsx";
 import ComponentsPreview from "./pages/ComponentsPreview.jsx";
@@ -50,6 +53,13 @@ export default function App() {
           <Route path="/diagnostico" element={<PageTransition type="fade"><DigitalDiagnostic /></PageTransition>} />
           <Route path="/diagnostico-procesando" element={<PageTransition type="fade"><DiagnosticProcessing /></PageTransition>} />
           <Route path="/diagnostico-resultados" element={<PageTransition type="fade"><DiagnosticResultsPage /></PageTransition>} />
+          <Route path="/privacidad" element={<PageTransition type="fade"><PrivacyPolicyPage /></PageTransition>} />
+          <Route path="/politica-de-privacidad" element={<PageTransition type="fade"><PrivacyPolicyPage /></PageTransition>} />
+          <Route path="/terminos" element={<PageTransition type="fade"><TermsPage /></PageTransition>} />
+          <Route path="/condiciones-del-servicio" element={<PageTransition type="fade"><TermsPage /></PageTransition>} />
+          <Route path="/terms" element={<PageTransition type="fade"><TermsPage /></PageTransition>} />
+          <Route path="/eliminacion-de-datos" element={<PageTransition type="fade"><DataDeletionPage /></PageTransition>} />
+          <Route path="/data-deletion" element={<PageTransition type="fade"><DataDeletionPage /></PageTransition>} />
           <Route path="/ebooks" element={<PageTransition type="fade"><EbooksPage /></PageTransition>} />
           <Route path="/gracias" element={<PageTransition type="fade"><ThankYouPage /></PageTransition>} />
           

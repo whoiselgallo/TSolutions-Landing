@@ -13,22 +13,17 @@ export default function LandingHero() {
     });
   };
 
-  const techBrands = [
-    { name: "Google Cloud", icon: "☁️" },
-    { name: "Google AI Studio", icon: "🧠" },
-    { name: "Vercel", icon: "▲" },
-    { name: "Render", icon: "⚡" },
-    { name: "Neon.tech", icon: "🟢" },
-    { name: "GitHub", icon: "🐙" },
-    { name: "Stripe", icon: "💳" },
-    { name: "Mercado Pago", icon: "🤝" },
-    { name: "OpenAI", icon: "🤖" },
-    { name: "Gemini", icon: "✨" },
-    { name: "Hostinger", icon: "🌐" },
-    { name: "Visual Studio Code", icon: "💻" },
-    { name: "Antigravity IDE", icon: "🚀" },
-    { name: "Dify", icon: "⚙️" },
-    { name: "Apache License", icon: "🪶" },
+  const compatibleStandards = [
+    { name: "Google Workspace", font: "font-sans font-medium" },
+    { name: "Vercel", font: "font-sans font-bold tracking-tight" },
+    { name: "neon.tech", font: "font-mono font-medium" },
+    { name: "Microsoft 365", font: "font-sans font-semibold" },
+    { name: "Open IA", font: "font-sans font-bold" },
+    { name: "Dify", font: "font-sans font-extrabold" },
+    { name: "Hostinger", font: "font-sans font-medium" },
+    { name: "GitHub", font: "font-sans font-bold" },
+    { name: "Render", font: "font-mono font-bold" },
+    { name: "GoDaddy", font: "font-sans font-semibold" },
   ];
 
   return (
@@ -107,20 +102,19 @@ export default function LandingHero() {
         {/* Fila 10: Espaciador */}
         <div className="h-2"></div>
 
-        {/* Fila 11: Logotipos de marcas utilizadas con efecto cristal semitransparente */}
+        {/* Fila 11: Integraciones & Estándares Compatibles (Estilo Foto 2) */}
         <div className="mb-14">
-          <span className="text-[10px] font-bold text-humo/60 uppercase tracking-widest block mb-4">
-            INFRAESTRUCTURA Y STACK TECNOLÓGICO EMPRESARIAL
+          <span className="text-[11px] font-mono font-bold text-cyan-400/90 uppercase tracking-[0.25em] block mb-6">
+            INTEGRACIONES & ESTÁNDARES COMPATIBLES
           </span>
-          <div className="flex flex-wrap items-center justify-center gap-2.5 max-w-5xl mx-auto">
-            {techBrands.map((brand, i) => (
-              <div
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 md:gap-12 max-w-6xl mx-auto px-4">
+            {compatibleStandards.map((brand, i) => (
+              <span
                 key={i}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-medium bg-white/5 backdrop-blur-md border border-white/10 hover:border-naranjaEnergy/50 hover:bg-white/10 text-[11px] font-mono text-humo hover:text-white transition-all shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+                className={`${brand.font} text-sm sm:text-base text-humo/60 hover:text-blancoPuro transition-all duration-300 cursor-default select-none hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.75)] hover:scale-105`}
               >
-                <span>{brand.icon}</span>
-                <span>{brand.name}</span>
-              </div>
+                {brand.name}
+              </span>
             ))}
           </div>
         </div>

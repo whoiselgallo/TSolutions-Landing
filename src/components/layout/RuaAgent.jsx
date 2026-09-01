@@ -210,32 +210,35 @@ export default function RuaAgent() {
 
       if (res.ok) {
         const data = await res.json();
-        if (data.text && !data.fallback) {
+        if (data.text) {
           setMessages([
             ...newHistory,
             { role: "assistant", text: data.text },
           ]);
           setLoading(false);
           return;
+        } else if (data.error || data.reason) {
+          setMessages([
+            ...newHistory,
+            { role: "assistant", text: `⚠️ [Error RUA]: ${data.error || data.reason || "No se pudo conectar con Gemini AI"}.` },
+          ]);
+          setLoading(false);
+          return;
         }
       }
 
-      // 2. Fallback Inteligente Nativo RUA (Garantiza 100% de disponibilidad sin caídas)
-      const fallbackReply = generateRuaResponse(userText);
-      setTimeout(() => {
-        setMessages([
-          ...newHistory,
-          { role: "assistant", text: fallbackReply },
-        ]);
-        setLoading(false);
-      }, 350);
-
-    } catch (err) {
-      // Fallback local instantáneo
-      const fallbackReply = generateRuaResponse(userText);
+      // Si la API responde con error HTTP
+      const errData = await res.json().catch(() => ({}));
       setMessages([
         ...newHistory,
-        { role: "assistant", text: fallbackReply },
+        { role: "assistant", text: `⚠️ [Error RUA]: Fallo de conexión con Gemini AI (HTTP ${res.status}). ${errData.error || ""}` },
+      ]);
+      setLoading(false);
+
+    } catch (err) {
+      setMessages([
+        ...newHistory,
+        { role: "assistant", text: `⚠️ [Error RUA]: Error de red al contactar al motor de Inteligencia Artificial: ${err.message}` },
       ]);
       setLoading(false);
     }
