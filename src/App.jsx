@@ -30,7 +30,6 @@ import Store from "./pages/Store.jsx";
 import AccessGate from "./pages/AccessGate.jsx";
 import AgentEvaluationPage from "./pages/AgentEvaluationPage.jsx";
 import KickoffAgendaPage from "./pages/KickoffAgendaPage.jsx";
-import DashboardPro from "./pages/DashboardPro.jsx";
 import ClientPortalPage from "./pages/ClientPortalPage.jsx";
 
 // Transition wrapper
@@ -66,9 +65,17 @@ export default function App() {
           {/* ===== PRIVADAS: EVALUACIÓN, KICKOFF Y SEGUIMIENTO ===== */}
           <Route path="/evaluacion-sesion" element={<PageTransition type="fade"><AgentEvaluationPage /></PageTransition>} />
           <Route path="/kickoff-agenda" element={<PageTransition type="fade"><KickoffAgendaPage /></PageTransition>} />
-          <Route path="/dashboard-pro" element={<PageTransition type="fade" glow><DashboardPro /></PageTransition>} />
           <Route path="/portal-cliente" element={<PageTransition type="fade"><ClientPortalPage /></PageTransition>} />
 
+          {/* ===== DASHBOARD MAESTRO UNIFICADO & ADMIN ===== */}
+          <Route path="/dashboard" element={<PageTransition type="fade" glow><Dashboard defaultTab="overview" /></PageTransition>} />
+          <Route path="/dashboard/pro" element={<PageTransition type="fade" glow><Dashboard defaultTab="mesa" /></PageTransition>} />
+          <Route path="/dashboard-pro" element={<PageTransition type="fade" glow><Dashboard defaultTab="mesa" /></PageTransition>} />
+          <Route path="/dashboard/admin" element={<PageTransition type="fade" glow><Dashboard defaultTab="admin" /></PageTransition>} />
+          <Route path="/admin" element={<PageTransition type="fade" glow><Dashboard defaultTab="admin" /></PageTransition>} />
+          <Route path="/dashboard/mesa-de-trabajo" element={<PageTransition type="fade" glow><Dashboard defaultTab="mesa" /></PageTransition>} />
+          <Route path="/mesa-de-trabajo" element={<PageTransition type="fade" glow><Dashboard defaultTab="mesa" /></PageTransition>} />
+          
           {/* ===== PRODUCT MODULES ===== */}
           <Route path="/ferreteria-smart" element={<PageTransition type="fade"><FerreteriaSmart /></PageTransition>} />
           <Route path="/ferreteria-smart/demo" element={<PageTransition type="fade" glow><FerreteriaDashboard /></PageTransition>} />
@@ -79,13 +86,10 @@ export default function App() {
           <Route path="/acceso" element={<PageTransition type="fade"><AccessGate /></PageTransition>} />
           <Route path="/acceso/:codigo" element={<PageTransition type="fade"><AccessGate /></PageTransition>} />
 
-          {/* ===== UI PREVIEWS ===== */}
+          {/* ===== UI PREVIEWS & DEMOS ===== */}
           <Route path="/components" element={<PageTransition type="slide" direction="up"><ComponentsPreview /></PageTransition>} />
           <Route path="/effects" element={<PageTransition type="slide" direction="up"><EffectsPreview /></PageTransition>} />
           <Route path="/tokens" element={<PageTransition type="fade"><TokensPreview /></PageTransition>} />
-
-          {/* ===== DASHBOARD ===== */}
-          <Route path="/dashboard" element={<PageTransition type="fade" glow><Dashboard /></PageTransition>} />
           <Route path="/dashboard/showcase" element={<PageTransition type="fade" glow><DashboardShowcase /></PageTransition>} />
           <Route path="/dashboard/full-demo" element={<PageTransition type="fade" glow><DashboardFullDemo /></PageTransition>} />
           <Route path="/dashboard/preview" element={<PageTransition type="fade" glow><DashboardPreview /></PageTransition>} />
@@ -96,4 +100,3 @@ export default function App() {
     </AIProvider>
   );
 }
-
